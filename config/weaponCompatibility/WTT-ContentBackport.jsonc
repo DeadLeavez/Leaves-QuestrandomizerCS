@@ -1,0 +1,161 @@
+{
+    //Weapon-equivalent mappings for WTT-ContentBackport. Every *.jsonc in this folder is loaded and merged.
+    //originalWeaponID = the weapon a quest asks for; equivalentWeaponID = another weapon that also counts.
+    //Auto-generated: each custom weapon counts as the vanilla weapon it is cloned from (chain-resolved).
+    "equivalents":
+    [
+        { "originalWeaponID": "57c44b372459772d2b39b8ce", "equivalentWeaponID": "6871284e9a353bb50606f3ed" }, //weapon_tochmash_val_9x39 -> AS VAL MOD.4 9x39 special assault rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "68a639748e1fe612970728e9" }, //weapon_colt_m4a1_556x45 -> Colt M16A1 5.56x45 assault rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "68a6399922b1e0bd360afe56" }, //weapon_colt_m4a1_556x45 -> Colt M16A2 5.56x45 assault rifle
+        { "originalWeaponID": "606587252535c57a13424cfd", "equivalentWeaponID": "68c16b9ab6b75a8a480520a6" }, //weapon_cmmg_mk47_762x39 -> Custom Guns NL545 (DI) 5.45x39 assault rifle
+        { "originalWeaponID": "606587252535c57a13424cfd", "equivalentWeaponID": "68c2940aecc41cc5490bd40e" }, //weapon_cmmg_mk47_762x39 -> Custom Guns NL545 (GP) 5.45x39 assault rifle
+        { "originalWeaponID": "6499849fc93611967b034949", "equivalentWeaponID": "689166b6c2d6fa42e7044756" }, //weapon_izhmash_ak12_545x39 -> Kalashnikov AK-308 7.62x51 assault rifle
+        { "originalWeaponID": "5df8ce05b11454561e39243b", "equivalentWeaponID": "6932abeb5403890d0c09c926" }, //weapon_kac_sr25_762x51 -> Knight's Armament Company SR-25 7.62x51 marksman rifle (Taupe)
+        { "originalWeaponID": "5bfea6e90db834001b7347f3", "equivalentWeaponID": "67c6de3ce39861860909e8e5" }, //weapon_remington_model_700_762x51 -> Marlin MXLR .308 ME lever-action rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "6895bb82c4519957df062f82" }, //weapon_colt_m4a1_556x45 -> Radian Weapons Model 1 FA 5.56x45 assault rifle
+        { "originalWeaponID": "5c46fbd72e2216398b5a8c9c", "equivalentWeaponID": "68aee763130c00663d08aea8" }, //weapon_izhmash_svd_s_762x54 -> TKPD 9.3x64 carbine
+        { "originalWeaponID": "5bb2475ed4351e00853264e3", "equivalentWeaponID": "6a15ae2ae5267ba21c07f98f" }, //weapon_hk_416a5_556x45 -> HK 416A5 5.56x45 assault rifle (RAL 8000)
+        //The Howa Type 20 and Norinco QBZ-191 clone from the HK 416A5 mechanically but are distinct platforms.
+        //Mapped as HK 416A5 equivalents anyway (so HK-416 quests/categories also count them) - deliberately
+        //trading strict correctness for more weapon variety. They ALSO get their own "East Asian Arms" home below.
+        { "originalWeaponID": "5bb2475ed4351e00853264e3", "equivalentWeaponID": "6a3bffbebc377285900b85cf" }, //weapon_hk_416a5_556x45 -> Howa Type 20 5.56x45 assault rifle
+        { "originalWeaponID": "5bb2475ed4351e00853264e3", "equivalentWeaponID": "69f9ebbcaae020b0db02f65d" } //weapon_hk_416a5_556x45 -> Norinco QBZ-191 5.8x42 assault rifle
+    ],
+
+    "weaponCategoryAdditions":
+    {
+        "Viet-fucking-nam":
+        [
+            "68a639748e1fe612970728e9", //Colt M16A1 5.56x45 assault rifle
+            "68a6399922b1e0bd360afe56" //Colt M16A2 5.56x45 assault rifle
+        ],
+        "DMR":
+        [
+            "6932abeb5403890d0c09c926" //Knight's Armament Company SR-25 7.62x51 marksman rifle (Taupe)
+        ],
+        "Hunting":
+        [
+            "67c6de3ce39861860909e8e5", //Marlin MXLR .308 ME lever-action rifle
+            "68aee763130c00663d08aea8" //TKPD 9.3x64 carbine
+        ],
+        "Ol' Reliable AKs":
+        [
+            "68c16b9ab6b75a8a480520a6", //Custom Guns NL545 (DI) 5.45x39 assault rifle
+            "68c2940aecc41cc5490bd40e" //Custom Guns NL545 (GP) 5.45x39 assault rifle
+        ],
+        "Spetsnaz Bullshit":
+        [
+            "6871284e9a353bb50606f3ed" //AS VAL MOD.4 9x39 special assault rifle
+        ],
+        "Ak 100 Series":
+        [
+            "689166b6c2d6fa42e7044756" //Kalashnikov AK-308 7.62x51 assault rifle
+        ],
+        //Invented category (not in weaponcategories.jsonc) - East-Asian-made service rifles. Weighted in
+        //"weaponCategoryWeights" below so it actually rolls. Add more here if other East-Asian guns arrive.
+        "East Asian Arms":
+        [
+            "6a3bffbebc377285900b85cf", //Howa Type 20 5.56x45 assault rifle (Japan)
+            "69f9ebbcaae020b0db02f65d" //Norinco QBZ-191 5.8x42 assault rifle (China)
+        ],
+        //Boss-arsenal categories (weaponcategories.jsonc 1.1 expansion). These bosses use
+        //WTT-ContentBackport weapons per the wiki; injected here so the base category file stays
+        //vanilla-only and they are pruned automatically when the backport mod is absent.
+        "Reshala Arsenal":
+        [
+            "68c2940aecc41cc5490bd40e" //Custom Guns NL545 (GP) 5.45x39 assault rifle
+        ],
+        "Shturman Arsenal":
+        [
+            "68aee763130c00663d08aea8" //TKPD 9.3x64 carbine
+        ],
+        "Zryachiy Arsenal":
+        [
+            "68aee763130c00663d08aea8" //TKPD 9.3x64 carbine
+        ],
+        "Birdeye Arsenal":
+        [
+            "67c6de3ce39861860909e8e5" //Marlin MXLR .308 ME lever-action rifle
+        ],
+        "1.0":
+        [
+            "6871284e9a353bb50606f3ed", //AS VAL MOD.4 9x39 special assault rifle
+            "68a639748e1fe612970728e9", //Colt M16A1 5.56x45 assault rifle
+            "68a6399922b1e0bd360afe56", //Colt M16A2 5.56x45 assault rifle
+            "68c16b9ab6b75a8a480520a6", //Custom Guns NL545 (DI) 5.45x39 assault rifle
+            "68c2940aecc41cc5490bd40e", //Custom Guns NL545 (GP) 5.45x39 assault rifle
+            "689166b6c2d6fa42e7044756", //Kalashnikov AK-308 7.62x51 assault rifle
+            "6932abeb5403890d0c09c926", //Knight's Armament Company SR-25 7.62x51 marksman rifle (Taupe)
+            "67c6de3ce39861860909e8e5", //Marlin MXLR .308 ME lever-action rifle
+            "6895bb82c4519957df062f82", //Radian Weapons Model 1 FA 5.56x45 assault rifle
+            "68aee763130c00663d08aea8", //TKPD 9.3x64 carbine
+            "6a15ae2ae5267ba21c07f98f", //HK 416A5 5.56x45 assault rifle (RAL 8000)
+            "6a3bffbebc377285900b85cf", //Howa Type 20 5.56x45 assault rifle
+            "69f9ebbcaae020b0db02f65d" //Norinco QBZ-191 5.8x42 assault rifle
+        ]
+    },
+
+    "modCategoryAdditions":
+    {
+        "Bipods":
+        [
+            "680f6d9a4d7624d36e06527b", //MDR BLK LBL ALX Bipod 16
+            "680f7e4aeee716732708e84e" //MDR BLK LBL ALX Bipod 20
+        ],
+        "Collimators":
+        [
+            "68a5ab09c44fa287ba0a97b5", //FALKE LE reflex sight
+            "688a0b38467521f9080693a3", //MeproLight Mepro M21 reflex sight
+            "68a5ac69b55a6b93c20a2bc7", //SwampFox Justice reflex sight
+            "688b44cb28bf8d85cd0ff108", //Trijicon SRO reflex sight
+            "688b4bd81cef2a61d0052738" //Trijicon SRO reflex sight (FDE)
+        ],
+        "Iron Sights":
+        [
+            "68caad70269e10396503ad00", //A.R.M.S. #40 Flip-Up Rear Sight
+            "68916765fa628c6b9f0ed6f6", //AK-308 rear sight base
+            "680b884f1a335f66240ecde7", //HK G36 KAC 600m Rear Sight Rail
+            "680b87fc9402a78e7504a057", //HK G36 KAC Front Flip Up Sight
+            "67c5427eac40c364490664f6", //M1895/MXLR XS Marlin Ghost front sight
+            "67c5422726265106dd0697a2", //M1895/MXLR XS Marlin Ghost Ring rear sight
+            "68a63d3c8e977b40b2032286", //MaTech BUIS rear sight
+            "67c54270b032bbdb530201c2", //MXLR standard front sight
+            "67c5428ab032bbdb530201c4" //MXLR standard rear sight
+        ],
+        "Optical Scopes":
+        [
+            "68caad7f933990601c07f47c" //Leupold Mark 4 MR/T TS-30A2 2.5-8x36 30mm riflescope
+        ],
+        "All Silencers":
+        [
+            "68d56685f3d7cd248f0a06d9", //AK-308 7.62x51 QD sound suppressor
+            "68caad12269e10396503acfe", //Allen Engineering AEM-5 5.56x45 sound suppressor
+            "6932af22cccd2b808a04385e", //AR-10 KAC SR-25/Mk.11 7.62x51 sound suppressor
+            "6936be064737190b66053bb4", //AR-10 KAC SR-25/Mk.11 7.62x51 sound suppressor (Taupe)
+            "68712ce2251b8d4c6c04ec1f" //AS VAL MOD.4 9x39 integral barrel-suppressor
+        ],
+        "Medium Silencers":
+        [
+            "68caad12269e10396503acfe", //Allen Engineering AEM-5 5.56x45 sound suppressor
+            "68712ce2251b8d4c6c04ec1f" //AS VAL MOD.4 9x39 integral barrel-suppressor
+        ],
+        "Big Silencers":
+        [
+            "68d56685f3d7cd248f0a06d9", //AK-308 7.62x51 QD sound suppressor
+            "6932af22cccd2b808a04385e", //AR-10 KAC SR-25/Mk.11 7.62x51 sound suppressor
+            "6936be064737190b66053bb4" //AR-10 KAC SR-25/Mk.11 7.62x51 sound suppressor (Taupe)
+        ],
+        "Tactical Lasers":
+        [
+            "68bedc0365e7dcf94f0cb0fc" //L3Harris AN/PEQ-15 tactical device (Black)
+        ]
+    },
+
+    //Roll weights for categories INVENTED by this compat file (names not in weaponcategories.jsonc).
+    //Without an entry an invented category defaults to weight 1 and rarely surfaces among the ~85 shipped
+    //categories. Shipped thematic categories run 2-3; "East Asian Arms" is set to 2 to match.
+    "weaponCategoryWeights":
+    {
+        "East Asian Arms": 2
+    }
+}

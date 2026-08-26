@@ -1,0 +1,84 @@
+{
+    //Weapon-equivalent mappings + category slotting for Epic's AIO.
+    //Every *.jsonc in this folder is loaded and merged.
+    //originalWeaponID = the weapon a quest asks for; equivalentWeaponID = another weapon that also counts.
+    //Each custom weapon counts as the vanilla weapon it is cloned from (chain-resolved).
+    "equivalents":
+    [
+        { "originalWeaponID": "57dc2fa62459775949412633", "equivalentWeaponID": "93bcdfda236122e67c098847" }, //Century Arms Draco 7.62x39 carbine
+        { "originalWeaponID": "606587252535c57a13424cfd", "equivalentWeaponID": "52ce1b65b13e1035808c4fd2" }, //CMMG Mk47 Mutant 5.45X39 assault rifle
+        { "originalWeaponID": "606587252535c57a13424cfd", "equivalentWeaponID": "96f5c38a676e11e13544dfba" }, //CMMG Mk47 Mutant 9X39 assault rifle
+        { "originalWeaponID": "5ac66cb05acfc40198510a10", "equivalentWeaponID": "d672109946fe88b803449054" }, //Kalashnikov AK-101 .300 Blackout assault rifle
+        { "originalWeaponID": "5ac66d015acfc400180ae6e4", "equivalentWeaponID": "ffc95b9d143f52202a311820" }, //Kalashnikov AK-102 .300 Blackout assault rifle
+        { "originalWeaponID": "6499849fc93611967b034949", "equivalentWeaponID": "3dc691f607ffed3228bf6ca2" }, //Kalashnikov AK-15 7.62x39 assault rifle
+        { "originalWeaponID": "57dc2fa62459775949412633", "equivalentWeaponID": "ed05294ed53c0400ae0e8a55" }, //Kalashnikov AKS-74U .300 Blackout Assault Rifle
+        { "originalWeaponID": "5839a40f24597726f856b511", "equivalentWeaponID": "939c742f7dad852286188029" }, //Kalashnikov AKS-74UB .300 Blackout Assault Rifle
+        { "originalWeaponID": "583990e32459771419544dd2", "equivalentWeaponID": "627c4fe34b0a558e8a3642a1" }, //Kalashnikov AKS-74UN .300 Blackout Assault Rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "4b81488c78c8a8ac7d37f9b9" }, //Mechanic's Colt M4A1 .300 blackout assault rifle
+        { "originalWeaponID": "583990e32459771419544dd2", "equivalentWeaponID": "52500592c7109667abb6cbeb" }, //Modified Century Arms Draco 7.62x39 Assault Rifle
+        { "originalWeaponID": "5bfea6e90db834001b7347f3", "equivalentWeaponID": "0af5f6a5aa9712e11c733fb9" }, //Remington Model 700 .277 Sig Fury bolt-action sniper rifle
+        { "originalWeaponID": "5ac4cd105acfc40016339859", "equivalentWeaponID": "e895575bcd1fa1de36d301b6" }, //Saiga MK Ver. 030 5.45x39 Carbine
+        { "originalWeaponID": "5644bd2b4bdc2d3b4c8b4572", "equivalentWeaponID": "57f28a7ffb22e277b0234219" }, //Saiga SGL31 5.45x39 Carbine
+        { "originalWeaponID": "5fbcc1d9016cce60e8341ab3", "equivalentWeaponID": "72bbf927bf5b1d4a0837485b" }, //SIG MCX 5.56x45 assault rifle
+        { "originalWeaponID": "65290f395ae2ae97b80fdf2d", "equivalentWeaponID": "8d59d8b10a4c2e85b871c317" } //SIG MCX SPEAR 7.62x51 assault rifle
+    ],
+
+    //Drop these weapons into weapon categories the quest roller can pick. Names not in
+    //weaponcategories.jsonc are created on the spot; a category left empty (mod not installed) is pruned.
+    "weaponCategoryAdditions":
+    {
+        "Epic's Arsenal":
+        [
+            "93bcdfda236122e67c098847", //Century Arms Draco 7.62x39 carbine
+            "52ce1b65b13e1035808c4fd2", //CMMG Mk47 Mutant 5.45X39 assault rifle
+            "96f5c38a676e11e13544dfba", //CMMG Mk47 Mutant 9X39 assault rifle
+            "d672109946fe88b803449054", //Kalashnikov AK-101 .300 Blackout assault rifle
+            "ffc95b9d143f52202a311820", //Kalashnikov AK-102 .300 Blackout assault rifle
+            "3dc691f607ffed3228bf6ca2", //Kalashnikov AK-15 7.62x39 assault rifle
+            "ed05294ed53c0400ae0e8a55", //Kalashnikov AKS-74U .300 Blackout Assault Rifle
+            "939c742f7dad852286188029", //Kalashnikov AKS-74UB .300 Blackout Assault Rifle
+            "627c4fe34b0a558e8a3642a1", //Kalashnikov AKS-74UN .300 Blackout Assault Rifle
+            "4b81488c78c8a8ac7d37f9b9", //Mechanic's Colt M4A1 .300 blackout assault rifle
+            "52500592c7109667abb6cbeb", //Modified Century Arms Draco 7.62x39 Assault Rifle
+            "0af5f6a5aa9712e11c733fb9", //Remington Model 700 .277 Sig Fury bolt-action sniper rifle
+            "e895575bcd1fa1de36d301b6", //Saiga MK Ver. 030 5.45x39 Carbine
+            "57f28a7ffb22e277b0234219", //Saiga SGL31 5.45x39 Carbine
+            "72bbf927bf5b1d4a0837485b", //SIG MCX 5.56x45 assault rifle
+            "8d59d8b10a4c2e85b871c317" //SIG MCX SPEAR 7.62x51 assault rifle
+        ],
+        "Ak 100 Series":
+        [
+            "d672109946fe88b803449054", //Kalashnikov AK-101 .300 Blackout assault rifle
+            "ffc95b9d143f52202a311820" //Kalashnikov AK-102 .300 Blackout assault rifle
+        ],
+        "AKSU Series":
+        [
+            "ed05294ed53c0400ae0e8a55", //Kalashnikov AKS-74U .300 Blackout Assault Rifle
+            "939c742f7dad852286188029", //Kalashnikov AKS-74UB .300 Blackout Assault Rifle
+            "627c4fe34b0a558e8a3642a1" //Kalashnikov AKS-74UN .300 Blackout Assault Rifle
+        ],
+        "West Made AK":
+        [
+            "52ce1b65b13e1035808c4fd2", //CMMG Mk47 Mutant 5.45X39 assault rifle
+            "96f5c38a676e11e13544dfba" //CMMG Mk47 Mutant 9X39 assault rifle
+        ],
+        "SIG Series":
+        [
+            "72bbf927bf5b1d4a0837485b", //SIG MCX 5.56x45 assault rifle
+            "8d59d8b10a4c2e85b871c317" //SIG MCX SPEAR 7.62x51 assault rifle
+        ],
+        "Bolt Action":
+        [
+            "0af5f6a5aa9712e11c733fb9" //Remington Model 700 .277 Sig Fury bolt-action sniper rifle
+        ]
+    },
+
+    //Roll weight for the categories this file INVENTS (ones not already in weaponcategories.jsonc).
+    //Without a weight a new category is created at 1 - so rare among the ~85 shipped categories you'd
+    //never see it. Shipped categories run 0.5-3. Only the invented catch-all below is weighted here;
+    //the existing categories above keep their own weights.
+    "weaponCategoryWeights":
+    {
+        "Epic's Arsenal": 1
+    }
+}

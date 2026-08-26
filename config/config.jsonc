@@ -1,0 +1,197 @@
+{
+    "questBlacklist": //These quests wont be edited. First batch are recommended to leave in here. Cus they cause bugs of different kinds when randomized.
+    [
+        "5c0d190cd09282029f5390d8", //Grenadier (Works fine to randomize, it just sort of loses its unique identity)
+        "5d25e2d886f77442734d335e", //The Huntsman Path - Controller (Loses unique identity, and might cause hidden objectives)
+        "60e729cf5698ee7b05057439", //Swift one
+        "5d25bfd086f77442734d3007", //The Survivalist Path - Zhivchik
+        "5d25c81b86f77443e625dd71", //The Survivalist Path - Wounded Beast
+        "59675ea386f77414b32bded2", //Postman Pat - Part 1 (Can be randomized, but causes UI bugs.)
+        "596760e186f7741e11214d58", //Postman Pat - Part 2 (Can be randomized, but causes UI bugs.)
+        "5d25cf2686f77443e75488d4", //The Survivalist Path - Tough Guy, Works, but can become insanely difficult. 
+
+        //Labyrinth quest line - blacklisted so this new map's quests stay untouched for now (remove these to let them randomize).
+        "67a0970f05d1611ed90be75d", //Hypotheses Testing
+        "67a09724972c11a3f5077324", //Confidential Info
+        "67a0972e77dd677f600804bd", //This Tape Sucks
+        "67a097379f2068e74603c6ac", //Indisputable Authority
+        "67a09761e720611a6a01f288", //Keepers Word
+        "67d03be712fb5f8fd2096332" //Vacate the Premises
+
+    ],
+
+    "chanceToEditKillConditions": 1.00, //Chance that we want to edit kill requirement on a quest. 1 for always. 0 for never. Decimal values are ok.
+    "chanceToAddLocations": 0.50, //Chance to add a location requirement to kill quests.
+    "locationCount": 2, //Total locations that the quest will be valid on.
+    "factoryDayQuestsAlsoCountAtNight": true, //Factory - Day objectives also count at night (not the reverse). Widened objectives read "[Factory]". 
+    "chanceToAddTimeOfDay": 0.05, //CHance to add a time of day requirement to kill quests.
+    "timeOfDayWindowHours": 8, //Length in hours of a rolled time-of-day window (kills only count between From and From+this).
+    "chanceToAddBodypart": 0.08, //Chance to add having to target specific body parts to kill quests.
+    "chanceToAddDistance": 0.05, //Chance to add a distance requirement to kill quests. (Currently >=/<= 20-100m, Might add options for this later)
+    "chanceToAddWeapon": 0.60, //Chance to add weapon requirement to kill quests. Will do a weighted selection from the weaponcategories.jsonc file.
+    "chanceForSecondWeaponCategory": 0.15, //Chance a weapon requirement uses TWO categories ("an AK or an SMG") instead of one. Multi-category only combines mod-less categories, so it's weapons-only.
+    "chanceForMysteryArsenal": 0.0, //Chance a weapon requirement is a "mystery arsenal": a fixed set of specific weapons instead of a category - one guaranteed pistol, one guaranteed shotgun, plus mysteryArsenalWeaponCount random weapons from the whole pool.
+    "mysteryArsenalWeaponCount": 3, //How many random weapons a mystery arsenal adds ON TOP of the guaranteed pistol and shotgun.
+    "chanceToAddGear": 0.10, //Chance to add gear requirement to kill quest. Will do a weighted selection from the gearlist.jsonc file.
+    "chanceToEditGear": 0.3, //Chance to re-roll a gear requirement the quest ALREADY has (e.g. vanilla "kill wearing UNTAR gear" quests) into random gear from gearlist.jsonc. Only applies to the few quests that come with gear requirements.
+    "addGearCount": 4, //How many different gear pieces will be selected. Every gear piece is an alternative. You only ever need to wear 1 of them.
+
+
+    "adjustKillCountFactorsUpDown": [ 0.20, 0.20 ], //How many kills a quest will need. It's randomly increased/decreased by a multiplier between the factors. So default settings makes the multiplier between 0.8-1.2
+    "killCountWhenTargetTypeChangesFactor": 1.5, //Ill tell how this works later. Idk
+
+    "addKillObjectiveToQuestChance": 0.60, //Chance to add a kill objective to quests that don't naturally have them.
+    "addKillObjectiveKillCount": 4, //Base kill count to added objectives. Then multiplied by the factors above.
+    "addKillOBjectiveDepthFactor": 0.15, //Will add quest depth * factor to the total kill count. Depth is how many quests is before it.
+    "addKillOBjectiveLevelFactor": 0.15, //Will add quest level * factor to the total kill count. Level is the minimum required level to start the quest.
+
+    "addHandOverObjectiveToQuestChance": 0.35, //CHance to ADD a handover condition to a quest that does not have it.
+    "addHandOverObjectiveBaseCount": 2, //Number of items that need to be handed over by default.
+    "addHandOverObjectiveDepthFactor": 0.15, //Will add quest depth * factor to the total kill count. Depth is how many quests is before it.
+    "addHandOverObjectiveLevelFactor": 0.1, //Will add quest level * factor to the total kill count. Level is the minimum required level to start the quest.
+
+    "chanceToEditHandoverCondition": 0.85, //Chance that the handover part of a quest will be randomized. 1 for always. 0 for never. Decimal values are ok.
+    "chanceToRequireItemCategory": 0.15, //Chance that instead of a specific item, the quest requires a bunch of items from a category instead.
+    "itemCategoryMultiplier": 2.50, //If it's a category we multiply the needed item count with this. With default settings if a quest normally requires 5 Duct Tape, it now might require 10 medikits.
+    "handoverItemUnknownItemValueDivider": 14000, //The divisor that determines the tier of an item. Rounded to nearest tier. An item worth 34000 rubles with be 34000/15000 ~ 2. Lower value means harder quests.
+    "adjustHandoverCountFactorsUpDown": [ 0.25, 0.40 ], //Adjusts how many items are needed for a handover quest. See how it works above.
+    "chanceHandoverNeedsFIR": 0.50, //Chance for a quest to require the handover items to be Found In Raid. 1 is always. 0 is never.
+    "rainbowifyFIR": true, //IF set to false, will make the "found in raid" text no longer be rainbow.
+    "handoverItemBlacklist": //Any quest that requires you to handover an item from this list will be skipped entirely and left alone. Parent categories also work.
+    [
+        "5696686a4bdc2da3298b456a", //Dollars
+        "5449016a4bdc2d6f028b456f", //Roubles
+        "569668774bdc2da2298b4568", //Euros
+        "59f32bb586f774757e1e8442", //Dogtag Bear
+        "59f32c3b86f77472a31742f0", //Dogtag USEC
+        "5485a8684bdc2da71d8b4567" //Ammo - Parent
+    ],
+    "enableQuestWhilelist": true, //When enabled, will only modify quests from the questwhitelist.jsonc. By default this is all the vanilla quests. Only enable this if you suspect another mod is playing bad with this one.
+    "questXPMultiplier": 0.5, //Multiplier for all quests. Applies to generated quests too. Useful if you spend more time on each quest, so you don't get ahead of the curve.
+    "pipelineSelfTest": false, //DIAGNOSTIC ONLY. Regenerates every rolled quest from its outline and compares the two, proving the outline pipeline reproduces the roller exactly. Leave false for normal play.
+    "rollerSelfTest": false, //DIAGNOSTIC ONLY. At boot, runs the new outline-native roller over every quest, regenerates + localizes each, and logs failures + decision distributions + samples. Leave false for normal play.
+    "enableTraderWhitelist": true, //If we want to enable the whitelist below.
+    "traderWhitelist": //If a quest is from a trader that's not on this list, it will be ignored.
+    [
+        "54cb50c76803fa8b248b4571", // PRAPOR
+        "54cb57776803fa99248b456e", // THERAPIST
+        //"579dc571d53a0658a154fbec", // FENCE
+        "58330581ace78e27b8b10cee", // SKIER
+        "5935c25fb3acc3127c3d8cd9", // PEACEKEEPER
+        "5a7c2eca46aef81a7ca2145d", // MECHANIC
+        "5ac3b934156ae10c4430e83c", // RAGMAN
+        //"638f541a29ffd1183d187f57", // Lightkeeper
+        //"6617beeaa9cfa777ca915b7c", // REF
+        "5c0647fdd443bc2504c2d371" // JAEGER
+    ],
+
+    /*
+    List of quests that are easier. 
+    Maps on this list will will have the following adjustments.
+    - - Uses Easier map list. The easier maps array can be found in ``assets/data/misc.jsonc - earlyMaps``. 
+    - - Does not ADD body part requirements
+    - - Does not ADD time of day requirements 
+    - - Does not ADD distance requirements
+    - - Does not ADD/EDIT gear requirements
+    - - Does not EDIT weapon requirements 
+    */
+    "easierQuestList":
+    [
+        "5936d90786f7742b1420ba5b", //Debut
+        "5936da9e86f7742d65037edf", //Background Check
+        "59674cd986f7744ab26e32f2", //Shootout Picnic
+        "59674eb386f774539f14813a", //Delivery From the Past
+        "5967530a86f77462ba22226b", //Bad Rep Evidence
+        "657315ddab5a49b71f098853", //First in Line
+        "657315df034d76585f032e01", //Shooting Cans
+        "657315e270bb0b8dba00cc48", //Burning Rubber
+        "596b455186f77457cb50eccb", //Stirrup
+        "5979ed3886f77431307dc512", //Whats on the Flash Drive
+        "657315e1dccd301f1301416a", //Luxurious Life
+        "5967733e86f774602332fc84", //Shortage
+        "59689ee586f7740d1570bbd5", //Sanitary Standards - Part 1
+        "59689fbd86f7740d137ebfc4", //Operation Aquarius - Part 1
+        "596b36c586f77450d6045ad2", //Supplier
+        "596b43fb86f77457ca186186", //The Extortionist
+        "657315e4a6af4ab4b50f3459", //Saving the Mole
+        "5d2495a886f77425cd51e403", //Introduction
+        "5d24b81486f77439c92d6ba8" //Acquaintance
+    ],
+
+    //Quest generation. If you want MORE quests later you can increase the numbers here. You cannot reduce the number on an already created profile however.
+    "QuestGen_TotalWeaponQuests": 3, //Amount of quests per type
+    "QuestGen_TotalHandoverQuests": 3,
+    "QuestGen_HandoverFIRChance": 0.8, //Chance that items in these quests need to be found in raid. 1 is always. 0 is never.
+    "QuestGen_HandoverMaxTier": 10,
+    "QuestGen_TotalSniperQuests": 3,
+    "QuestGen_SniperWeaponGroup": "Precision Sniping",
+    "QuestGen_TotalRunnerQuests": 10, //Not implemented
+    "QuestGen_TotalPostmanQuests": 10, //Not implemented
+    "QuestGen_Trader": "54cb50c76803fa8b248b4571", //What trader will provide the new quests.
+
+    "QuestGen_XPPerQuest": 1000, //The amount of xp you get from each quest, multiplied by how far into the questchain you are. 5th quest would give 5 times this number.
+    "QuestGen_RewardPools": //At what quest depth of generated quests we use what reward pools. See the pools in ``assets/data/misc.jsonc``
+    {
+        "common": 0,
+        "rare": 5,
+        "epic": 10
+    },
+
+    // The web UI profile filter moved to LeavesUtils' config.jsonc (WebUI_FilterProfiles /
+    // WebUI_HiddenProfilePrefixes) - one shared filter for every mod's web UI, including this page's dropdown.
+
+    /*
+    How long in seconds between checks for inactivity. 
+    The actual time to unload can be longer since its since last inactivity check and not since they went inactive. 
+    This is to save system memory if there are a lot of people using the server. 
+    For a setup without mods its about 50MB per profile in memory usage.
+    */
+    "timeBetweenUnloadChecks": 900,
+    "allowAllProfilesToDoAllQuests": true,
+    "DebugEnabled": false, //Enables a lot of debug logging.
+
+    "purgeQuests": //Will purge these quests from all profiles at server startup. Remove the lines from here before next startup or it will keep purging them. Useful for rerolling or unbricking specific quests
+    [
+        /*
+		// Special Comms
+		"66ab970848ddbe9d4a0c49a8",
+
+		// Cream of the Crop
+		"66e01ae0c391e4c94903d220",
+
+		// Sample IV
+		"67040c78bf4be8a4ef041a65",
+
+		// Foresters Duty
+		"66ab9da7eb102b9bcd08591c",
+
+		// New Day New Paths
+		"66aa58245ab22944110db6e9",
+
+		// Know your place
+		"66aa61663aa37705c5024277",
+
+		// Secrets of Polikhim
+		"66aa74571e5e199ecd094f18",
+		// Beneath the streets
+		"66aba85403e0ee3101042877"
+    */
+    ],
+    "profileTranslator": //Any profile ID that appears here will use the specified profile's quests instead. OR you can use "original" (match caps) to use the games original unmodified quests.
+    //Not that original profiles WILL NOT get any of the generated quests. DO NOT CHAIN PROFILES. IT WILL CRASH THE SERVER
+    {
+        "679a31c90002036669e3baec":"original", //Leaves profile :]
+        "66aa61663aa37705c5024277":"66aa74571e5e199ecd094f18" //Example. THE LEFT <- HAND PROFILE, WILL USE THE QUESTS FROM THE RIGHT -> HAND PROFILE.
+    }
+}
+
+//Default Traders
+// PRAPOR = "54cb50c76803fa8b248b4571"
+// THERAPIST = "54cb57776803fa99248b456e"
+// FENCE = "579dc571d53a0658a154fbec"
+// SKIER = "58330581ace78e27b8b10cee"
+// PEACEKEEPER = "5935c25fb3acc3127c3d8cd9"
+// MECHANIC = "5a7c2eca46aef81a7ca2145d"
+// RAGMAN = "5ac3b934156ae10c4430e83c"
+// JAEGER = "5c0647fdd443bc2504c2d371"
+// REF = "6617beeaa9cfa777ca915b7c"

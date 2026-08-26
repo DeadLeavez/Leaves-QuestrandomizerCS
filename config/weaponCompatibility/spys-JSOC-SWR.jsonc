@@ -1,0 +1,72 @@
+{
+    //Weapon-equivalent mappings + category slotting for spys-JSOC-SWR (Spy's JSOC SWR by SpyPilot).
+    //Every *.jsonc in this folder is loaded and merged.
+    //originalWeaponID = the weapon a quest asks for; equivalentWeaponID = another weapon that also counts.
+    //Each custom weapon counts as the vanilla weapon it is cloned from (chain-resolved).
+    "equivalents":
+    [
+        { "originalWeaponID": "5d43021ca4b9362eab4b5e25", "equivalentWeaponID": "6a4984896b23a3cb9a32d302" }, //Geissele Freedom Rifle(R) MOD1, 6MM ARC Recce - Black
+        { "originalWeaponID": "5d43021ca4b9362eab4b5e25", "equivalentWeaponID": "6a498c43aa51eb453732d35d" }, //Geissele Freedom Rifle(R) MOD1, 6MM ARC Recce - FDE
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "6a4ae2c038b1f41eb932d3a7" }, //Geissele GFR-X 5.56x45mm Assault Rifle
+        { "originalWeaponID": "5d43021ca4b9362eab4b5e25", "equivalentWeaponID": "67f1a2000000000000000100" }, //Knight's Armament KS-1 5.56x45 assault rifle lower receiver (Black)
+        { "originalWeaponID": "5d43021ca4b9362eab4b5e25", "equivalentWeaponID": "67f1a1000000000000000100" }, //Knight's Armament KS-1 5.56x45 assault rifle lower receiver (FDE)
+        { "originalWeaponID": "5df8ce05b11454561e39243b", "equivalentWeaponID": "e20c4faf13f794df81947cc0" }, //LMT MRGG-A 7.62x51mm Marksman Rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "6a6663f771682cb4807e2290" }, //Noveske Chainsaw 5.56x45mm Assault Rifle
+        { "originalWeaponID": "5fbcc1d9016cce60e8341ab3", "equivalentWeaponID": "6a666a22869a3661217e22ac" }, //Noveske Generation 1 .300 Blackout Assault Rifle
+        { "originalWeaponID": "5d43021ca4b9362eab4b5e25", "equivalentWeaponID": "6a3da86d69fe0a0ad5c17045" }, //SOLGW MK1
+        { "originalWeaponID": "5d43021ca4b9362eab4b5e25", "equivalentWeaponID": "6a3da86d69fe0a0ad5c17103" }, //SOLGW MK1 (Camo Cerakoted)
+        { "originalWeaponID": "5d43021ca4b9362eab4b5e25", "equivalentWeaponID": "6a3da86d69fe0a0ad5c17102" }, //SOLGW MK1 (FDE Anodized)
+        { "originalWeaponID": "5d43021ca4b9362eab4b5e25", "equivalentWeaponID": "6a3da86d69fe0a0ad5c17101" } //SOLGW MK1 (Grey Anodized)
+    ],
+
+    //Drop these weapons into weapon categories the quest roller can pick. Names not in
+    //weaponcategories.jsonc are created on the spot; a category left empty (mod not installed) is pruned.
+    "weaponCategoryAdditions":
+    {
+        "JSOC SWR Arsenal":
+        [
+            "6a4984896b23a3cb9a32d302", //Geissele Freedom Rifle(R) MOD1, 6MM ARC Recce - Black
+            "6a498c43aa51eb453732d35d", //Geissele Freedom Rifle(R) MOD1, 6MM ARC Recce - FDE
+            "6a4ae2c038b1f41eb932d3a7", //Geissele GFR-X 5.56x45mm Assault Rifle
+            "67f1a2000000000000000100", //Knight's Armament KS-1 5.56x45 assault rifle lower receiver (Black)
+            "67f1a1000000000000000100", //Knight's Armament KS-1 5.56x45 assault rifle lower receiver (FDE)
+            "e20c4faf13f794df81947cc0", //LMT MRGG-A 7.62x51mm Marksman Rifle
+            "6a6663f771682cb4807e2290", //Noveske Chainsaw 5.56x45mm Assault Rifle
+            "6a666a22869a3661217e22ac", //Noveske Generation 1 .300 Blackout Assault Rifle
+            "6a3da86d69fe0a0ad5c17045", //SOLGW MK1
+            "6a3da86d69fe0a0ad5c17103", //SOLGW MK1 (Camo Cerakoted)
+            "6a3da86d69fe0a0ad5c17102", //SOLGW MK1 (FDE Anodized)
+            "6a3da86d69fe0a0ad5c17101" //SOLGW MK1 (Grey Anodized)
+        ],
+        "DMR":
+        [
+            "e20c4faf13f794df81947cc0", //LMT MRGG-A 7.62x51mm Marksman Rifle
+            "6a4984896b23a3cb9a32d302", //Geissele Freedom Rifle(R) MOD1, 6MM ARC Recce - Black
+            "6a498c43aa51eb453732d35d" //Geissele Freedom Rifle(R) MOD1, 6MM ARC Recce - FDE
+        ],
+        "556 Boppers":
+        [
+            "6a4ae2c038b1f41eb932d3a7", //Geissele GFR-X 5.56x45mm Assault Rifle
+            "6a6663f771682cb4807e2290", //Noveske Chainsaw 5.56x45mm Assault Rifle
+            "6a3da86d69fe0a0ad5c17045", //SOLGW MK1
+            "6a3da86d69fe0a0ad5c17103", //SOLGW MK1 (Camo Cerakoted)
+            "6a3da86d69fe0a0ad5c17102", //SOLGW MK1 (FDE Anodized)
+            "6a3da86d69fe0a0ad5c17101", //SOLGW MK1 (Grey Anodized)
+            "67f1a2000000000000000100", //Knight's Armament KS-1 5.56x45 assault rifle lower receiver (Black)
+            "67f1a1000000000000000100" //Knight's Armament KS-1 5.56x45 assault rifle lower receiver (FDE)
+        ],
+        "SIG Series":
+        [
+            "6a666a22869a3661217e22ac" //Noveske Generation 1 .300 Blackout Assault Rifle
+        ]
+    },
+
+    //Roll weight for the categories this file INVENTS (ones not already in weaponcategories.jsonc).
+    //Without a weight a new category is created at 1 - so rare among the ~85 shipped categories you'd
+    //never see it. Shipped categories run 0.5-3. Only the invented catch-all below is weighted here;
+    //the existing categories above keep their own weights.
+    "weaponCategoryWeights":
+    {
+        "JSOC SWR Arsenal": 1
+    }
+}

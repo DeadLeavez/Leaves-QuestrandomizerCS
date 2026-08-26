@@ -1,0 +1,567 @@
+{
+  "gearGroups": {
+
+    // ---------------------------------------------------------------- BODY ARMOR
+    "armor_6b_series": {
+      "displayName": "6B-series armor",
+      "slot": "armor",
+      "weight": 0.7,
+      "items": [
+        "5c0e3eb886f7742015526062", //6B5-16 Zh-86 Uley armored rig (Khaki)
+        "5c0e446786f7742013381639", //6B5-15 Zh-86 Uley armored rig (Flora)
+        "5d5d646386f7742797261fd9", //6B3TM-01 armored rig (Khaki)
+        "5df8a2ca86f7740bfe6df777", //6B2 body armor (Flora)
+        "5c0e51be86f774598e797894", //6B13 assault armor (Flora)
+        "5c0e53c886f7747fa54205c7", //6B13 assault armor (EMR)
+        "5c0e541586f7747fa54205c9", //6B13 M assault armor (Killa Edition)
+        "674d91ce6e862d5a95059ed6", //6B13 M assault armor (Christmas Edition)
+        "5c0e57ba86f7747fa141986d", //6B23-2 body armor (Mountain Flora)
+        "5c0e5bab86f77461f55ed1f3", //6B23-1 body armor (EMR)
+        "545cdb794bdc2d3a198b456a"  //6B43 Zabralo-Sh body armor (EMR)
+      ]
+    },
+    "armor_bnti": {
+      "displayName": "BNTI body armor",
+      "slot": "armor",
+      "weight": 1.0,
+      "items": [
+        "59e7635f86f7742cbf2c1095", //BNTI Module-3M body armor
+        "5ab8e79e86f7742d8b372e78", //BNTI Gzhel-K body armor
+        "5b44d22286f774172b0c9de8", //BNTI Kirasa-N body armor
+        "67ab2f28dafe3b22670c9116", //BNTI Kirasa-N body armor (Green)
+        "5c0e5edb86f77461f55ed1f7", //BNTI Zhuk body armor (Press)
+        "5c0e625a86f7742d77340f62"  //BNTI Zhuk body armor (EMR)
+      ]
+    },
+    "armor_fort": {
+      "displayName": "FORT body armor",
+      "slot": "armor",
+      "weight": 1.0,
+      "items": [
+        "5ca2151486f774244a3b8d30", //FORT Redut-M body armor
+        "67ab2f5adafe3b22670c911f", //FORT Redut-M body armor (SK Woodland)
+        "5ca21c6986f77479963115a7", //FORT Redut-T5 body armor (Smog)
+        "5e9dacf986f774054d6b89f4"  //FORT Defender-2 body armor
+      ]
+    },
+    "armor_iotv_interceptor": {
+      "displayName": "IOTV / Interceptor body armor",
+      "slot": "armor",
+      "weight": 0.6,
+      "items": [
+        "5b44cd8b86f774503d30cba2", //IOTV Gen4 body armor (Full Protection Kit, MultiCam)
+        "5b44cf1486f77431723e3d05", //IOTV Gen4 body armor (Assault Kit, MultiCam)
+        "5b44d0de86f774503d30cba8", //IOTV Gen4 body armor (High Mobility Kit, MultiCam)
+        "64abd93857958b4249003418"  //Interceptor OTV body armor (UCP)
+      ]
+    },
+    "armor_npp_klass": {
+      "displayName": "NPP KlASS body armor",
+      "slot": "armor",
+      "weight": 0.7,
+      "items": [
+        "5f5f41476bdad616ad46d631", //NPP KlASS Korund-VM body armor (Black)
+        "64be79c487d1510151095552", //NPP KlASS Kora-Kulon body armor (Black)
+        "64be79e2bf8412471d0d9bcc"  //NPP KlASS Kora-Kulon body armor (EMR)
+      ]
+    },
+    "armor_lbt_slick": {
+      "displayName": "Slick plate carriers",
+      "slot": "armor",
+      "weight": 0.3,
+      "items": [
+        "5e4abb5086f77406975c9342", //LBT-6094A Slick Plate Carrier (Black)
+        "6038b4b292ec1c3103795a0b", //LBT-6094A Slick Plate Carrier (Coyote Tan)
+        "6038b4ca92ec1c3103795a0d"  //LBT-6094A Slick Plate Carrier (Olive Drab)
+      ]
+    },
+    "armor_soft_concealable": {
+      "displayName": "Concealable body armor",
+      "slot": "armor",
+      "weight": 1.0,
+      "items": [
+        "5648a7494bdc2d9d488b4583", //PACA Soft Armor
+        "607f20859ee58b18e41ecd90", //PACA Soft Armor (Rivals Edition)
+        "5ab8e4ed86f7742d8e50c7fa", //MF-UNTAR body armor
+        "62a09d79de7ac81993580530", //DRD body armor
+        "609e8540d5c319764c2bc2e9"  //NFM THOR Concealable Reinforced Vest body armor
+      ]
+    },
+    "armor_western_carriers": {
+      "displayName": "Western plate carriers",
+      "slot": "armor",
+      "weight": 1.0,
+      "items": [
+        "5fd4c474dd870108a754b241", //5.11 Tactical Hexgrid plate carrier
+        "5c0e655586f774045612eeb2", //HighCom Trooper TFO body armor (MultiCam)
+        "67ab2f94dafe3b22670c912c", //HighCom Trooper TFO body armor (Coyote)
+        "63737f448b28897f2802b874", //Hexatac HPC Plate Carrier (MultiCam Black)
+        "67ab2eecfe82855dcc0f2af6", //Hexatac HPC Plate Carrier (MultiCam)
+        "60a283193cb70855c43a381d"  //NFM THOR Integrated Carrier body armor
+      ]
+    },
+
+    // ------------------------------------------------------------------- EYEWEAR
+    "eyewear_all_glasses": {
+      "displayName": "Glasses",
+      "slot": "eyewear",
+      "weight": 0.4,
+      "items": [
+        "557ff21e4bdc2d89578b4586", //Tactical glasses
+        "59e770b986f7742cbd762754", //Anti-fragmentation glasses
+        "5aa2b923e5b5b000137b7589", //Round frame sunglasses
+        "5aa2b986e5b5b00014028f4c", //Dundukk sport sunglasses
+        "5aa2b9aee5b5b00015693121", //RayBench Hipster Reserve sunglasses
+        "5b432be65acfc433000ed01f", //6B34 anti-fragmentation glasses
+        "5c0d32fcd174af02a1659c75", //Pyramex Proximity safety glasses
+        "5c1a1cc52e221602b3136e3d", //Oakley SI M Frame safety glasses
+        "5d5fca1ea4b93635fd598c07", //ESS Crossbow tactical glasses
+        "5d6d2e22a4b9361bd5780d05", //Oakley SI Gascan glasses
+        "5d6d2ef3a4b93618084f58bd", //RayBench Aviator glasses
+        "603409c80ca681766b6a0fb2", //NPP KlASS Condor glasses
+        "61c18d83b00456371a66814b", //Gas welder safety goggles
+        "62a09e410b9d3c46de5b6e78", //JohnB Liquid DNB glasses
+        "62a61c988ec41a51b34758d5", //Oakley SI Batwolf glasses
+        "67af41dd1eb308667602db4a", //Dundukk sport sunglasses (Orange lenses)
+        "67af425c2676ade5750b50e6", //RayBench Aviator glasses (Green lenses)
+        "67af42942676ade5750b50e8", //Oakley SI M Frame safety glasses (Orange lenses)
+        "67af42b38d9ef5c57e0d5126"  //Round frame sunglasses (Green lenses)
+      ]
+    },
+
+    // ------------------------------------------------------------------ HEADWEAR
+    "headwear_caps": {
+      "displayName": "Caps",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "59e770f986f7742cbe3164ef", //Army cap
+        "603618feffd42c541047f771", //Army cap (Black)
+        "603619720ca681766b6a0fc4", //Army cap (Coyote Tan)
+        "60361a7497633951dc245eb4", //Army cap (Flora)
+        "60361b0b5a45383c122086a1", //Army cap (Desert)
+        "60361b5a9a15b10d96792291", //Army cap (UCP)
+        "6040de02647ad86262233012", //Army cap (CADPAT)
+        "572b7d8524597762b472f9d1", //Baseball cap
+        "60a7acf20c5cb24b01346648", //BOSS cap
+        "65749cb8e0423b9ebe0c79c9", //Gus baseball cap
+        "5aa2a7e8e5b5b00016327c16", //USEC baseball cap (Coyote)
+        "5b40e61f5acfc4001a599bec", //USEC baseball cap (Black)
+        "5aa2b87de5b5b00016327c25", //BEAR baseball cap (Olive Drab)
+        "5b40e5e25acfc4001a599bea", //BEAR baseball cap (Black)
+        "5aa2b89be5b5b0001569311f", //EMERCOM cap
+        "5aa2b8d7e5b5b00014028f4a", //Police cap
+        "61c18db6dfd64163ea78fbb4", //Leather cap
+        "65749ccf33fdc9c0cf06d3ca"  //Basmach leather cap
+      ]
+    },
+    "headwear_beanies": {
+      "displayName": "Beanies",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "572b7fa124597762b472f9d2", //Beanie
+        "5aa2ba19e5b5b00014028f4e", //Tactical fleece beanie (Tan)
+        "5aa2ba46e5b5b000137b758d", //UX PRO beanie
+        "5bd073c986f7747f627e796c", //Kotton beanie
+        "60bf74184a63fc79b60c57f6", //Bomber beanie
+        "5b4329075acfc400153b78ff"  //Pompon hat
+      ]
+    },
+    "headwear_boonie_hats": {
+      "displayName": "Boonie hats",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5b4327aa5acfc400175496e0", //MIL-TEC boonie hat
+        "5d96141523f0ea1b7f2aacab", //Door Kicker boonie hat
+        "60b52e5bc7d8103275739d67", //Stich Profi Chimera boonie hat
+        "618aef6d0a5a59657e5f55ee"  //Jack Pyke Hunting LLCS boonie hat
+      ]
+    },
+    "headwear_berets": {
+      "displayName": "Berets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5f60e6403b85f6263c14558c", //Beret (Black)
+        "5f60e7788adaa7100c3adb49", //Beret (Blue)
+        "5f60e784f2bcbb675b00dac7"  //Beret (Olive Drab)
+      ]
+    },
+    "headwear_holiday_hats": {
+      "displayName": "Holiday hats",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5a43943586f77416ad2f06e2", //Ded Moroz hat
+        "5a43957686f7742a2c2f11b0", //Santa hat
+        "675aadf3003bb2e826030996", //Elf hat
+        "675aae1c26dc64e17800fee6"  //Hat with horns
+      ]
+    },
+    "headwear_russian_heavy_helmets": {
+      "displayName": "Russian heavy assault helmets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5aa7e276e5b5b000171d0647", //Altyn bulletproof helmet (Olive Drab)
+        "5ca20ee186f774799474abc2", //Vulkan-5 LShZ-5 bulletproof helmet (Black)
+        "5f60c74e3b85f6263c145586", //Rys-T bulletproof helmet (Black)
+        "5aa7e454e5b5b0214e506fa2", //ZSh-1-2M helmet (Olive Drab)
+        "5aa7e4a4e5b5b000137b76f2", //ZSh-1-2M helmet (Black cover)
+        "5c091a4e0db834001d5addc8", //Maska-1SCh bulletproof helmet (Olive Drab)
+        "5c0e874186f7745dc7616606", //Maska-1SCh bulletproof helmet (Killa Edition)
+        "6759af0f9c8a538dd70bfae6"  //Maska-1SCh bulletproof helmet (Christmas Edition)
+      ]
+    },
+    "headwear_ops_core_fast": {
+      "displayName": "FAST MT helmets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5a154d5cfcdbcb001a3b00da", //Ops-Core FAST MT Super High Cut helmet (Black)
+        "5ac8d6885acfc400180ae7b0", //Ops-Core FAST MT Super High Cut helmet (Urban Tan)
+        "5ea05cf85ad9772e6624305d"  //Tac-Kek FAST MT helmet (Replica)
+      ]
+    },
+    "headwear_highcom_striker": {
+      "displayName": "HighCom helmets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5b40e1525acfc4771e1c6611", //HighCom Striker ULACH IIIA helmet (Black)
+        "5b40e2bc5acfc40016388216", //HighCom Striker ULACH IIIA helmet (Desert Tan)
+        "5b40e3f35acfc40016388218", //HighCom Striker ACHHC IIIA helmet (Black)
+        "5b40e4035acfc47a87740943"  //HighCom Striker ACHHC IIIA helmet (Olive Drab)
+      ]
+    },
+    "headwear_msa_mich": {
+      "displayName": "MSA helmets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5d5e7d28a4b936645d161203", //MSA ACH TC-2001 MICH Series helmet (Olive Drab)
+        "5d5e9c74a4b9364855191c40", //MSA ACH TC-2002 MICH Series helmet (Olive Drab)
+        "5e4bfc1586f774264f7582d3"  //MSA Gallet TC 800 High Cut combat helmet (Black)
+      ]
+    },
+    "headwear_mtek": {
+      "displayName": "MTEK helmets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "675956062f6ddfe8ff0e2806", //MTEK FLUX Ballistic helmet (MultiCam Alpine)
+        "6759655674aa5e0825040d62", //MTEK FLUX Ballistic helmet (Olive Drab)
+        "67597ceea35600b4c10cea86", //MTEK STRIKE Ballistic helmet (Coyote)
+        "67597d241d5a44f2f605df06"  //MTEK STRIKE Ballistic helmet (Coyote/MultiCam Arid)
+      ]
+    },
+    "headwear_bastion": {
+      "displayName": "Bastion helmets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5ea17ca01412a1425304d1c0", //Diamond Age Bastion helmet (Black)
+        "66b5f65ca7f72d197e70bcd6", //Ballistic Armor Co. Bastion helmet (Armor Black)
+        "66b5f661af44ca0014063c05", //Ballistic Armor Co. Bastion helmet (OD Green)
+        "66b5f666cad6f002ab7214c2"  //Ballistic Armor Co. Bastion helmet (MultiCam)
+      ]
+    },
+    "headwear_western_ballistic_helmets": {
+      "displayName": "Western ballistic helmets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "5e00c1ad86f774747333222c", //Team Wendy EXFIL Ballistic Helmet (Black)
+        "5e01ef6886f77445f643baa4", //Team Wendy EXFIL Ballistic Helmet (Coyote Brown)
+        "5f60b34a41e30a4ab12a6947", //Galvion Caiman Hybrid helmet (Grey)
+        "5c17a7ed2e2216152142459c", //Crye Precision AirFrame helmet (Tan)
+        "65709d2d21b9f815e208ff95"  //Diamond Age NeoSteel High Cut helmet (Black)
+      ]
+    },
+    "headwear_riot_helmets": {
+      "displayName": "Civilian helmets",
+      "slot": "headwear",
+      "weight": 1.0,
+      "items": [
+        "59e7711e86f7746cae05fbe1", //Kolpak-1S riot helmet
+        "5c0d2727d174af02a012cf58", //PSh-97 DJETA riot helmet
+        "5c08f87c0db8340019124324"  //ShPM Firefighter helmet
+      ]
+    },
+
+    // ----------------------------------------------------------------- FACECOVER
+    "facecover_balaclavas": {
+      "displayName": "Balaclavas",
+      "slot": "facecover",
+      "weight": 0.5,
+      "items": [
+        "572b7f1624597762ae139822", //Balaclava
+        "675ac888803644528007b3f6", //Balaclava (White)
+        "5b432f3d5acfc4704b4a1dfb", //Momex balaclava
+        "5fd8d28367cb5e077335170f", //Smoke balaclava
+        "5ab8f4ff86f77431c60d91ba", //Ghost balaclava
+        "5ab8f85d86f7745cd93a1cf5", //Shemagh (Green)
+        "5b4325355acfc40019478126", //Shemagh (Tan)
+        "5ab8f39486f7745cd93a1cca", //Cold Fear infrared balaclava
+        "67a9dc769de6826a650ee066", //Cold Fear infrared balaclava (Green)
+        "67a9dc997faa4210bb0807c6", //Cold Fear infrared balaclava (SBEU)
+        "67a9dca99de6826a650ee068", //Cold Fear infrared balaclava (Oak)
+        "67a9dcbac185de5a4d0c2a06", //Cold Fear infrared balaclava (Surpat)
+        "67a9dccf9de6826a650ee06a", //Cold Fear infrared balaclava (DPM Desert)
+        "67a9dce47faa4210bb0807c8", //Cold Fear infrared balaclava (MultiCam Tropic)
+        "67a9dd619de6826a650ee06c", //Cold Fear infrared balaclava (Tiger Stripe)
+        "67a9cc9cf05be177170bcd76", //Balaclava (Green)
+        "67a9ccfff05be177170bcd78", //Balaclava (Scars)
+        "67a9cd18f05be177170bcd7a", //Balaclava (Scratches)
+        "67a9cd28cade15e0f00123b6", //Balaclava (Born to Die)
+        "67a9cd381fb22063280728a6", //Balaclava (Not Nice)
+        "67a9cd55c2a2d940930aec86", //Balaclava (Yellow)
+        "67a9cd6ecade15e0f00123b8", //Balaclava (Luxury)
+        "67a9e9d04fb4a4a8a00d2826", //Balaclava (Red Nose)
+        "67a9e9e0c185de5a4d0c2a13", //Balaclava (Demon)
+        "67a9e9f09de6826a650ee074", //Balaclava (Skull)
+        "67a9ea004fb4a4a8a00d2828", //Balaclava (Fear)
+        "67a9ea10c185de5a4d0c2a15", //Balaclava (Yellow Oni)
+        "67a9ea39de7fb0f19e077da6", //Balaclava (Red Oni)
+        "67a9ea7e4fb4a4a8a00d282a", //Balaclava (White Oni)
+        "67a9ea98de7fb0f19e077da8"  //Balaclava (Smile)
+      ]
+    },
+    "facecover_half_masks": {
+      "displayName": "Half-masks",
+      "slot": "facecover",
+      "weight": 0.5,
+      "items": [
+        "572b7fa524597762b747ce82", //Lower half-mask
+        "67a5f917dfdf568c9009af6b", //Lower half-mask (MultiCam)
+        "67a5f94e802d287c670bb966", //Lower half-mask (Zombie)
+        "67a5f968fafb8efd440694b6", //Lower half-mask (Moss)
+        "67a5f989f7041a25760dda36", //Lower half-mask (El Dia de Muertos)
+        "67a5f9a193f7b62b6b0f6576", //Lower half-mask (Wraith)
+        "67a5f9c8fafb8efd440694b8", //Lower half-mask (Balaclavas Green)
+        "67a5f9e7f7041a25760dda38", //Lower half-mask (Balaclavas Red)
+        "67a5fa01fafb8efd440694ba", //Lower half-mask (Balaclavas White)
+        "5b4326435acfc433000ed01d", //Neoprene mask
+        "67aaf808bf7609058606a926", //Neoprene mask (M90 Desert)
+        "67aaf82d508ee9b6440e9c46", //Neoprene mask (Loui Peeton)
+        "67aaf84104dca1c82c071cf6", //Neoprene mask (Lucha Libre)
+        "67aaf851bf7609058606a928", //Neoprene mask (Zombie)
+        "67aaf863de7fb0f19e077db9", //Neoprene mask (Say Nothing)
+        "67aaf879508ee9b6440e9c48"  //Neoprene mask (ONI)
+      ]
+    },
+    "facecover_gas_masks": {
+      "displayName": "Gas masks / respirators",
+      "slot": "facecover",
+      "weight": 1.0,
+      "items": [
+        "5b432c305acfc40019478128", //GP-5 gas mask
+        "60363c0c92ec1c31037959f5", //GP-7 gas mask
+        "59e7715586f7742ee5789605"  //Respirator
+      ]
+    },
+    "facecover_armored_masks": {
+      "displayName": "Armored masks",
+      "slot": "facecover",
+      "weight": 0.7,
+      "items": [
+        "5b432b2f5acfc4771e1c6622", //Shattered lightweight armored mask
+        "62a09e08de7ac81993580532", //Glorious E lightweight armored mask
+        "6570aead4d84f81fd002a033", //Death Shadow lightweight armored mask
+        "62963c18dbc8ab5f0d382d0b", //Death Knight mask
+        "657089638db3adca1009f4ca", //Atomic Defense CQCM up armored ballistic mask (Black)
+        "67a4b71ad3228756b6088ee2", //Atomic Defense CQCM ballistic mask (Smile)
+        "67a5c5b6dfdf568c9009af66", //Atomic Defense CQCM ballistic mask (Stop Me)
+        "67a5c5df782ce4655104db14", //Atomic Defense CQCM ballistic mask (Scars)
+        "67a5c5f37f52620c5b05b4d6", //Atomic Defense CQCM ballistic mask (Target)
+        "67a5c6068fcd9fb73f0752cf", //Atomic Defense CQCM ballistic mask (Skull)
+        "67a5c61c7f52620c5b05b4d8", //Atomic Defense CQCM ballistic mask (Demon)
+        "67a5c657782ce4655104db16"  //Atomic Defense CQCM ballistic mask (El Dia de Muertos)
+      ]
+    },
+    "facecover_horror_masks": {
+      "displayName": "Horror masks",
+      "slot": "facecover",
+      "weight": 1.0,
+      "items": [
+        "5bd06f5d86f77427101ad47c", //Slender mask
+        "62a5c41e8ec41a51b34739c3", //Slender mask (alt)
+        "5bd071d786f7747e707b93a3", //Jason mask
+        "6176a40f0b8c0312ac75a3d3", //Ghoul mask
+        "62a5c2c98ec41a51b34739c0", //Ghoul mask (alt)
+        "6176a48d732a664031271438", //Faceless mask
+        "62a5c333ec21e50cad3b5dc6", //Spooky skull mask
+        "635267ab3c89e2112001f826", //Spooky skull mask (alt)
+        "5b432b6c5acfc4001a599bf0", //Deadly Skull mask
+        "5e54f79686f7744022011103", //Pestily plague mask
+        "5bd0716d86f774171822ef4b"  //Misha Mayorov mask
+      ]
+    },
+    "facecover_fake_facial_hair": {
+      "displayName": "Fake facial hair",
+      "slot": "facecover",
+      "weight": 1.0,
+      "items": [
+        "5bd073a586f7747e6f135799", //Fake mustache
+        "5c1a1e3f2e221602b66cc4c2", //Fake white beard
+        "62a09dd4621468534a797ac7"  //Baddie's red beard
+      ]
+    },
+    "facecover_tagilla_masks": {
+      "displayName": "Tagilla's masks",
+      "slot": "facecover",
+      "weight": 1.0,
+      "items": [
+        "60a7ad2a2198820d95707a2e", //Tagilla's welding mask "UBEY"
+        "60a7ad3a0c5cb24b0134664a", //Tagilla's welding mask "Gorilla"
+        "678f84bb9e85556ca60f0362"  //Tagilla's welding mask "ZABEY"
+      ]
+    },
+
+    // --------------------------------------------------- CHEST RIGS / CARRIERS
+    // NOTE: these live under the Vest parent (5448e5284bdc2dcb718b4567), NOT the
+    // Equipment parent - a separate "rig" slot. Added on request.
+    "rig_crye_precision": {
+      "displayName": "Crye Precision",
+      "slot": "rig",
+      "weight": 1.0,
+      "items": [
+        "544a5caa4bdc2d1a388b4568", //Crye Precision AVS plate carrier (Ranger Green)
+        "67ab49aab9c7a1e18c095686", //Crye Precision AVS plate carrier (MultiCam)
+        "609e860ebd219504d8507525", //Crye Precision AVS plate carrier (Tagilla Edition)
+        "628b9c7d45122232a872358f"  //Crye Precision CPC plate carrier (Goons Edition)
+      ]
+    },
+    "rig_wartech": {
+      "displayName": "WARTECH",
+      "slot": "rig",
+      "weight": 1.0,
+      "items": [
+        "59e7643b86f7742cbf2c109a", //WARTECH TV-109 + TV-106 chest rig (A-TACS FG)
+        "5ab8dab586f77441cd04f2a2", //WARTECH MK3 TV-104 chest rig (MultiCam)
+        "5c0e746986f7741453628fe5", //WARTECH TV-110 plate carrier (Coyote)
+        "64a536392d2c4e6e970f4121"  //WARTECH TV-115 plate carrier (Olive Drab)
+      ]
+    },
+    "rig_ana_tactical": {
+      "displayName": "ANA",
+      "slot": "rig",
+      "weight": 1.0,
+      "items": [
+        "592c2d1a86f7746dbe2af32a", //ANA Tactical Alpha chest rig (Olive Drab)
+        "67ab3ea96d7ece17bf0096f6", //ANA Tactical Alpha chest rig (MultiCam)
+        "5ab8dced86f774646209ec87", //ANA Tactical M2 plate carrier (EMR)
+        "5c0e722886f7740458316a57"  //ANA Tactical M1 plate carrier (Olive Drab)
+      ]
+    },
+    "rig_stich_profi": {
+      "displayName": "Stich Profi",
+      "slot": "rig",
+      "weight": 1.0,
+      "items": [
+        "60a621c49c197e4e8c4455e6", //Stich Profi Chest Rig MK2 (Assault, A-TACS FG)
+        "60a6220e953894617404b00a", //Stich Profi Chest Rig MK2 (Recon, A-TACS FG)
+        "66b6295178bbc0200425f995", //Stich Profi Stich Defense mod.2 plate carrier (MultiCam)
+        "66b6296d7994640992013b17"  //Stich Profi Plate Carrier V2 (Black)
+      ]
+    },
+    "rig_azimut_ss": {
+      "displayName": "Azimut SS",
+      "slot": "rig",
+      "weight": 1.0,
+      "items": [
+        "603648ff5a45383c122086ac", //Azimut SS Zhuk chest harness (Black)
+        "6040dd4ddcf9592f401632d2", //Azimut SS Zhuk chest harness (SURPAT)
+        "63611865ba5b90db0c0399d1"  //Azimut SS "Khamelion" chest harness (Olive)
+      ]
+    },
+    "rig_plate_carriers": {
+      "displayName": "Plate carriers",
+      "slot": "rig",
+      "weight": 0.5,
+      "items": [
+        "5b44cad286f77402a54ae7e5", //5.11 Tactical TacTec plate carrier (Ranger Green)
+        "67ab4b2d6f7ae4aa550bbcf6", //5.11 Tactical TacTec plate carrier (Storm)
+        "5d5d87f786f77427997cfaef", //Ars Arma A18 Skanda plate carrier (MultiCam)
+        "5e4ac41886f77406a511c9a8", //Ars Arma CPC MOD.1 plate carrier (A-TACS FG)
+        "60a3c68c37ea821725773ef5", //CQC Osprey MK4A plate carrier (Protection, MTP)
+        "60a3c70cde5f453f634816a3", //CQC Osprey MK4A plate carrier (Assault, MTP)
+        "628cd624459354321c4b7fa2", //Tasmanian Tiger SK plate carrier (MultiCam Black)
+        "66b6295a8ca68c6461709efa", //Tasmanian Tiger Plate Carrier MKIII (Coyote Brown)
+        "61bc85697113f767765c7fe7", //Eagle Industries MMAC plate carrier (Ranger Green)
+        "64a5366719bab53bd203bf33", //Eagle Allied Industries MBSS plate carrier (Coyote Brown)
+        "61bcc89aef0f505f0c6cd0fc", //First Spear Strandhogg plate carrier (Ranger Green)
+        "628dc750b910320f4c27a732", //ECLiPSE RBAV-AF plate carrier (Ranger Green)
+        "639343fce101f4caa40a4ef3", //Shellback Tactical Banshee plate carrier (A-TACS AU)
+        "628d0618d1ba6e4fa07ce5a4", //NPP KlASS Bagariy plate carrier (EMR)
+        "5df8a42886f77412640e2e75", //Velocity Systems MPPV Multi-Purpose Patrol Vest (Wolf Grey)
+        "628b9784bcf6e2659e09b8a2"  //S&S Precision PlateFrame plate carrier (Goons Edition)
+      ]
+    },
+    "rig_chest_rigs": {
+      "displayName": "Chest rigs",
+      "slot": "rig",
+      "weight": 0.4,
+      "items": [
+        "5648a69d4bdc2ded0b8b457b", //BlackRock chest rig (Gray)
+        "67ab3f146d7ece17bf0096ff", //BlackRock chest rig (Khaki)
+        "572b7adb24597762ae139821", //Scav Vest
+        "5929a2a086f7744f4b234d43", //UMTBS 6Sh112 Scout-Sniper chest rig (EMR)
+        "5b44c8ea86f7742d1627baf1", //BlackHawk! Commando chest harness (Desert Tan)
+        "5c0e9f2c86f77432297fe0a3", //BlackHawk! Commando chest harness (Black)
+        "5ca20abf86f77418567a43f2", //Dynaforce Triton M43-A chest harness (Black)
+        "5d5d85c586f774279a21cbdb", //Haley Strategic D3CRX Chest Harness (Ranger Green)
+        "5d5d8ca986f7742798716522", //SOE Micro Rig (MultiCam)
+        "5e4abc1f86f774069619fbaa", //Spiritus Systems Bank Robber chest rig (MultiCam Black)
+        "674589d98dd67746010329e6", //Spiritus Systems Bank Robber chest rig (MultiCam Alpine)
+        "5e4abfed86f77406a2713cf7", //Splav Tarzan M22 chest rig (Smog)
+        "5e9db13186f7742f845ee9d3", //LBT-1961A Load Bearing Chest Rig (MAS Grey)
+        "628baf0b967de16aab5a4f36", //LBT-1961A Load Bearing Chest Rig (Goons Edition)
+        "5f5f41f56760b4138443b352", //Direct Action Thunderbolt compact chest rig (Shadow Grey)
+        "5fd4c4fa16cac650092f6771", //DIY IDEA chest rig
+        "5fd4c5477a8d854fa0105061", //Security vest
+        "5fd4c60f875c30179f5d04c2", //Gear Craft GC-BSS-MK1 chest rig (A-TACS FG)
+        "6034cf5fffd42c541047f72e", //Umka M33-SET1 hunter vest (Olive Drab)
+        "6034d0230ca681766b6a0fb5", //CSA chest rig (Black)
+        "64be7095047e826eae02b0c1", //Zulu Nylon Gear M4 Reduced Signature Chest Rig (Ranger Green)
+        "64be7110bf597ba84a0a41ea"  //Type 56 Chicom chest harness
+      ]
+    },
+
+    // -------------------------------------------------------- CROSS-SLOT / THEMED
+    "boss_head_gear": {
+      "displayName": "Boss signature head gear",
+      "slot": "mixed",
+      "weight": 0.7,
+      "items": [
+        "60a7ad2a2198820d95707a2e", //Tagilla's welding mask "UBEY" (facecover)
+        "60a7ad3a0c5cb24b0134664a", //Tagilla's welding mask "Gorilla" (facecover)
+        "678f84bb9e85556ca60f0362", //Tagilla's welding mask "ZABEY" (facecover)
+        "62a61bbf8ec41a51b34758d2", //Big Pipe's smoking pipe (facecover)
+        "628e4dd1f477aa12234918aa", //Big Pipe's bandana (headwear)
+        "62a09dd4621468534a797ac7", //Baddie's red beard (facecover)
+        "63626d904aa74b8fe30ab426", //Zryachiy's balaclava (facecover)
+        "636270263f2495c26f00b007", //Zryachiy's balaclava (folded) (headwear)
+        "6530e8587cbfc1e309011e37", //Vengeful Zryachiy's balaclava (facecover)
+        "6531119b9afebff7ff0a1769", //Vengeful Zryachiy's balaclava (folded) (headwear)
+        "62963c18dbc8ab5f0d382d0b", //Death Knight mask (facecover)
+        "5c0e874186f7745dc7616606"  //Maska-1SCh bulletproof helmet (Killa Edition) (headwear)
+      ]
+    },
+    "boss_armor_rig_gear": {
+      "displayName": "Boss signature chests",
+      "slot": "mixed",
+      "weight": 0.7,
+      "items": [
+        "5c0e541586f7747fa54205c9", //6B13 M assault armor (Killa Edition) (armor)
+        "609e860ebd219504d8507525", //Crye Precision AVS plate carrier (Tagilla Edition) (rig)
+        "628b9784bcf6e2659e09b8a2", //S&S Precision PlateFrame plate carrier (Goons Edition) (rig)
+        "628b9c7d45122232a872358f", //Crye Precision CPC plate carrier (Goons Edition) (rig)
+        "628baf0b967de16aab5a4f36"  //LBT-1961A Load Bearing Chest Rig (Goons Edition) (rig)
+      ]
+    }
+
+  }
+}

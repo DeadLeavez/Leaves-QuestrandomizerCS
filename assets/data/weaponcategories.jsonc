@@ -1,0 +1,1713 @@
+/*
+This file holds all weapon and mod categories, and a list of individual weapons that can be generated.
+
+Each weapon category supports these keys (all optional except the name):
+    "weight": 2                                  //Roll odds vs other categories. Omit for 1.
+    "weapons": [ "id", ... ]                     //Hand-picked members. Empty/omitted with no selectors = ANY weapon.
+    "requiredMods": [ "Mod Category", ... ]      //ALL listed mod categories required, any one mod from each satisfies it.
+    "forbiddenMods": [ "Mod Category", ... ]     //Every mod in every listed category is forbidden.
+    "calibers": [ "7.62x25", "9x19", "12g" ]     //DYNAMIC: every weapon of these calibers joins automatically at
+                                                 //startup - including weapons added by OTHER MODS. Written the human
+                                                 //way; matches internal names like Caliber762x25TT tolerantly.
+    "excludeWeapons": [ "id", ... ]              //Hand-prune selector matches you don't want.
+    "fireRate": { "above": 1000 }                //DYNAMIC: keep only weapons whose full-auto RPM is in range.
+                                                 //"above"/"below" are strict bounds (either or both). It NARROWS:
+                                                 //with "calibers" it filters those matches; alone, it filters the whole
+                                                 //weapon pool. A gun with no fire rate (bolt-action, most shotguns) is
+                                                 //excluded by any bound.
+
+HOW MEMBERSHIP IS COMPUTED (resolved once at startup, against the LIVE item DB incl. other mods' guns):
+    1. Start with the hand-listed "weapons".
+    2. CANDIDATE POOL from "calibers" (a weapon joins if it matches ANY of them). If no "calibers",
+       the candidate pool is EVERY weapon.
+    3. NARROW by "fireRate": a candidate must be in range. So calibers and fire rate INTERSECT -
+       "calibers:[9x19] + fireRate:{above:1000}" = 9x19 guns that are ALSO >1000 rpm, NOT 9x19 plus
+       all high-rpm guns. (There is no OR/expand mode.)
+    4. Prune "excludeWeapons", then merge the result into the hand-listed weapons.
+A category with NO weapons and NO selectors is the deliberate "ANY weapon" shape (e.g. a "Suppressed"
+category = empty + a required silencer = any gun with a silencer).
+
+EQUIVALENCE (shiny/platform "counts-as" links, from weaponCompatibility + mods like ShinyAirdropGuns):
+    A PURELY selector-based category (has selectors, NO hand-listed weapons) IGNORES equivalence - its
+    membership is a live DB query, so a shiny/modded gun that belongs is already a direct member, and
+    pulling in equivalents would only add guns the query excludes (a 9x19 platform-twin of a 5.56 member
+    leaking into a "5.56" category). A hand-listed OR mixed category (any explicit "weapons") KEEPS
+    equivalence: a shiny of a hand-picked gun isn't a direct member, so the "counts-as" link is what
+    makes it count. (Pinned/vanilla weapon requirements always keep equivalence; that's decided per
+    objective, not on the category.)
+*/
+{
+    "categories": //Weapon categories
+    {
+        "Precision Sniping": //Name of the category that appears in-game.
+        {
+            "weight": 1, //How likely this is to appear, compared to other categories. Higher is likelier. The chance is the weight part of the sum of all weights.
+            "weapons": //The weapons allowed in this category
+            [
+                "627e14b21713922ded6f2c15", //Accuracy International AXMC .338 LM bolt-action sniper rifle
+                "588892092459774ac91d4b11", //Lobaev Arms DVL-10 7.62x51 bolt-action sniper rifle
+                "5bfea6e90db834001b7347f3", //Remington Model 700 7.62x51 bolt-action sniper rifle
+                "5bfd297f0db834001a669119", //Mosin 7.62x54R bolt-action rifle (Infantry)
+                "5ae08f0a5acfc408fb1398a1", //Mosin 7.62x54R bolt-action rifle (Sniper)
+                "55801eed4bdc2d89578b4588", //SV-98 7.62x54R bolt-action sniper rifle
+                "673cab3e03c6a20581028bc1", //Sako TRG M10 .338 LM bolt-action sniper rifle
+                "5df24cf80dee1b22f862e9bc" //ORSIS T-5000M 7.62x51 bolt-action sniper rifle
+            ],
+            /*
+            The mod categories that must ALL appear on the weapon - one mod from each category
+            counts (any silencer from Big Silencers, any bipod from Bipods, etc).
+            So in total here, you have to have
+            - A silencer
+            - A Bipod
+            - The Raptar
+            all mounted to one of the weapons above.
+            */
+            "requiredMods": [ "Big Silencers", "Bipods", "Raptar" ]
+        },
+        "No scope": //Example of exclusive
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "627e14b21713922ded6f2c15", //Accuracy International AXMC .338 LM bolt-action sniper rifle
+                "588892092459774ac91d4b11", //Lobaev Arms DVL-10 7.62x51 bolt-action sniper rifle
+                "5bfea6e90db834001b7347f3", //Remington Model 700 7.62x51 bolt-action sniper rifle
+                "5bfd297f0db834001a669119", //Mosin 7.62x54R bolt-action rifle (Infantry)
+                "5ae08f0a5acfc408fb1398a1", //Mosin 7.62x54R bolt-action rifle (Sniper)
+                "55801eed4bdc2d89578b4588", //SV-98 7.62x54R bolt-action sniper rifle
+                "5df24cf80dee1b22f862e9bc", //ORSIS T-5000M 7.62x51 bolt-action sniper rifle
+                "5de652c31b7e3716273428be", //Molot Arms VPO-215 Gornostay .366 TKM bolt-action rifle
+                "5a38e6bac4a2826c6e06d79b" //TOZ-106 20ga bolt-action shotgun
+
+            ],
+            //Every mod in ANY of the categories below is forbidden from being used.
+            //So this means you are effectively banned from using any optics. Iron sights are still allowed.
+            "forbiddenMods": [ "Assault Scopes", "Optical Scopes", "Collimators", "Thermal Scopes", "Night Vision Scopes" ]
+        },
+        "5.56":
+        {
+            "weight": 1,
+            "calibers": [ "5.56x45" ]
+        },
+        "5.45":
+        {
+            "weight": 1,
+            "calibers": [ "5.45x39" ]
+        },
+        "12gauge":
+        {
+            "weight": 1,
+            "calibers": [ "12g" ]
+        },
+        "9x19":
+        {
+            "weight": 1,
+            "calibers": [ "9x19" ]
+        },
+        "9x18":
+        {
+            "weight": 1,
+            "calibers": [ "9x18" ] //Covers both 9x18PM and 9x18PMM
+        },
+        "7.62x25":
+        {
+            "weight": 1,
+            "calibers": [ "7.62x25" ]
+        },
+        ".357":
+        {
+            "weight": 1,
+            "calibers": [ "9x33R" ] //.357 Magnum's internal name
+        },
+        ".45 ACP":
+        {
+            "weight": 1,
+            "calibers": [ "11.43x23" ] //.45 ACP's internal name
+        },
+        "9x21":
+        {
+            "weight": 1,
+            "calibers": [ "9x21" ]
+        },
+        ".50 AE":
+        {
+            "weight": 1,
+            "calibers": [ "12.7x33" ] //.50 AE's internal name
+        },
+        "4.6mm":
+        {
+            "weight": 1,
+            "calibers": [ "4.6x30" ]
+        },
+        "5.7mm":
+        {
+            "weight": 1,
+            "calibers": [ "5.7x28" ]
+        },
+        "7.62x39":
+        {
+            "weight": 1,
+            "calibers": [ "7.62x39" ]
+        },
+        "9x39":
+        {
+            "weight": 1,
+            "calibers": [ "9x39" ]
+        },
+        "Real Fucking Nato":
+        {
+            "weight": 1,
+            "calibers": [ "7.62x51" ]
+        },
+        "7.62x54R":
+        {
+            "weight": 1,
+            "calibers": [ "7.62x54R" ]
+        },
+        ".366TKM":
+        {
+            "weight": 1,
+            "calibers": [ "366TKM" ]
+        },
+        "Large calibers": //Every round bigger than 7.62x51/7.62x54R. Vanilla big-bore: 12.7x55 (ASh-12/RSh-12), .50 BMG, .50 AE, 25x59 (XM109). Plus the modded sniper calibers: .408 CT (10.36x77), .338 LM (8.6x70), .338 Norma (8.6x63), 9.3x64, and .300 WM (7.62x67 - internal Caliber762x67B, matched by prefix; does NOT collide with 7.62x51/54R/39/25). Full caliber strings on purpose - a bare "12.7" would prefix-match all three 12.7 rounds at once. Weapons of these calibers join automatically at load, incl. mods: WTT CheyTac M200, both Surgeon 1581s (.338 LM + .338 Norma), Backport TKPD, Remington MSR, AXMC .300 WM; the .338 LM string also pulls the vanilla AXMC/Sako TRG/SWORD Mk-18 .338 rifles in.
+        {
+            "weight": 1,
+            "calibers": [ "12.7x55", "12.7x99", "12.7x33", "25x59", "10.36x77", "8.6x70", "8.6x63", "9.3x64", "7.62x67" ]
+        },
+        "Bolt Action":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "627e14b21713922ded6f2c15", //Accuracy International AXMC .338 LM bolt-action sniper rifle
+                "588892092459774ac91d4b11", //Lobaev Arms DVL-10 7.62x51 bolt-action sniper rifle
+                "5bfea6e90db834001b7347f3", //Remington Model 700 7.62x51 bolt-action sniper rifle
+                "5bfd297f0db834001a669119", //Mosin 7.62x54R bolt-action rifle (Infantry)
+                "5ae08f0a5acfc408fb1398a1", //Mosin 7.62x54R bolt-action rifle (Sniper)
+                "55801eed4bdc2d89578b4588", //SV-98 7.62x54R bolt-action sniper rifle
+                "5df24cf80dee1b22f862e9bc", //ORSIS T-5000M 7.62x51 bolt-action sniper rifle
+                "5de652c31b7e3716273428be", //Molot Arms VPO-215 Gornostay .366 TKM bolt-action rifle
+                "5a38e6bac4a2826c6e06d79b", //TOZ-106 20ga bolt-action shotgun
+                "673cab3e03c6a20581028bc1" //Sako TRG M10 .338 LM bolt-action sniper rifle
+
+            ]
+        },
+        "DMR":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5d43021ca4b9362eab4b5e25", //Lone Star TX-15 DML 5.56x45 carbine
+                "5c501a4d2e221602b412b540", //Molot Arms VPO-101 Vepr-Hunter 7.62x51 carbine
+                "6176aca650224f204c1da3fb", //HK G28 7.62x51 marksman rifle
+                "5aafa857e5b5b00018480968", //Springfield Armory M1A 7.62x51 rifle
+                "5fc22d7c187fea44d52eda44", //SWORD International Mk-18 .338 LM marksman rifle
+                "5a367e5dc4a282000e49738f", //Remington R11 RSASS 7.62x51 marksman rifle
+                "5df8ce05b11454561e39243b", //Knight's Armament Company SR-25 7.62x51 marksman rifle
+                "5c46fbd72e2216398b5a8c9c", //SVDS 7.62x54R sniper rifle
+                "57838ad32459774a17445cd2" //VSS Vintorez 9x39 special sniper rifle
+
+            ]
+        },
+        "LMG":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "65fb023261d5829b2d090755", //U.S. Ordnance M60E4 7.62x51 light machine gun
+                "661ceb1b9311543c7104149b", //U.S. Ordnance M60E6 7.62x51 light machine gun
+                "661cec09b2c6356b4d0c7a36", //U.S. Ordnance M60E6 7.62x51 light machine gun (FDE)
+                "64637076203536ad5600c990", //Kalashnikov PKM 7.62x54R machine gun
+                "64ca3d3954fc657e230529cc", //Kalashnikov PKP 7.62x54R infantry machine gun
+                "6513ef33e06849f06c0957ca", //Degtyarev RPD 7.62x39 machine gun
+                "65268d8ecb944ff1e90ea385" //Degtyarev RPDN 7.62x39 machine gun
+
+            ]
+        },
+        "Shotgun": //Showcase of selectors AND a hand-list in one category: the calibers pull every shotshell gun automatically (vanilla or modded), and "weapons" adds the two that are shotguns only by Russian law, not by caliber. Both keep their spots in their other categories too.
+        {
+            "weight": 2,
+            "calibers": [ "12g", "20g", "23x75" ],
+            "weapons":
+            [
+                "61f7c9e189e6fb1a5e3ea78d", //MP-18 7.62x54R - rifle round, but legally a shotgun in Russia
+                "59e6687d86f77411d949b251" //VPO-209 .366 TKM - the whole point of .366 TKM is to be legally smoothbore
+            ]
+        },
+        "Pistol":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5abccb7dd8ce87001773e277", //APB 9x18PM silenced machine pistol
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "669fa409933e898cce0c2166", //Magnum Research Desert Eagle L5 .357 pistol
+                "669fa3f88abd2662d80eee77", //Magnum Research Desert Eagle L5 .50 AE pistol
+                "669fa39b48fc9f8db6035a0c", //Magnum Research Desert Eagle L6 .50 AE pistol
+                "669fa3d876116c89840b1217", //Magnum Research Desert Eagle L6 .50 AE pistol (WTS)
+                "668fe5a998b5ad715703ddd6", //Magnum Research Desert Eagle Mk XIX .50 AE pistol
+                "5d3eb3b0a4b93615055e84d2", //FN Five-seveN MK2 5.7x28 pistol
+                "5d67abc1a4b93614ec50137f", //FN Five-seveN MK2 5.7x28 pistol (FDE)
+                "5a7ae0c351dfba0017554310", //Glock 17 9x19 pistol
+                "5b1fa9b25acfc40018633c01", //Glock 18C 9x19 machine pistol
+                "63088377b5cd696784087147", //Glock 19X 9x19 pistol
+                "5cadc190ae921500103bb3b6", //Beretta M9A3 9x19 pistol
+                "5f36a0e5fbf956000b716b65", //Colt M45A1 .45 ACP pistol
+                "5e81c3cbac2bb513793cdc75", //Colt M1911A1 .45 ACP pistol
+                "576a581d2459771e7b1bc4f1", //Yarygin MP-443 Grach 9x19 pistol
+                "56d59856d2720bd8418b456a", //SIG P226R 9x19 pistol
+                "56e0598dd2720bb5668b45a6", //PB 9x18PM silenced pistol
+                "602a9740da11d6478d5a06dc", //Lebedev PL-15 9x19 pistol
+                "579204f224597773d619e051", //Makarov PM (t) 9x18PM pistol
+                "5448bd6b4bdc2dfc2f8b4569", //Makarov PM 9x18PM pistol
+                "59f98b4986f7746f546d2cef", //Serdyukov SR-1MP Gyurza 9x21 pistol
+                "571a12c42459771f627b58a0", //TT-33 7.62x25 TT pistol
+                "5b3b713c5acfc4330140bd8d", //TT-33 7.62x25 TT pistol (Golden)
+                "6193a720f8ee7e52e42109ed" //HK USP .45 ACP pistol
+
+            ]
+        },
+        "SMG":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5926bb2186f7744b1c6c6e60", //HK MP5 9x19 submachine gun (Navy 3 Round Burst)
+                "5d2f0d8048f0356c925bc3b0", //HK MP5K 9x19 submachine gun
+                "5ba26383d4351e00334c93d9", //HK MP7A1 4.6x30 submachine gun
+                "5bd70322209c4d00d7167b8f", //HK MP7A2 4.6x30 submachine gun
+                "5e00903ae9dc277128008b87", //B&T MP9 9x19 submachine gun
+                "5de7bd7bfd6b4e6e2276dc25", //B&T MP9-N 9x19 submachine gun
+                "58948c8e86f77409493f7266", //SIG MPX 9x19 submachine gun
+                "5cc82d76e24e8d00134b4b83", //FN P90 5.7x28 submachine gun
+                "57f4c844245977379d5c14d1", //PP-9 Klin 9x18PMM submachine gun
+                "59984ab886f7743e98271174", //PP-19-01 Vityaz 9x19 submachine gun
+                "57d14d2524597714373db789", //PP-91 Kedr 9x18PM submachine gun
+                "57f3c6bd24597738e730fa2f", //PP-91-01 Kedr-B 9x18PM submachine gun
+                "5ea03f7400685063ec28bfa8", //PPSh-41 7.62x25 submachine gun
+                "59f9cabd86f7743a10721f46", //Saiga-9 9x19 carbine
+                "62e14904c2699c0ec93adc47", //SR-2M Veresk 9x21 submachine gun
+                "60339954d62c9b14ed777c06", //Soyuz-TM STM-9 Gen.2 9x19 carbine
+                "5fc3e272f8b6a877a729eac5", //HK UMP .45 ACP submachine gun
+                "66992b349950f5f4cd06029f", //IWI UZI 9x19 submachine gun
+                "6680304edadb7aa61d00cef0", //IWI UZI PRO Pistol 9x19 submachine gun
+                "668e71a8dadf42204c032ce1", //IWI UZI PRO SMG 9x19 submachine gun
+                "5fb64bc92b1b027b1f50bcf2", //TDI KRISS Vector Gen.2 .45 ACP submachine gun
+                "5fc3f2d5900b1d5091531e57", //TDI KRISS Vector Gen.2 9x19 submachine gun
+                "5abccb7dd8ce87001773e277", //APB 9x18PM silenced machine pistol
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "5b1fa9b25acfc40018633c01" //Glock 18C 9x19 machine pistol
+
+            ]
+        },
+        "Revolver":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "60db29ce99594040e04c4a27", //MTs-255-12 12ga shotgun
+                "61a4c8884f95bc3b2c5dc96f", //Chiappa Rhino 50DS .357 revolver
+                "624c2e8614da335f1e034d8c", //Chiappa Rhino 200DS 9x19 revolver
+                "633ec7c2a6918cb895019c6c" //RSh-12 12.7x55 revolver
+
+            ]
+        },
+        "Big Pipe Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5fbcc1d9016cce60e8341ab3", //SIG MCX .300 Blackout assault rifle
+                "5e81ebcd8e146c7080625e15", //FN40GL Mk2 40mm grenade launcher
+                "6275303a9f372d6ea97f9ec7", //Milkor M32A1 MSGL 40mm grenade launcher
+                "65fb023261d5829b2d090755", //U.S. Ordnance M60E4 7.62x51 light machine gun
+                "661ceb1b9311543c7104149b", //U.S. Ordnance M60E6 7.62x51 light machine gun
+                "661cec09b2c6356b4d0c7a36", //U.S. Ordnance M60E6 7.62x51 light machine gun (FDE)
+                "5a7828548dc32e5a9c28b516", //Remington Model 870 12ga pump-action shotgun
+                "5bd70322209c4d00d7167b8f", //HK MP7A2 4.6x30 submachine gun
+                "669fa3f88abd2662d80eee77", //Magnum Research Desert Eagle L5 .50 AE pistol
+                "5f36a0e5fbf956000b716b65", //Colt M45A1 .45 ACP pistol
+                "668fe5a998b5ad715703ddd6", //Magnum Research Desert Eagle Mk XIX .50 AE pistol
+                "58d3db5386f77426186285a0", //M67 hand grenade
+                "66dae7cbeb28f0f96809f325", //V40 Mini-Grenade
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "Birdeye Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5447a9cd4bdc2dbd208b4567", //Colt M4A1 5.56x45 assault rifle
+                "5bfea6e90db834001b7347f3", //Remington Model 700 7.62x51 bolt-action sniper rifle
+                "5a367e5dc4a282000e49738f", //Remington R11 RSASS 7.62x51 marksman rifle
+                "5df8ce05b11454561e39243b", //Knight's Armament Company SR-25 7.62x51 marksman rifle
+                "669fa3f88abd2662d80eee77", //Magnum Research Desert Eagle L5 .50 AE pistol
+                "5cadc190ae921500103bb3b6", //Beretta M9A3 9x19 pistol
+                "673cab3e03c6a20581028bc1" //Sako TRG M10 .338 LM bolt-action sniper rifle
+
+            ]
+        },
+        "Glukhar Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "651450ce0e00edc794068371", //SR-3M 9x39 compact assault rifle
+                "5cadfbf7ae92152ac412eeef", //ASh-12 12.7x55 assault rifle
+                "5aafa857e5b5b00018480968", //Springfield Armory M1A 7.62x51 rifle
+                "59984ab886f7743e98271174", //PP-19-01 Vityaz 9x19 submachine gun
+                "5abccb7dd8ce87001773e277", //APB 9x18PM silenced machine pistol
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "5f36a0e5fbf956000b716b65", //Colt M45A1 .45 ACP pistol
+                "5e81c3cbac2bb513793cdc75", //Colt M1911A1 .45 ACP pistol
+                "602a9740da11d6478d5a06dc", //Lebedev PL-15 9x19 pistol
+                "6193a720f8ee7e52e42109ed", //HK USP .45 ACP pistol
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "668fe5a998b5ad715703ddd6", //Magnum Research Desert Eagle Mk XIX .50 AE pistol
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "58d3db5386f77426186285a0" //M67 hand grenade
+
+            ]
+        },
+        "Kaban Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "65fb023261d5829b2d090755", //U.S. Ordnance M60E4 7.62x51 light machine gun
+                "661ceb1b9311543c7104149b", //U.S. Ordnance M60E6 7.62x51 light machine gun
+                "661cec09b2c6356b4d0c7a36", //U.S. Ordnance M60E6 7.62x51 light machine gun (FDE)
+                "64637076203536ad5600c990", //Kalashnikov PKM 7.62x54R machine gun
+                "64ca3d3954fc657e230529cc", //Kalashnikov PKP 7.62x54R infantry machine gun
+                "5beed0f50db834001c062b12", //RPK-16 5.45x39 light machine gun
+                "669fa3f88abd2662d80eee77", //Magnum Research Desert Eagle L5 .50 AE pistol
+                "602a9740da11d6478d5a06dc", //Lebedev PL-15 9x19 pistol
+                "5448bd6b4bdc2dfc2f8b4569", //Makarov PM 9x18PM pistol
+                "59f98b4986f7746f546d2cef", //Serdyukov SR-1MP Gyurza 9x21 pistol
+                "571a12c42459771f627b58a0", //TT-33 7.62x25 TT pistol
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "Killa Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "59ff346386f77477562ff5e2", //Kalashnikov AKMS 7.62x39 assault rifle
+                "5beed0f50db834001c062b12", //RPK-16 5.45x39 light machine gun
+                "59984ab886f7743e98271174", //PP-19-01 Vityaz 9x19 submachine gun
+                "571a12c42459771f627b58a0", //TT-33 7.62x25 TT pistol
+                "668fe5a998b5ad715703ddd6", //Magnum Research Desert Eagle Mk XIX .50 AE pistol
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "Knight Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5dcbd56fdbd3d91b3e5468d5", //Desert Tech MDR 7.62x51 assault rifle
+                "65290f395ae2ae97b80fdf2d", //SIG MCX-SPEAR 6.8x51 assault rifle
+                "606587252535c57a13424cfd", //CMMG Mk47 Mutant 7.62x39 assault rifle
+                "6183afd850224f204c1da514", //FN SCAR-H 7.62x51 assault rifle
+                "6165ac306ef05c2ce828ef74", //FN SCAR-H 7.62x51 assault rifle (FDE)
+                "669fa39b48fc9f8db6035a0c", //Magnum Research Desert Eagle L6 .50 AE pistol
+                "669fa3d876116c89840b1217", //Magnum Research Desert Eagle L6 .50 AE pistol (WTS)
+                "5a7ae0c351dfba0017554310", //Glock 17 9x19 pistol
+                "5b1fa9b25acfc40018633c01", //Glock 18C 9x19 machine pistol
+                "676176d362e0497044079f4c", //FN SCAR-H X-17 7.62x51 assault rifle
+                "66dae7cbeb28f0f96809f325", //V40 Mini-Grenade
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "58d3db5386f77426186285a0", //M67 hand grenade
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "Kollontay Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5a0ec13bfcdbcb00165aa685", //Kalashnikov AKMN 7.62x39 assault rifle
+                "57dc2fa62459775949412633", //Kalashnikov AKS-74U 5.45x39 assault rifle
+                "65fb023261d5829b2d090755", //U.S. Ordnance M60E4 7.62x51 light machine gun
+                "661ceb1b9311543c7104149b", //U.S. Ordnance M60E6 7.62x51 light machine gun
+                "661cec09b2c6356b4d0c7a36", //U.S. Ordnance M60E6 7.62x51 light machine gun (FDE)
+                "6513ef33e06849f06c0957ca", //Degtyarev RPD 7.62x39 machine gun
+                "65268d8ecb944ff1e90ea385", //Degtyarev RPDN 7.62x39 machine gun
+                "5e848cc2988a8701445df1e8", //TOZ KS-23M 23x75mm pump-action shotgun
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "602a9740da11d6478d5a06dc", //Lebedev PL-15 9x19 pistol
+                "5448bd6b4bdc2dfc2f8b4569", //Makarov PM 9x18PM pistol
+                "644674a13d52156624001fbc", //KBP 9A-91 9x39 compact assault rifle
+                "57d14d2524597714373db789", //PP-91 Kedr 9x18PM submachine gun
+                "668fe5a998b5ad715703ddd6" //Magnum Research Desert Eagle Mk XIX .50 AE pistol
+
+            ]
+        },
+        "Partisan Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "6410733d5dd49d77bd07847e", //Tokarev AVT-40 7.62x54R automatic rifle
+                "5ac66d2e5acfc43b321d4b53", //Kalashnikov AK-103 7.62x39 assault rifle
+                "59ff346386f77477562ff5e2", //Kalashnikov AKMS 7.62x39 assault rifle
+                "5abcbc27d8ce8700182eceeb", //Kalashnikov AKMSN 7.62x39 assault rifle
+                "5bf3e0490db83400196199af", //Kalashnikov AKS-74 5.45x39 assault rifle
+                "5ab8e9fcd8ce870019439434", //Kalashnikov AKS-74N 5.45x39 assault rifle
+                "5580223e4bdc2d1c128b457f", //MP-43-1C 12ga double-barrel shotgun
+                "54491c4f4bdc2db1078b4568", //MP-133 12ga pump-action shotgun
+                "56dee2bdd2720bc8328b4567", //MP-153 12ga semi-automatic shotgun
+                "606dae0ab0e443224b421bb7", //MP-155 12ga semi-automatic shotgun
+                "60db29ce99594040e04c4a27", //MTs-255-12 12ga shotgun
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "5448be9a4bdc2dfd2f8b456a", //RGD-5 hand grenade
+                "5e340dcdcb6d5863cc5e5efb", //VOG-25 Khattabka improvised hand grenade
+                "618a431df1eb8e24b8741deb", //RGO hand grenade
+                "617fd91e5539a84ec44ce155" //RGN hand grenade
+
+            ]
+        },
+        "Reshala Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5ac66cb05acfc40198510a10", //Kalashnikov AK-101 5.56x45 assault rifle
+                "5ac66d015acfc400180ae6e4", //Kalashnikov AK-102 5.56x45 assault rifle
+                "5dcbd56fdbd3d91b3e5468d5", //Desert Tech MDR 7.62x51 assault rifle
+                "576165642459773c7a400233", //Saiga-12K ver.10 12ga semi-automatic shotgun
+                "5926bb2186f7744b1c6c6e60", //HK MP5 9x19 submachine gun (Navy 3 Round Burst)
+                "668e71a8dadf42204c032ce1", //IWI UZI PRO SMG 9x19 submachine gun
+                "5a7ae0c351dfba0017554310", //Glock 17 9x19 pistol
+                "602a9740da11d6478d5a06dc", //Lebedev PL-15 9x19 pistol
+                "5b3b713c5acfc4330140bd8d", //TT-33 7.62x25 TT pistol (Golden)
+                "6193a720f8ee7e52e42109ed", //HK USP .45 ACP pistol
+                "5710c24ad2720bc3458b45a3" //F-1 hand grenade
+
+            ]
+        },
+        "Sanitar Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "587e02ff24597743df3deaeb", //Molot Arms Simonov OP-SKS 7.62x39 carbine
+                "651450ce0e00edc794068371", //SR-3M 9x39 compact assault rifle
+                "57838ad32459774a17445cd2", //VSS Vintorez 9x39 special sniper rifle
+                "5a7828548dc32e5a9c28b516", //Remington Model 870 12ga pump-action shotgun
+                "57d14d2524597714373db789", //PP-91 Kedr 9x18PM submachine gun
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "57f3c6bd24597738e730fa2f", //PP-91-01 Kedr-B 9x18PM submachine gun
+                "668fe5a998b5ad715703ddd6", //Magnum Research Desert Eagle Mk XIX .50 AE pistol
+                "5710c24ad2720bc3458b45a3" //F-1 hand grenade
+
+            ]
+        },
+        "Shturman Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5ac66d9b5acfc4001633997a", //Kalashnikov AK-105 5.45x39 assault rifle
+                "6176aca650224f204c1da3fb", //HK G28 7.62x51 marksman rifle
+                "5c46fbd72e2216398b5a8c9c" //SVDS 7.62x54R sniper rifle
+
+            ]
+        },
+        "Tagilla Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "57dc2fa62459775949412633", //Kalashnikov AKS-74U 5.45x39 assault rifle
+                "5beed0f50db834001c062b12", //RPK-16 5.45x39 light machine gun
+                "606dae0ab0e443224b421bb7", //MP-155 12ga semi-automatic shotgun
+                "576165642459773c7a400233", //Saiga-12K ver.10 12ga semi-automatic shotgun
+                "583990e32459771419544dd2", //Kalashnikov AKS-74UN 5.45x39 assault rifle
+                "66ffa9b66e19cc902401c5e8", //MPS Auto Assault-12 Gen 1 12ga automatic shotgun
+                "67124dcfa3541f2a1f0e788b", //MPS Auto Assault-12 Gen 2 12ga automatic shotgun
+                "5710c24ad2720bc3458b45a3" //F-1 hand grenade
+
+            ]
+        },
+        "Zryachiy Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "57dc2fa62459775949412633", //Kalashnikov AKS-74U 5.45x39 assault rifle
+                "5c46fbd72e2216398b5a8c9c", //SVDS 7.62x54R sniper rifle
+                "59f98b4986f7746f546d2cef", //Serdyukov SR-1MP Gyurza 9x21 pistol
+                "67d0576f29f580ebc10efd08" //TheAKGuy AK-50 .50 BMG sniper rifle
+
+            ]
+        },
+        "Santa Claus Arsenal":
+        {
+            "weight": 0.5,
+            "weapons":
+            [
+                "5c07c60e0db834002330051f", //ADAR 2-15 5.56x45 carbine
+                "574d967124597745970e7c94", //TOZ Simonov SKS 7.62x39 carbine
+                "59e6152586f77473dc057aa1", //Molot Arms VPO-136 Vepr-KM 7.62x39 carbine
+                "5ac4cd105acfc40016339859", //Kalashnikov AK-74M 5.45x39 assault rifle
+                "59ff346386f77477562ff5e2", //Kalashnikov AKMS 7.62x39 assault rifle
+                "576a581d2459771e7b1bc4f1", //Yarygin MP-443 Grach 9x19 pistol
+                "56d59856d2720bd8418b456a", //SIG P226R 9x19 pistol
+                "576165642459773c7a400233", //Saiga-12K ver.10 12ga semi-automatic shotgun
+                "56e0598dd2720bb5668b45a6" //PB 9x18PM silenced pistol
+
+            ]
+        },
+        "Shadow of Tagilla Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "576165642459773c7a400233", //Saiga-12K ver.10 12ga semi-automatic shotgun
+                "6499849fc93611967b034949" //Kalashnikov AK-12 5.45x39 assault rifle
+
+            ]
+        },
+        "Vengeful Killa Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5beed0f50db834001c062b12", //RPK-16 5.45x39 light machine gun
+                "59ff346386f77477562ff5e2", //Kalashnikov AKMS 7.62x39 assault rifle
+                "571a12c42459771f627b58a0", //TT-33 7.62x25 TT pistol
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "The Wedge Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5ba26383d4351e00334c93d9", //HK MP7A1 4.6x30 submachine gun
+                "6183afd850224f204c1da514", //FN SCAR-H 7.62x51 assault rifle
+                "6165ac306ef05c2ce828ef74", //FN SCAR-H 7.62x51 assault rifle (FDE)
+                "676176d362e0497044079f4c", //FN SCAR-H X-17 7.62x51 assault rifle
+                "5b0bbe4e5acfc40dc528a72d", //DS Arms SA-58 7.62x51 assault rifle
+                "5dcbd56fdbd3d91b3e5468d5", //Desert Tech MDR 7.62x51 assault rifle
+                "6193a720f8ee7e52e42109ed" //HK USP .45 ACP pistol
+
+            ]
+        },
+        "Cultist Priest Arsenal":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "58948c8e86f77409493f7266", //SIG MPX 9x19 submachine gun
+                "674d6121c09f69dfb201a888", //Aklys Defense Velociraptor .300 Blackout assault rifle
+                "5839a40f24597726f856b511", //Kalashnikov AKS-74UB 5.45x39 assault rifle
+                "57f3c6bd24597738e730fa2f", //PP-91-01 Kedr-B 9x18PM submachine gun
+                "606587252535c57a13424cfd", //CMMG Mk47 Mutant 7.62x39 assault rifle
+                "5926bb2186f7744b1c6c6e60", //HK MP5 9x19 submachine gun (Navy 3 Round Burst)
+                "5fb64bc92b1b027b1f50bcf2", //TDI KRISS Vector Gen.2 .45 ACP submachine gun
+                "59f98b4986f7746f546d2cef", //Serdyukov SR-1MP Gyurza 9x21 pistol
+                "602a9740da11d6478d5a06dc", //Lebedev PL-15 9x19 pistol
+                "669fa3f88abd2662d80eee77", //Magnum Research Desert Eagle L5 .50 AE pistol
+                "5710c24ad2720bc3458b45a3" //F-1 hand grenade
+
+            ]
+        },
+        "Reshala's Zavodskoy":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5c07c60e0db834002330051f", //ADAR 2-15 5.56x45 carbine
+                "5ac66d2e5acfc43b321d4b53", //Kalashnikov AK-103 7.62x39 assault rifle
+                "5ab8e9fcd8ce870019439434", //Kalashnikov AKS-74N 5.45x39 assault rifle
+                "5ac4cd105acfc40016339859", //Kalashnikov AK-74M 5.45x39 assault rifle
+                "59e6687d86f77411d949b251", //Molot Arms VPO-209 .366 TKM carbine
+                "5710c24ad2720bc3458b45a3" //F-1 hand grenade
+
+            ]
+        },
+        "Glukhar's Guards":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5ac4cd105acfc40016339859", //Kalashnikov AK-74M 5.45x39 assault rifle
+                "6499849fc93611967b034949", //Kalashnikov AK-12 5.45x39 assault rifle
+                "5ac66d725acfc43b321d4b60", //Kalashnikov AK-104 7.62x39 assault rifle
+                "59d6088586f774275f37482f", //Kalashnikov AKM 7.62x39 assault rifle
+                "5a0ec13bfcdbcb00165aa685", //Kalashnikov AKMN 7.62x39 assault rifle
+                "59ff346386f77477562ff5e2", //Kalashnikov AKMS 7.62x39 assault rifle
+                "5beed0f50db834001c062b12", //RPK-16 5.45x39 light machine gun
+                "65268d8ecb944ff1e90ea385", //Degtyarev RPDN 7.62x39 machine gun
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "5aafa857e5b5b00018480968", //Springfield Armory M1A 7.62x51 rifle
+                "5447a9cd4bdc2dbd208b4567", //Colt M4A1 5.56x45 assault rifle
+                "576165642459773c7a400233", //Saiga-12K ver.10 12ga semi-automatic shotgun
+                "54491c4f4bdc2db1078b4568", //MP-133 12ga pump-action shotgun
+                "56dee2bdd2720bc8328b4567", //MP-153 12ga semi-automatic shotgun
+                "5e848cc2988a8701445df1e8", //TOZ KS-23M 23x75mm pump-action shotgun
+                "66ffa9b66e19cc902401c5e8", //MPS Auto Assault-12 Gen 1 12ga automatic shotgun
+                "59984ab886f7743e98271174", //PP-19-01 Vityaz 9x19 submachine gun
+                "5926bb2186f7744b1c6c6e60", //HK MP5 9x19 submachine gun (Navy 3 Round Burst)
+                "5d2f0d8048f0356c925bc3b0", //HK MP5K 9x19 submachine gun
+                "57d14d2524597714373db789", //PP-91 Kedr 9x18PM submachine gun
+                "5448bd6b4bdc2dfc2f8b4569", //Makarov PM 9x18PM pistol
+                "576a581d2459771e7b1bc4f1", //Yarygin MP-443 Grach 9x19 pistol
+                "59f98b4986f7746f546d2cef", //Serdyukov SR-1MP Gyurza 9x21 pistol
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "5448be9a4bdc2dfd2f8b456a", //RGD-5 hand grenade
+                "5e32f56fcb6d5863cc5e5ee4", //VOG-17 Khattabka improvised hand grenade
+                "5e340dcdcb6d5863cc5e5efb" //VOG-25 Khattabka improvised hand grenade
+
+            ]
+        },
+        "Kaban's Crew":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "5abcbc27d8ce8700182eceeb", //Kalashnikov AKMSN 7.62x39 assault rifle
+                "5ac66d2e5acfc43b321d4b53", //Kalashnikov AK-103 7.62x39 assault rifle
+                "5ac66d725acfc43b321d4b60", //Kalashnikov AK-104 7.62x39 assault rifle
+                "5ac66d9b5acfc4001633997a", //Kalashnikov AK-105 5.45x39 assault rifle
+                "5ac4cd105acfc40016339859", //Kalashnikov AK-74M 5.45x39 assault rifle
+                "628b9c37a733087d0d7fe84b", //SAG AK-545 Short 5.45x39 carbine
+                "59e6152586f77473dc057aa1", //Molot Arms VPO-136 Vepr-KM 7.62x39 carbine
+                "59e6687d86f77411d949b251", //Molot Arms VPO-209 .366 TKM carbine
+                "5beed0f50db834001c062b12", //RPK-16 5.45x39 light machine gun
+                "5e848cc2988a8701445df1e8", //TOZ KS-23M 23x75mm pump-action shotgun
+                "576165642459773c7a400233", //Saiga-12K ver.10 12ga semi-automatic shotgun
+                "5580223e4bdc2d1c128b457f", //MP-43-1C 12ga double-barrel shotgun
+                "62e14904c2699c0ec93adc47", //SR-2M Veresk 9x21 submachine gun
+                "59984ab886f7743e98271174", //PP-19-01 Vityaz 9x19 submachine gun
+                "5ea03f7400685063ec28bfa8", //PPSh-41 7.62x25 submachine gun
+                "633ec7c2a6918cb895019c6c", //RSh-12 12.7x55 revolver
+                "602a9740da11d6478d5a06dc", //Lebedev PL-15 9x19 pistol
+                "571a12c42459771f627b58a0", //TT-33 7.62x25 TT pistol
+                "5abccb7dd8ce87001773e277", //APB 9x18PM silenced machine pistol
+                "59f98b4986f7746f546d2cef", //Serdyukov SR-1MP Gyurza 9x21 pistol
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "Kollontay's Guards":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "57dc2fa62459775949412633", //Kalashnikov AKS-74U 5.45x39 assault rifle
+                "5ac4cd105acfc40016339859", //Kalashnikov AK-74M 5.45x39 assault rifle
+                "59d6088586f774275f37482f", //Kalashnikov AKM 7.62x39 assault rifle
+                "5ac66d725acfc43b321d4b60", //Kalashnikov AK-104 7.62x39 assault rifle
+                "5c46fbd72e2216398b5a8c9c", //SVDS 7.62x54R sniper rifle
+                "644674a13d52156624001fbc", //KBP 9A-91 9x39 compact assault rifle
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "59984ab886f7743e98271174", //PP-19-01 Vityaz 9x19 submachine gun
+                "57d14d2524597714373db789", //PP-91 Kedr 9x18PM submachine gun
+                "576165642459773c7a400233", //Saiga-12K ver.10 12ga semi-automatic shotgun
+                "54491c4f4bdc2db1078b4568", //MP-133 12ga pump-action shotgun
+                "5e848cc2988a8701445df1e8", //TOZ KS-23M 23x75mm pump-action shotgun
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "56e0598dd2720bb5668b45a6", //PB 9x18PM silenced pistol
+                "602a9740da11d6478d5a06dc", //Lebedev PL-15 9x19 pistol
+                "576a581d2459771e7b1bc4f1", //Yarygin MP-443 Grach 9x19 pistol
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "Sanitar's Colleagues":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5c501a4d2e221602b412b540", //Molot Arms VPO-101 Vepr-Hunter 7.62x51 carbine
+                "59e6152586f77473dc057aa1", //Molot Arms VPO-136 Vepr-KM 7.62x39 carbine
+                "59d6088586f774275f37482f", //Kalashnikov AKM 7.62x39 assault rifle
+                "5839a40f24597726f856b511", //Kalashnikov AKS-74UB 5.45x39 assault rifle
+                "576165642459773c7a400233", //Saiga-12K ver.10 12ga semi-automatic shotgun
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "Shturman's Svetloozerskiy":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "643ea5b23db6f9f57107d9fd", //Tokarev SVT-40 7.62x54R rifle
+                "5c46fbd72e2216398b5a8c9c", //SVDS 7.62x54R sniper rifle
+                "5c501a4d2e221602b412b540", //Molot Arms VPO-101 Vepr-Hunter 7.62x51 carbine
+                "5df8ce05b11454561e39243b", //Knight's Armament Company SR-25 7.62x51 marksman rifle
+                "5aafa857e5b5b00018480968", //Springfield Armory M1A 7.62x51 rifle
+                "5ae08f0a5acfc408fb1398a1", //Mosin 7.62x54R bolt-action rifle (Sniper)
+                "587e02ff24597743df3deaeb", //Molot Arms Simonov OP-SKS 7.62x39 carbine
+                "57838ad32459774a17445cd2", //VSS Vintorez 9x39 special sniper rifle
+                "651450ce0e00edc794068371", //SR-3M 9x39 compact assault rifle
+                "5f2a9575926fd9352339381f", //Kel-Tec RFB 7.62x51 rifle
+                "5710c24ad2720bc3458b45a3", //F-1 hand grenade
+                "5448be9a4bdc2dfd2f8b456a", //RGD-5 hand grenade
+                "5e32f56fcb6d5863cc5e5ee4", //VOG-17 Khattabka improvised hand grenade
+                "5e340dcdcb6d5863cc5e5efb" //VOG-25 Khattabka improvised hand grenade
+
+            ]
+        },
+        "Zryachiy's Followers":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "57dc2fa62459775949412633", //Kalashnikov AKS-74U 5.45x39 assault rifle
+                "59984ab886f7743e98271174", //PP-19-01 Vityaz 9x19 submachine gun
+                "55801eed4bdc2d89578b4588", //SV-98 7.62x54R bolt-action sniper rifle
+                "5c46fbd72e2216398b5a8c9c" //SVDS 7.62x54R sniper rifle
+
+            ]
+        },
+        "Cultist Warriors":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "5839a40f24597726f856b511", //Kalashnikov AKS-74UB 5.45x39 assault rifle
+                "6499849fc93611967b034949", //Kalashnikov AK-12 5.45x39 assault rifle
+                "674d6121c09f69dfb201a888", //Aklys Defense Velociraptor .300 Blackout assault rifle
+                "628b9c37a733087d0d7fe84b", //SAG AK-545 Short 5.45x39 carbine
+                "60339954d62c9b14ed777c06", //Soyuz-TM STM-9 Gen.2 9x19 carbine
+                "5c46fbd72e2216398b5a8c9c", //SVDS 7.62x54R sniper rifle
+                "5df8ce05b11454561e39243b", //Knight's Armament Company SR-25 7.62x51 marksman rifle
+                "574d967124597745970e7c94", //TOZ Simonov SKS 7.62x39 carbine
+                "59d6088586f774275f37482f", //Kalashnikov AKM 7.62x39 assault rifle
+                "5a0ec13bfcdbcb00165aa685", //Kalashnikov AKMN 7.62x39 assault rifle
+                "5ac66d9b5acfc4001633997a", //Kalashnikov AK-105 5.45x39 assault rifle
+                "5beed0f50db834001c062b12", //RPK-16 5.45x39 light machine gun
+                "59984ab886f7743e98271174", //PP-19-01 Vityaz 9x19 submachine gun
+                "58948c8e86f77409493f7266", //SIG MPX 9x19 submachine gun
+                "62e14904c2699c0ec93adc47", //SR-2M Veresk 9x21 submachine gun
+                "5fb64bc92b1b027b1f50bcf2", //TDI KRISS Vector Gen.2 .45 ACP submachine gun
+                "5e00903ae9dc277128008b87", //B&T MP9 9x19 submachine gun
+                "5448be9a4bdc2dfd2f8b456a" //RGD-5 hand grenade
+
+            ]
+        },
+        "Ak 100 Series":
+        {
+            "weight": 1.5,
+            "weapons":
+            [
+                "5ac66cb05acfc40198510a10", //Kalashnikov AK-101 5.56x45 assault rifle
+                "5ac66d015acfc400180ae6e4", //Kalashnikov AK-102 5.56x45 assault rifle
+                "5ac66d2e5acfc43b321d4b53", //Kalashnikov AK-103 7.62x39 assault rifle
+                "5ac66d725acfc43b321d4b60", //Kalashnikov AK-104 7.62x39 assault rifle
+                "5ac66d9b5acfc4001633997a" //Kalashnikov AK-105 5.45x39 assault rifle
+
+            ]
+        },
+        "556 RUS":
+        {
+            "weight": 1.5,
+            "weapons":
+            [
+                "5c07c60e0db834002330051f", //ADAR 2-15 5.56x45 carbine
+                "5ac66cb05acfc40198510a10", //Kalashnikov AK-101 5.56x45 assault rifle
+                "5ac66d015acfc400180ae6e4" //Kalashnikov AK-102 5.56x45 assault rifle
+
+            ]
+        },
+        "West Made AK":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "606587252535c57a13424cfd", //CMMG Mk47 Mutant 7.62x39 assault rifle
+                "628a60ae6b1d481ff772e9c8" //Rifle Dynamics RD-704 7.62x39 assault rifle
+
+            ]
+        },
+        "556 Boppers":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5c07c60e0db834002330051f", //ADAR 2-15 5.56x45 carbine
+                "5d43021ca4b9362eab4b5e25" //Lone Star TX-15 DML 5.56x45 carbine
+
+            ]
+        },
+        "WW2":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "574d967124597745970e7c94", //SKS
+                "587e02ff24597743df3deaeb", //OP-SKS
+                "6410733d5dd49d77bd07847e", //Tokarev AVT-40 7.62x54R automatic rifle
+                "643ea5b23db6f9f57107d9fd", //Tokarev SVT-40 7.62x54R rifle
+                "5bfd297f0db834001a669119", //Mosin 7.62x54R bolt-action rifle (Infantry)
+                "5ae08f0a5acfc408fb1398a1", //Mosin 7.62x54R bolt-action rifle (Sniper)
+                "5ea03f7400685063ec28bfa8", //PPSh-41 7.62x25 submachine gun
+                "5e81c3cbac2bb513793cdc75", //Colt M1911A1 .45 ACP pistol
+                "571a12c42459771f627b58a0", //TT-33 7.62x25 TT pistol
+                "5b3b713c5acfc4330140bd8d" //TT-33 7.62x25 TT pistol (Golden)
+
+            ]
+        },
+        "Scrap SMGs":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5d2f0d8048f0356c925bc3b0", //HK MP5K 9x19 submachine gun
+                "57f4c844245977379d5c14d1", //PP-9 Klin 9x18PMM submachine gun
+                "57d14d2524597714373db789", //PP-91 Kedr 9x18PM submachine gun
+                "57f3c6bd24597738e730fa2f", //PP-91-01 Kedr-B 9x18PM submachine gun
+                "5ea03f7400685063ec28bfa8" //PPSh-41 7.62x25 submachine gun
+
+            ]
+        },
+        "FN Series":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5b0bbe4e5acfc40dc528a72d", //DS Arms SA-58 7.62x51 assault rifle
+                "6183afd850224f204c1da514", //FN SCAR-H 7.62x51 assault rifle
+                "6165ac306ef05c2ce828ef74", //FN SCAR-H 7.62x51 assault rifle (FDE)
+                "6184055050224f204c1da540", //FN SCAR-L 5.56x45 assault rifle
+                "618428466ef05c2ce828f218", //FN SCAR-L 5.56x45 assault rifle (FDE)
+                "5e81ebcd8e146c7080625e15", //FN40GL Mk2 40mm grenade launcher
+                "5cc82d76e24e8d00134b4b83", //FN P90 5.7x28 submachine gun
+                "5d3eb3b0a4b93615055e84d2", //FN Five-seveN MK2 5.7x28 pistol
+                "5d67abc1a4b93614ec50137f", //FN Five-seveN MK2 5.7x28 pistol (FDE)
+                "676176d362e0497044079f4c" //FN SCAR-H X-17 7.62x51 assault rifle
+
+            ]
+        },
+        "HK Series":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "623063e994fc3f7b302a9696", //HK G36 5.56x45 assault rifle
+                "5bb2475ed4351e00853264e3", //HK 416A5 5.56x45 assault rifle
+                "6176aca650224f204c1da3fb", //HK G28 7.62x51 marksman rifle
+                "5926bb2186f7744b1c6c6e60", //HK MP5 9x19 submachine gun (Navy 3 Round Burst)
+                "5d2f0d8048f0356c925bc3b0", //HK MP5K 9x19 submachine gun
+                "5ba26383d4351e00334c93d9", //HK MP7A1 4.6x30 submachine gun
+                "5bd70322209c4d00d7167b8f", //HK MP7A2 4.6x30 submachine gun
+                "5fc3e272f8b6a877a729eac5", //HK UMP .45 ACP submachine gun
+                "6193a720f8ee7e52e42109ed" //HK USP .45 ACP pistol
+
+            ]
+        },
+        "SIG Series":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5fbcc1d9016cce60e8341ab3", //SIG MCX .300 Blackout assault rifle
+                "65290f395ae2ae97b80fdf2d", //SIG MCX-SPEAR 6.8x51 assault rifle
+                "58948c8e86f77409493f7266", //SIG MPX 9x19 submachine gun
+                "56d59856d2720bd8418b456a" //SIG P226R 9x19 pistol
+
+            ]
+        },
+        "Pump shotguns":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "5e848cc2988a8701445df1e8", //TOZ KS-23M 23x75mm pump-action shotgun
+                "6259b864ebedf17603599e88", //Benelli M3 Super 90 12ga dual-mode shotgun
+                "5e870397991fd70db46995c8", //Mossberg 590A1 12ga pump-action shotgun
+                "5a7828548dc32e5a9c28b516", //Remington Model 870 12ga pump-action shotgun
+                "54491c4f4bdc2db1078b4568" //MP-133 12ga pump-action shotgun
+
+            ]
+        },
+        "Spetsnaz Bullshit":
+        {
+            "weight": 1,
+            "weapons":
+            [
+                "644674a13d52156624001fbc", //KBP 9A-91 9x39 compact assault rifle
+                "651450ce0e00edc794068371", //SR-3M 9x39 compact assault rifle
+                "645e0c6b3b381ede770e1cc9", //KBP VSK-94 9x39 rifle
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "5cadfbf7ae92152ac412eeef", //ASh-12 12.7x55 assault rifle
+                "57838ad32459774a17445cd2", //VSS Vintorez 9x39 special sniper rifle
+                "62e14904c2699c0ec93adc47", //SR-2M Veresk 9x21 submachine gun
+                "59f98b4986f7746f546d2cef" //Serdyukov SR-1MP Gyurza 9x21 pistol
+
+            ]
+        },
+        "Break action":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "61f7c9e189e6fb1a5e3ea78d", //MP-18 7.62x54R single-shot rifle
+                "5580223e4bdc2d1c128b457f", //MP-43-1C 12ga double-barrel shotgun
+                "64748cb8de82c85eaf0a273a" //MP-43 12ga sawed-off double-barrel shotgun
+
+            ]
+        },
+        "Hunting":
+        {
+            "weight": 3,
+            "weapons":
+            [
+                "574d967124597745970e7c94", //TOZ Simonov SKS 7.62x39 carbine
+                "5c501a4d2e221602b412b540", //Molot Arms VPO-101 Vepr-Hunter 7.62x51 carbine
+                "59e6152586f77473dc057aa1", //Molot Arms VPO-136 Vepr-KM 7.62x39 carbine
+                "59e6687d86f77411d949b251", //Molot Arms VPO-209 .366 TKM carbine
+                "5bfea6e90db834001b7347f3", //Remington Model 700 7.62x51 bolt-action sniper rifle
+                "5bfd297f0db834001a669119", //Mosin 7.62x54R bolt-action rifle (Infantry)
+                "5de652c31b7e3716273428be", //Molot Arms VPO-215 Gornostay .366 TKM bolt-action rifle
+                "5e848cc2988a8701445df1e8", //TOZ KS-23M 23x75mm pump-action shotgun
+                "5a7828548dc32e5a9c28b516", //Remington Model 870 12ga pump-action shotgun
+                "61f7c9e189e6fb1a5e3ea78d", //MP-18 7.62x54R single-shot rifle
+                "5580223e4bdc2d1c128b457f", //MP-43-1C 12ga double-barrel shotgun
+                "54491c4f4bdc2db1078b4568", //MP-133 12ga pump-action shotgun
+                "60db29ce99594040e04c4a27", //MTs-255-12 12ga shotgun
+                "5a38e6bac4a2826c6e06d79b" //TOZ-106 20ga bolt-action shotgun
+
+            ]
+        },
+        "Viet-fucking-nam":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "574d967124597745970e7c94", //TOZ Simonov SKS 7.62x39 carbine
+                "587e02ff24597743df3deaeb", //Molot Arms Simonov OP-SKS 7.62x39 carbine
+                "59d6088586f774275f37482f", //Kalashnikov AKM 7.62x39 assault rifle
+                "5a0ec13bfcdbcb00165aa685", //Kalashnikov AKMN 7.62x39 assault rifle
+                "59ff346386f77477562ff5e2", //Kalashnikov AKMS 7.62x39 assault rifle
+                "5abcbc27d8ce8700182eceeb", //Kalashnikov AKMSN 7.62x39 assault rifle
+                "5bfea6e90db834001b7347f3", //Remington Model 700 7.62x51 bolt-action sniper rifle
+                "5bfd297f0db834001a669119", //Mosin 7.62x54R bolt-action rifle (Infantry)
+                "5ae08f0a5acfc408fb1398a1", //Mosin 7.62x54R bolt-action rifle (Sniper)
+                "5aafa857e5b5b00018480968", //Springfield Armory M1A 7.62x51 rifle
+                "5c46fbd72e2216398b5a8c9c", //SVDS 7.62x54R sniper rifle
+                "65fb023261d5829b2d090755", //U.S. Ordnance M60E4 7.62x51 light machine gun
+                "661ceb1b9311543c7104149b", //U.S. Ordnance M60E6 7.62x51 light machine gun
+                "6513ef33e06849f06c0957ca", //Degtyarev RPD 7.62x39 machine gun
+                "5a7828548dc32e5a9c28b516", //Remington Model 870 12ga pump-action shotgun
+                "5ea03f7400685063ec28bfa8", //PPSh-41 7.62x25 submachine gun
+                "5abccb7dd8ce87001773e277", //APB 9x18PM silenced machine pistol
+                "5a17f98cfcdbcb0980087290", //Stechkin APS 9x18PM machine pistol
+                "5e81c3cbac2bb513793cdc75", //Colt M1911A1 .45 ACP pistol
+                "579204f224597773d619e051", //Makarov PM (t) 9x18PM pistol
+                "5448bd6b4bdc2dfc2f8b4569", //Makarov PM 9x18PM pistol
+                "571a12c42459771f627b58a0", //TT-33 7.62x25 TT pistol
+                "5b3b713c5acfc4330140bd8d" //TT-33 7.62x25 TT pistol (Golden)
+
+            ],
+            "forbiddenMods": [ "All Silencers" ]
+        },
+        "The Legends":
+        {
+            "weight": 1,
+            "weapons":
+            [
+                "5a7ae0c351dfba0017554310", //Glock 17 9x19 pistol
+                "5e81c3cbac2bb513793cdc75", //Colt M1911A1 .45 ACP pistol
+                "5448bd6b4bdc2dfc2f8b4569" //Makarov PM 9x18PM pistol
+
+            ]
+        },
+        "AKSU Series":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "628b9c37a733087d0d7fe84b", //SAG AK-545 Short 5.45x39 carbine
+                "57dc2fa62459775949412633", //Kalashnikov AKS-74U 5.45x39 assault rifle
+                "5839a40f24597726f856b511", //Kalashnikov AKS-74UB 5.45x39 assault rifle
+                "583990e32459771419544dd2" //Kalashnikov AKS-74UN 5.45x39 assault rifle
+
+            ]
+        },
+        "AKM Series":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "59d6088586f774275f37482f", //Kalashnikov AKM 7.62x39 assault rifle
+                "5a0ec13bfcdbcb00165aa685", //Kalashnikov AKMN 7.62x39 assault rifle
+                "59ff346386f77477562ff5e2", //Kalashnikov AKMS 7.62x39 assault rifle
+                "5abcbc27d8ce8700182eceeb" //Kalashnikov AKMSN 7.62x39 assault rifle
+
+            ]
+        },
+        "Ol' Reliable AKs":
+        {
+            "weight": 1,
+            "weapons":
+            [
+                "6499849fc93611967b034949", //Kalashnikov AK-12 5.45x39 assault rifle
+                "5bf3e03b0db834001d2c4a9c", //Kalashnikov AK-74 5.45x39 assault rifle
+                "5ac4cd105acfc40016339859", //Kalashnikov AK-74M 5.45x39 assault rifle
+                "5644bd2b4bdc2d3b4c8b4572", //Kalashnikov AK-74N 5.45x39 assault rifle
+                "5ac66cb05acfc40198510a10", //Kalashnikov AK-101 5.56x45 assault rifle
+                "5ac66d015acfc400180ae6e4", //Kalashnikov AK-102 5.56x45 assault rifle
+                "5ac66d2e5acfc43b321d4b53", //Kalashnikov AK-103 7.62x39 assault rifle
+                "5ac66d725acfc43b321d4b60", //Kalashnikov AK-104 7.62x39 assault rifle
+                "5ac66d9b5acfc4001633997a", //Kalashnikov AK-105 5.45x39 assault rifle
+                "59d6088586f774275f37482f", //Kalashnikov AKM 7.62x39 assault rifle
+                "5a0ec13bfcdbcb00165aa685", //Kalashnikov AKMN 7.62x39 assault rifle
+                "59ff346386f77477562ff5e2", //Kalashnikov AKMS 7.62x39 assault rifle
+                "5abcbc27d8ce8700182eceeb", //Kalashnikov AKMSN 7.62x39 assault rifle
+                "5bf3e0490db83400196199af", //Kalashnikov AKS-74 5.45x39 assault rifle
+                "5ab8e9fcd8ce870019439434", //Kalashnikov AKS-74N 5.45x39 assault rifle
+                "57dc2fa62459775949412633", //Kalashnikov AKS-74U 5.45x39 assault rifle
+                "5839a40f24597726f856b511", //Kalashnikov AKS-74UB 5.45x39 assault rifle
+                "583990e32459771419544dd2", //Kalashnikov AKS-74UN 5.45x39 assault rifle
+                "674d6121c09f69dfb201a888" //Aklys Defense Velociraptor .300 Blackout assault rifle
+
+            ]
+        },
+        "The Best":
+        {
+            "weight": 1,
+            "weapons":
+            [
+                "6499849fc93611967b034949", //Kalashnikov AK-12 5.45x39 assault rifle
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "5bb2475ed4351e00853264e3", //HK 416A5 5.56x45 assault rifle
+                "5447a9cd4bdc2dbd208b4567", //Colt M4A1 5.56x45 assault rifle
+                "65290f395ae2ae97b80fdf2d", //SIG MCX-SPEAR 6.8x51 assault rifle
+                "606587252535c57a13424cfd", //CMMG Mk47 Mutant 7.62x39 assault rifle
+                "628a60ae6b1d481ff772e9c8" //Rifle Dynamics RD-704 7.62x39 assault rifle
+
+            ]
+        },
+        "Bullpup":
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "5f2a9575926fd9352339381f", //Kel-Tec RFB 7.62x51 rifle
+                "5cadfbf7ae92152ac412eeef", //ASh-12 12.7x55 assault rifle
+                "62e7c4fba689e8c9c50dfc38", //Steyr AUG A1 5.56x45 assault rifle
+                "63171672192e68c5460cebc5", //Steyr AUG A3 5.56x45 assault rifle
+                "5c488a752e221602b412af63", //Desert Tech MDR 5.56x45 assault rifle
+                "5dcbd56fdbd3d91b3e5468d5", //Desert Tech MDR 7.62x51 assault rifle
+                "5cc82d76e24e8d00134b4b83" //FN P90 5.7x28 submachine gun
+
+            ]
+        },
+        "BRRRRRT": //Any weapon firing faster than 999 rpm, without a silencer.
+        {
+            "weight": 2,
+            "fireRate": { "above": 999 },
+            "weapons":
+            [
+            ],
+            "forbiddenMods": [ "All Silencers" ]
+        },
+        "Suppressed": //Empty weapons list = ANY weapon, as long as it has a silencer mounted.
+        {
+            "weight": 1,
+            "weapons":
+            [
+            ],
+            "requiredMods": [ "All Silencers" ]
+        },
+        "Gluck Hunt":
+        {
+            "weight": 1,
+            "weapons":
+            [
+                "5a7ae0c351dfba0017554310", //Glock 17 9x19 pistol",
+                "5b1fa9b25acfc40018633c01", //Glock 18C 9x19 machine pistol",
+                "63088377b5cd696784087147" //Glock 19X 9x19 pistol",
+            ],
+            "requiredMods": [ "Small Silencers", "Tactical Lasers" ]
+        },
+        "Subsonic Sickos": //Heavy-and-slow suppressed specialists - the 9x39 gang plus the .300 Blackout boutique crowd. Whisper-quiet, wall-punching, insufferable about it.
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "645e0c6b3b381ede770e1cc9", //KBP VSK-94 9x39 rifle
+                "57838ad32459774a17445cd2", //VSS Vintorez 9x39 special sniper rifle
+                "57c44b372459772d2b39b8ce", //AS VAL 9x39 special assault rifle
+                "651450ce0e00edc794068371", //SR-3M 9x39 compact assault rifle
+                "644674a13d52156624001fbc", //KBP 9A-91 9x39 compact assault rifle
+                "5fbcc1d9016cce60e8341ab3", //SIG MCX .300 Blackout assault rifle
+                "674d6121c09f69dfb201a888" //Aklys Defense Velociraptor .300 Blackout assault rifle
+
+            ]
+        },
+        "Krav Maga Certified": //Israeli hardware, straight from the mall-ninja catalogue. IWI's finest and the Deagles they build.
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "66992b349950f5f4cd06029f", //IWI UZI 9x19 submachine gun
+                "6680304edadb7aa61d00cef0", //IWI UZI PRO Pistol 9x19 submachine gun
+                "668e71a8dadf42204c032ce1", //IWI UZI PRO SMG 9x19 submachine gun
+                "669fa409933e898cce0c2166", //Magnum Research Desert Eagle L5 .357 pistol
+                "669fa3f88abd2662d80eee77", //Magnum Research Desert Eagle L5 .50 AE pistol
+                "669fa39b48fc9f8db6035a0c", //Magnum Research Desert Eagle L6 .50 AE pistol
+                "669fa3d876116c89840b1217", //Magnum Research Desert Eagle L6 .50 AE pistol (WTS)
+                "668fe5a998b5ad715703ddd6" //Magnum Research Desert Eagle Mk XIX .50 AE pistol
+
+            ]
+        },
+        "Call of Duty Loadout": //The guns every 12-year-old picks first. Space-gun bullpups, wall-hangers and the fifty-cal handcannon.
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "62e7c4fba689e8c9c50dfc38", //Steyr AUG A1 5.56x45 assault rifle
+                "63171672192e68c5460cebc5", //Steyr AUG A3 5.56x45 assault rifle
+                "5c488a752e221602b412af63", //Desert Tech MDR 5.56x45 assault rifle
+                "5cc82d76e24e8d00134b4b83", //FN P90 5.7x28 submachine gun
+                "5d3eb3b0a4b93615055e84d2", //FN Five-seveN MK2 5.7x28 pistol
+                "5d67abc1a4b93614ec50137f", //FN Five-seveN MK2 5.7x28 pistol (FDE)
+                "5fb64bc92b1b027b1f50bcf2", //TDI KRISS Vector Gen.2 .45 ACP submachine gun
+                "5fc3f2d5900b1d5091531e57", //TDI KRISS Vector Gen.2 9x19 submachine gun
+                "623063e994fc3f7b302a9696", //HK G36 5.56x45 assault rifle
+                "6184055050224f204c1da540", //FN SCAR-L 5.56x45 assault rifle
+                "618428466ef05c2ce828f218", //FN SCAR-L 5.56x45 assault rifle (FDE)
+                "668fe5a998b5ad715703ddd6" //Magnum Research Desert Eagle Mk XIX .50 AE pistol
+
+            ]
+        },
+        "Trust Fund Operator": //Guns that cost more than your rig. Boutique bolt-guns and the one meme .50 BMG YouTube build.
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "627e14b21713922ded6f2c15", //Accuracy International AXMC .338 LM bolt-action sniper rifle
+                "588892092459774ac91d4b11", //Lobaev Arms DVL-10 7.62x51 bolt-action sniper rifle
+                "5df24cf80dee1b22f862e9bc", //ORSIS T-5000M 7.62x51 bolt-action sniper rifle
+                "5fc22d7c187fea44d52eda44", //SWORD International Mk-18 .338 LM marksman rifle
+                "673cab3e03c6a20581028bc1", //Sako TRG M10 .338 LM bolt-action sniper rifle
+                "67d0576f29f580ebc10efd08" //TheAKGuy AK-50 .50 BMG sniper rifle
+
+            ]
+        },
+        "Snake Charmer": //Wheelguns and cylinder-fed oddities. If it spins, it wins.
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "61a4c8884f95bc3b2c5dc96f", //Chiappa Rhino 50DS .357 revolver
+                "624c2e8614da335f1e034d8c", //Chiappa Rhino 200DS 9x19 revolver
+                "633ec7c2a6918cb895019c6c", //RSh-12 12.7x55 revolver
+                "60db29ce99594040e04c4a27" //MTs-255-12 12ga shotgun
+
+            ]
+        },
+        "Pistol Caliber Poverty": //Can't afford a rifle round, so you brought a carbine that eats pistol ammo. PCC gang.
+        {
+            "weight": 2,
+            "weapons":
+            [
+                "59f9cabd86f7743a10721f46", //Saiga-9 9x19 carbine
+                "60339954d62c9b14ed777c06", //Soyuz-TM STM-9 Gen.2 9x19 carbine
+                "5de7bd7bfd6b4e6e2276dc25", //B&T MP9-N 9x19 submachine gun
+                "5e00903ae9dc277128008b87", //B&T MP9 9x19 submachine gun
+                "5fc3f2d5900b1d5091531e57" //TDI KRISS Vector Gen.2 9x19 submachine gun
+
+            ]
+        },
+        "Afghan Surplus": //Base-model AK-74 pattern and the pistol that came with it. Nothing fancy, everything works.
+        {
+            "weight": 1.5,
+            "weapons":
+            [
+                "5bf3e03b0db834001d2c4a9c", //Kalashnikov AK-74 5.45x39 assault rifle
+                "5644bd2b4bdc2d3b4c8b4572", //Kalashnikov AK-74N 5.45x39 assault rifle
+                "5bf3e0490db83400196199af", //Kalashnikov AKS-74 5.45x39 assault rifle
+                "57dc2fa62459775949412633", //Kalashnikov AKS-74U 5.45x39 assault rifle
+                "5beed0f50db834001c062b12", //RPK-16 5.45x39 light machine gun
+                "5448bd6b4bdc2dfc2f8b4569" //Makarov PM 9x18PM pistol
+
+            ]
+        }
+    },
+    "modCategories":
+    {
+        "Big Silencers":
+        {
+            "mods": [
+                "57838c962459774a1651ec63", //"VSS 9x39 integral barrel-suppressor",
+                "57c44dd02459772d2e0ae249", //"AS VAL 9x39 integral barrel-suppressor",
+                "59bffbb386f77435b379b9c2", //"SilencerCo Hybrid 46 multi-caliber sound suppressor",
+                "5a34fe59c4a282000b1521a2", //"AAC 762-SDN-6 multi-caliber sound suppressor",
+                "5b86a0e586f7745b600ccb23", //"Mosin Rifle Bramit 7.62x54R sound suppressor",
+                "5c4eecc32e221602b412b440", //"SV-98 7.62x54R sound suppressor",
+                "5c7955c22e221644f31bfd5e", //"Gemtech ONE multi-caliber sound suppressor",
+                "5caf187cae92157c28402e43", //"ASh-12 12.7x55 sound suppressor",
+                "5cff9e84d7ad1a049e54ed55", //"Daniel Defense WAVE QD sound suppressor",
+                "5d44064fa4b9361e4f6eb8b5", //"Thunder Beast Arms Ultra 5 sound suppressor",
+                "5dfa3d2b0dee1b22f862eade", //"KAC PRS/QDC 7.62x51 sound suppressor",
+                "5e01ea19e9dc277128008c0b", //"Rotor 43 7.62x54R sound suppressor",
+                "5f63407e1b231926f2329f15", //"VPO-101 Rotor 43 7.62x51 sound suppressor",
+                "5fbe760793164a5b6278efc8", //"SIG Sauer SRD762-QD 7.62x51 sound suppressor",
+                "5fbe7618d6fa9c00c571bb6c", //"SIG Sauer SRD762Ti 7.62x51 sound suppressor",
+                "6171367e1cb55961fa0fdb36", //"HK G28 B&T QD 7.62x51 sound suppressor",
+                "62811fa609427b40ab14e765", //"AI .338 LM Tactical Sound Moderator",
+                "63877c99e785640d436458ea", //"AWC Thor PSR XL multi-caliber sound suppressor",
+                "64527a3a7da7133e5a09ca99", //"9A-91 9x39 sound suppressor",
+                "5888945a2459774bf43ba385", //"DVL-10 7.62x51 500mm barrel",
+                "65144ff50e00edc79406836f" //"SR-3M 9x39 sound suppressor",
+            ]
+        },
+        "Medium Silencers":
+        {
+            "mods": [
+                "55d614004bdc2d86028b4568", //"SureFire SOCOM556-MONSTER 5.56x45 sound suppressor",
+                "55d617094bdc2d89028b4568", //"KAC QDC 6.5x35 sound suppressor",
+                "55d6190f4bdc2d87028b4567", //"SureFire SOCOM556-MINI MONSTER 5.56x45 sound suppressor",
+                "564caa3d4bdc2d17108b458e", //"AK-74 TGP-A 5.45x39 sound suppressor",
+                "57da93632459771cb65bf83f", //"KAC QDSS NT-4 5.56x45 sound suppressor (Black)",
+                "57dbb57e2459774673234890", //"KAC QDSS NT-4 5.56x45 sound suppressor (FDE)",
+                "57ffb0e42459777d047111c5", //"AKS-74U PBS-4 5.45x39 sound suppressor",
+                "593d489686f7745c6255d58a", //"AKM Hexagon 7.62x39 sound suppressor",
+                "593d490386f7745ee97a1555", //"SKS Hexagon 7.62x39 sound suppressor",
+                "593d493f86f7745e6b2ceb22", //"AK-74 Hexagon 5.45x39 sound suppressor",
+                "59bffbb386f77435b379b9c2", //"SilencerCo Hybrid 46 multi-caliber sound suppressor",
+                "59fb257e86f7742981561852", //"AKM Zenit DTK-4M 7.62x39 sound suppressor",
+                "5a0d63621526d8dba31fe3bf", //"AKM PBS-1 7.62x39 sound suppressor",
+                "5a34fe59c4a282000b1521a2", //"AAC 762-SDN-6 multi-caliber sound suppressor",
+                "5a9fbacda2750c00141e080f", //"Rotor 43 7.62x39 sound suppressor",
+                "5a9fbb74a2750c0032157181", //"Rotor 43 .366 TKM sound suppressor",
+                "5a9fbb84a2750c00137fa685", //"Rotor 43 5.56x45 sound suppressor",
+                "5c7955c22e221644f31bfd5e", //"Gemtech ONE multi-caliber sound suppressor",
+                "5cff9e84d7ad1a049e54ed55", //"Daniel Defense WAVE QD sound suppressor",
+                "5d44064fa4b9361e4f6eb8b5", //"Thunder Beast Arms Ultra 5 sound suppressor",
+                "5e208b9842457a4a7a33d074", //"AK Hexagon DTKP MK.2 7.62x39 sound suppressor",
+                "5ea17bbc09aa976f2e7a51cd", //"SureFire SOCOM556-RC2 5.56x45 sound suppressor",
+                "60926df0132d4d12c81fd9df", //"SilencerCo Saker ASR 556 5.56x45 sound suppressor",
+                "615d8f8567085e45ef1409ca", //"AK-74 Hexagon Wafflemaker 5.45x39 sound suppressor",
+                "626673016f1edc06f30cf6d5", //"KAC QDC 5.56x45 sound suppressor",
+                "630f2982cdb9e392db0cbcc7", //"Steyr AUG Relfex T4AUG Ranger 5.56x45 sound suppressor",
+                "634eba08f69c710e0108d386", //"Steyr AUG Ase Utra S Series SL7i 5.56x45 sound suppressor",
+                "638612b607dfed1ccb7206ba", //"AR-15 Griffin Armament M4SD-K 5.56x45 sound suppressor",
+                "63877c99e785640d436458ea", //"AWC Thor PSR XL multi-caliber sound suppressor",
+                "64c196ad26a15b84aa07132f", //"AK-12 5.45x39 sound suppressor",
+                "652911e650dc782999054b9d" //"MCX-SPEAR SLX68-MG-QD 6.8x51 sound suppressor",
+            ]
+        },
+        "Small Silencers":
+        {
+            "mods": [
+                "54490a4d4bdc2dbc018b4573", //"SilencerCo Sparrow 22 sound suppressor",
+                "56e05b06d2720bb2668b4586", //"PB 9x18PM sound suppressor",
+                "571a28e524597720b4066567", //"TT 7.62x25 makeshift sound suppressor",
+                "57f3c8cc2459773ec4480328", //"PP-91-01 Kedr-B 9x18PM sound suppressor",
+                "58aeac1b86f77457c419f475", //"MPX-SD 9x19 integrated sound suppressor",
+                "5926d33d86f77410de68ebc0", //"HK MP5SD 9x19 sound suppressor",
+                "59bfc5c886f7743bf6794e62", //"PP-19-01 Vityaz 9x19 sound suppressor",
+                "59bffbb386f77435b379b9c2", //"SilencerCo Hybrid 46 multi-caliber sound suppressor",
+                "5a27b6bec4a282000e496f78", //"SR-1MP 9x21 sound suppressor",
+                "5a32a064c4a28200741e22de", //"SilencerCo Osprey 9 9x19 sound suppressor",
+                "5a33a8ebc4a282000c5a950d", //"Alpha Dog Alpha 9 9x19 sound suppressor",
+                "5a7ad74e51dfba0015068f45", //"Glock 9x19 Fischer Development FD917 sound suppressor",
+                "5a9fb739a2750c003215717f", //"Rotor 43 9x19 sound suppressor",
+                "5abcc328d8ce8700194394f3", //"APB 9x18PM sound suppressor",
+                "5ba26ae8d4351e00367f9bdb", //"HK MP7 B&T Rotex 2 4.6x30 sound suppressor",
+                "5c6165902e22160010261b28", //"SIG Sauer SRD9 9x19 sound suppressor",
+                "5c7955c22e221644f31bfd5e", //"Gemtech ONE multi-caliber sound suppressor",
+                "5c7e8fab2e22165df16b889b", //"AAC Illusion 9 9x19 sound suppressor",
+                "5cebec00d7f00c065c53522a", //"FN P90 Attenuator 5.7x28 sound suppressor",
+                "5d3ef698a4b9361182109872", //"Gemtech SFN-57 5.7x28 sound suppressor",
+                "5de8f2d5b74cd90030650c72", //"MP9 9x19 sound suppressor",
+                "5fc4b9b17283c4046c5814d7", //"SilencerCo Omega 45k .45 ACP sound suppressor",
+                "602a97060ddce744014caf6f", //"PL-15 9x19 sound suppressor",
+                "6130c4d51cb55961fa0fd49f", //"HK UMP B&T OEM .45 ACP sound suppressor",
+                "62e2a7138e1ac9380579c122", //"SR-2M 9x21 SV-1381 sound suppressor",
+                "63877c99e785640d436458ea", //"AWC Thor PSR XL multi-caliber sound suppressor",
+                "66993733f74fef4dfd0b04ff" //"UZI 9x19 sound suppressor"
+            ]
+        },
+        "Shotgun Silencers":
+        {
+            "mods": [
+                "59c0ec5b86f77435b128bfca", //"Hexagon 12K 12ga sound suppressor", 
+                "5b363dd25acfc4001a598fd2" //"SilencerCo Salvo 12 12ga sound suppressor",
+            ]
+        },
+        "All Silencers":
+        {
+            "mods": [
+                "54490a4d4bdc2dbc018b4573", //"SilencerCo Sparrow 22 sound suppressor",
+                "55d614004bdc2d86028b4568", //"SureFire SOCOM556-MONSTER 5.56x45 sound suppressor",
+                "55d617094bdc2d89028b4568", //"KAC QDC 6.5x35 sound suppressor",
+                "55d6190f4bdc2d87028b4567", //"SureFire SOCOM556-MINI MONSTER 5.56x45 sound suppressor",
+                "564caa3d4bdc2d17108b458e", //"AK-74 TGP-A 5.45x39 sound suppressor",
+                "56e05b06d2720bb2668b4586", //"PB 9x18PM sound suppressor",
+                "571a28e524597720b4066567", //"TT 7.62x25 makeshift sound suppressor",
+                "57838c962459774a1651ec63", //"VSS 9x39 integral barrel-suppressor",
+                "57c44dd02459772d2e0ae249", //"AS VAL 9x39 integral barrel-suppressor",
+                "57da93632459771cb65bf83f", //"KAC QDSS NT-4 5.56x45 sound suppressor (Black)",
+                "57dbb57e2459774673234890", //"KAC QDSS NT-4 5.56x45 sound suppressor (FDE)",
+                "57f3c8cc2459773ec4480328", //"PP-91-01 Kedr-B 9x18PM sound suppressor",
+                "57ffb0e42459777d047111c5", //"AKS-74U PBS-4 5.45x39 sound suppressor",
+                "58aeac1b86f77457c419f475", //"MPX-SD 9x19 integrated sound suppressor",
+                "5926d33d86f77410de68ebc0", //"HK MP5SD 9x19 sound suppressor",
+                "593d489686f7745c6255d58a", //"AKM Hexagon 7.62x39 sound suppressor",
+                "593d490386f7745ee97a1555", //"SKS Hexagon 7.62x39 sound suppressor",
+                "593d493f86f7745e6b2ceb22", //"AK-74 Hexagon 5.45x39 sound suppressor",
+                "59bfc5c886f7743bf6794e62", //"PP-19-01 Vityaz 9x19 sound suppressor",
+                "59bffbb386f77435b379b9c2", //"SilencerCo Hybrid 46 multi-caliber sound suppressor",
+                "59c0ec5b86f77435b128bfca", //"Hexagon 12K 12ga sound suppressor",
+                "59fb257e86f7742981561852", //"AKM Zenit DTK-4M 7.62x39 sound suppressor",
+                "5a0d63621526d8dba31fe3bf", //"AKM PBS-1 7.62x39 sound suppressor",
+                "5a27b6bec4a282000e496f78", //"SR-1MP 9x21 sound suppressor",
+                "5a32a064c4a28200741e22de", //"SilencerCo Osprey 9 9x19 sound suppressor",
+                "5a33a8ebc4a282000c5a950d", //"Alpha Dog Alpha 9 9x19 sound suppressor",
+                "5a34fe59c4a282000b1521a2", //"AAC 762-SDN-6 multi-caliber sound suppressor",
+                "5a7ad74e51dfba0015068f45", //"Glock 9x19 Fischer Development FD917 sound suppressor",
+                "5a9fb739a2750c003215717f", //"Rotor 43 9x19 sound suppressor",
+                "5a9fbacda2750c00141e080f", //"Rotor 43 7.62x39 sound suppressor",
+                "5a9fbb74a2750c0032157181", //"Rotor 43 .366 TKM sound suppressor",
+                "5a9fbb84a2750c00137fa685", //"Rotor 43 5.56x45 sound suppressor",
+                "5abcc328d8ce8700194394f3", //"APB 9x18PM sound suppressor",
+                "5b363dd25acfc4001a598fd2", //"SilencerCo Salvo 12 12ga sound suppressor",
+                "5b86a0e586f7745b600ccb23", //"Mosin Rifle Bramit 7.62x54R sound suppressor",
+                "5ba26ae8d4351e00367f9bdb", //"HK MP7 B&T Rotex 2 4.6x30 sound suppressor",
+                "5c4eecc32e221602b412b440", //"SV-98 7.62x54R sound suppressor",
+                "5c6165902e22160010261b28", //"SIG Sauer SRD9 9x19 sound suppressor",
+                "5c7955c22e221644f31bfd5e", //"Gemtech ONE multi-caliber sound suppressor",
+                "5c7e8fab2e22165df16b889b", //"AAC Illusion 9 9x19 sound suppressor",
+                "5caf187cae92157c28402e43", //"ASh-12 12.7x55 sound suppressor",
+                "5cebec00d7f00c065c53522a", //"FN P90 Attenuator 5.7x28 sound suppressor",
+                "5cff9e84d7ad1a049e54ed55", //"Daniel Defense WAVE QD sound suppressor",
+                "5d3ef698a4b9361182109872", //"Gemtech SFN-57 5.7x28 sound suppressor",
+                "5d44064fa4b9361e4f6eb8b5", //"Thunder Beast Arms Ultra 5 sound suppressor",
+                "5de8f2d5b74cd90030650c72", //"MP9 9x19 sound suppressor",
+                "5dfa3d2b0dee1b22f862eade", //"KAC PRS/QDC 7.62x51 sound suppressor",
+                "5e01ea19e9dc277128008c0b", //"Rotor 43 7.62x54R sound suppressor",
+                "5e208b9842457a4a7a33d074", //"AK Hexagon DTKP MK.2 7.62x39 sound suppressor",
+                "5ea17bbc09aa976f2e7a51cd", //"SureFire SOCOM556-RC2 5.56x45 sound suppressor",
+                "5f63407e1b231926f2329f15", //"VPO-101 Rotor 43 7.62x51 sound suppressor",
+                "5fbe760793164a5b6278efc8", //"SIG Sauer SRD762-QD 7.62x51 sound suppressor",
+                "5fbe7618d6fa9c00c571bb6c", //"SIG Sauer SRD762Ti 7.62x51 sound suppressor",
+                "5fc4b9b17283c4046c5814d7", //"SilencerCo Omega 45k .45 ACP sound suppressor",
+                "602a97060ddce744014caf6f", //"PL-15 9x19 sound suppressor",
+                "60926df0132d4d12c81fd9df", //"SilencerCo Saker ASR 556 5.56x45 sound suppressor",
+                "6130c4d51cb55961fa0fd49f", //"HK UMP B&T OEM .45 ACP sound suppressor",
+                "615d8f8567085e45ef1409ca", //"AK-74 Hexagon Wafflemaker 5.45x39 sound suppressor",
+                "6171367e1cb55961fa0fdb36", //"HK G28 B&T QD 7.62x51 sound suppressor",
+                "626673016f1edc06f30cf6d5", //"KAC QDC 5.56x45 sound suppressor",
+                "62811fa609427b40ab14e765", //"AI .338 LM Tactical Sound Moderator",
+                "62e2a7138e1ac9380579c122", //"SR-2M 9x21 SV-1381 sound suppressor",
+                "630f2982cdb9e392db0cbcc7", //"Steyr AUG Relfex T4AUG Ranger 5.56x45 sound suppressor",
+                "634eba08f69c710e0108d386", //"Steyr AUG Ase Utra S Series SL7i 5.56x45 sound suppressor",
+                "638612b607dfed1ccb7206ba", //"AR-15 Griffin Armament M4SD-K 5.56x45 sound suppressor",
+                "63877c99e785640d436458ea", //"AWC Thor PSR XL multi-caliber sound suppressor",
+                "64527a3a7da7133e5a09ca99", //"9A-91 9x39 sound suppressor",
+                "64c196ad26a15b84aa07132f", //"AK-12 5.45x39 sound suppressor",
+                "65144ff50e00edc79406836f", //"SR-3M 9x39 sound suppressor",
+                "652911e650dc782999054b9d", //"MCX-SPEAR SLX68-MG-QD 6.8x51 sound suppressor",
+                "66993733f74fef4dfd0b04ff" //"UZI 9x19 sound suppressor"
+            ]
+        },
+        "Bipods":
+        {
+            "mods": [
+                "56ea8222d2720b69698b4567", //SV-98 bipod",
+                "5888961624597754281f93f3", //Harris HBR bipod",
+                "622b397c9a3d4327e41843b6", //HK G36 bipod",
+                "6464d870bb2c580352070cc4", //PK bipod",
+                "6513f037e06849f06c0957d7", //RPD bipod",
+                "66012d9a3dff5074ed002e33", //M60 bipod",
+                "6644920d49817dc7d505ca71", //BT10 V8 Atlas Bipod",
+                "665745c8a3c672c7b00bb355" //??
+            ]
+        },
+        "Raptar":
+        {
+            "mods": [
+                "61605d88ffa6e502ac5e7eeb" //"Wilcox RAPTAR ES Tactical Rangefinder",
+            ]
+        },
+        "Tactical Lasers":
+        {
+            "mods": [
+                "544909bb4bdc2d6f028b4577", //L3Harris AN/PEQ-15 tactical device",
+                "560d657b4bdc2da74d8b4572", //Zenit Klesch-2P flashlight with laser",
+                "56def37dd2720bec348b456a", //SureFire X400 Ultra tactical flashlight with laser",
+                "57fd23e32459772d0805bcf1", //Holosun LS321 Tactical device",
+                "5a5f1ce64f39f90b401987bc", //Zenit Klesch-2IKS IR illuminator with laser",
+                "5a7b483fe899ef0016170d15", //SureFire XC1 tactical flashlight",
+                "5a800961159bd4315e3a1657", //Glock GTL 21 tactical flashlight with laser",
+                "5b07dd285acfc4001754240d", //Steiner LAS/TAC 2 tactical flashlight",
+                "5b3a337e5acfc4704b4a19a0", //Zenit Klesch-2U tactical flashlight",
+                "5c06595c0db834001a66af6c", //L3Harris LA-5B/PEQ tactical device",
+                "5c079ed60db834001a66b372", //TT DLP Tactical Precision Laser Sight",
+                "5c5952732e2216398b5abda2", //Zenit Perst-3 tactical device",
+                "5cc9c20cd7f00c001336c65d", //NcSTAR Tactical Blue Laser",
+                "5d10b49bd7ad1a1a560708b0", //Insight AN/PEQ-2 tactical device",
+                "5d2369418abbc306c62e0c80", //Steiner DBAL-PL tactical device",
+                "61605d88ffa6e502ac5e7eeb", //Wilcox RAPTAR ES Tactical Rangefinder",
+                "626becf9582c3e319310b837", //Insight WMX200 tactical flashlight",
+                "6272370ee4013c5d7e31f418", //Olight Baldr Pro tactical flashlight with laser",
+                "6272379924e29f06af4d5ecb", //Olight Baldr Pro tactical flashlight with laser (Tan)",
+                "644a3df63b0b6f03e101e065" //B.E. Meyers MAWL-C1+ tactical device"
+            ]
+        },
+        "Assault Scopes":
+        {
+            "mods": [
+                "544a3a774bdc2d3a388b4567", //Leupold Mark 4 HAMR 4x24 DeltaPoint hybrid assault scope",
+                "544a3f024bdc2d1d388b4568", //ELCAN Specter OS4x assault scope",
+                "57ac965c24597706be5f975c", //ELCAN SpecterDR 1x/4x scope",
+                "57aca93d2459771f2c7e26db", //ELCAN SpecterDR 1x/4x scope (FDE)",
+                "57adff4f24597737f373b6e6", //SIG Sauer BRAVO4 4x30 scope",
+                "59db7e1086f77448be30ddf3", //Trijicon ACOG TA11D 3.5x35 scope",
+                "5c0517910db83400232ffee5", //Valday PS-320 1/6x scope",
+                "5c05293e0db83400232fff80", //Trijicon ACOG TA01NSN 4x32 scope (Black)",
+                "5c052a900db834001a66acbd", //Trijicon ACOG TA01NSN 4x32 scope (Tan)",
+                "5c1cdd512e22161b267d91ae", //Kiba Arms Short Prism 2.5x scope",
+                "5d2dc3e548f035404a1a4798", //Monstrum Tactical Compact Prism Scope 2x32",
+                "622b4d7df9cfc87d675d2ded", //HK G36 Hensoldt HKV 3x carry handle",
+                "622b4f54dc8dcc0ba8742f85", //HK G36 Hensoldt HKV ZF 1.5x carry handle",
+                "626bb8532c923541184624b4", //SwampFox Trihawk Prism Scope 3x30",
+                "62ea7c793043d74a0306e19f", //Steyr AUG A1 STG77 1.5x optic sight",
+                "62ebd290c427473eff0baafb" //Steyr AUG A3 M1 1.5x optic sight"
+            ]
+        },
+        "Optical Scopes":
+        {
+            "mods": [
+                "544a3d0a4bdc2d1b388b4567", //Nightforce NXS 2.5-10x24 scope",
+                "56ea70acd2720b844b8b4594", //Hensoldt FF 4-16x56 34mm riflescope",
+                "576fd4ec2459777f0b518431", //BelOMO PSO-1M2-1 4x24 scope",
+                "57c5ac0824597754771e88a9", //March Tactical 3-24x42 FFP 30mm riflescope",
+                "5a37cb10c4a282329a73b4e7", //Leupold Mark 4 LR 6.5-20x50 30mm riflescope",
+                "5aa66be6e5b5b0214e506e97", //Nightforce ATACR 7-35x56 34mm riflescope",
+                "5b2388675acfc4771e1be0be", //Burris FullField TAC30 1-4x24 30mm riflescope",
+                "5b3b99475acfc432ff4dcbee", //EOTech Vudu 1-6x24 30mm riflescope",
+                "5b3f7c1c5acfc40dc5296b1d", //PU 3.5x riflescope",
+                "5c82342f2e221644f31c060e", //BelOMO PSO-1 4x24 scope",
+                "5c82343a2e221644f31c0611", //BelOMO PSO-1M2 4x24 scope",
+                "5cf638cbd7f00c06595bc936", //NPZ USP-1 Tyulpan 4x scope",
+                "5d0a3a58d7ad1a669c15ca14", //KMZ 1P59 3-10x riflescope",
+                "5d0a3e8cd7ad1a6f6a3d35bd", //KMZ 1P69 3-10x riflescope",
+                "5d53f4b7a4b936793d58c780", //PAG-17 scope",
+                "5dfe6104585a0c3e995c7b82", //NcSTAR ADO P4 Sniper 3-9x42 riflescope",
+                "5dff772da3651922b360bf91", //VOMZ Pilad 4x32 25.4mm riflescope",
+                "61714eec290d254f5e6b2ffc", //Schmidt & Bender PM II 3-20x50 34mm riflescope",
+                "617151c1d92c473c770214ab", //Schmidt & Bender PM II 1-8x24 30mm riflescope",
+                "618a75f0bd321d49084cd399", //NPZ 1P78-1 2.8x scope",
+                "618ba27d9008e4636a67f61d", //Vortex Razor HD Gen.2 1-6x24 30mm riflescope",
+                "62850c28da09541f43158cca", //Schmidt & Bender PM II 5-25x56 34mm riflescope",
+                "6567e7681265c8a131069b0f", //SIG TANGO6T 1-6x24 30mm riflescope"
+                "6567e7681265c8a131069b0f", //SIG Sauer TANGO6T 1-6x24 30mm riflescope
+                "676175789dcee773150c6925"  //Leupold Mark 5HD 5-25x56mm 35mm riflescope (FDE)
+            ]
+        },
+        "Collimators":
+        {
+            "mods": [
+                "558022b54bdc2dac148b458d", //EOTech EXPS3 holographic sight (Tan)",
+                "570fd6c2d2720bc6458b457f", //EOTech 553 holographic sight",
+                "570fd721d2720bc5458b4596", //Walther MRS reflex sight",
+                "570fd79bd2720bc7458b4583", //OKP-7 reflex sight",
+                "57486e672459770abd687134", //OKP-7 reflex sight (Dovetail)",
+                "58491f3324597764bc48fa02", //EOTech XPS3-0 holographic sight",
+                "584924ec24597768f12ae244", //EOTech XPS3-2 holographic sight",
+                "584984812459776a704a82a6", //VOMZ Pilad P1x42 Weaver reflex sight",
+                "591c4efa86f7741030027726", //Axion Kobra EKP-8-18 reflex sight",
+                "5947db3f86f77447880cf76f", //Axion Kobra EKP-8-02 reflex sight (Dovetail)",
+                "59f9d81586f7744c7506ee62", //Vortex Razor AMG UH-1 holographic sight",
+                "5b30b0dc5acfc400153b7124", //Holosun HS401G5 reflex sight",
+                "5c0505e00db834001b735073", //Valday PK-120 (1P87) holographic sight",
+                "5c07dd120db834001c39092d", //EOTech HHS-1 hybrid sight",
+                "5c0a2cec0db834001b7ce47d", //EOTech HHS-1 hybrid sight (Tan)",
+                "5c7d55de2e221644f31bff68", //Aimpoint CompM4 reflex sight",
+                "5cebec38d7f00c00110a652a", //FN P90 Ring Sight reflex sight",
+                "5d2da1e948f035477b1ce2ba", //Trijicon SRS-02 reflex sight",
+                "609a63b6e2ff132951242d09", //Valday Krechet reflex sight",
+                "609b9e31506cf869cf3eaf41", //VOMZ Pilad TargetRing reflex sight",
+                "60a23797a37c940de7062d02", //SIG Sauer ROMEO8T reflex sight",
+                "6113d6c3290d254f5e6b27db", //BelOMO PK-AA dovetail reflex sight",
+                "61659f79d92c473c770213ee", //Aimpoint PRO reflex sight",
+                "6165ac8c290d254f5e6b2f6c", //Leapers UTG reflex sight",
+                "618a5d5852ecee1505530b2a", //NPZ PK1 Obzor dovetail reflex sight",
+                "622efbcb99f4ea1a4d6c9a15", //Hensoldt RV red dot sight",
+                "6284bd5f95250a29bc628a30", //Milkor M2A1 grenade launcher reflex sight",
+                "62ff9920fe938a24c90c10d2", //SR-2M KP-SR2 reflex sight",
+                "6477772ea8a38bb2050ed4db", //SIG Sauer ROMEO7 1x30 reflex sight (Prototype)",
+                "64785e7c19d732620e045e15", //ELCAN Specter HCO holographic sight",
+                "6544d4187c5457729210d277", //Axion Kobra EKP-1S-03 reflex sight (Dovetail)",
+                "655f13e0a246670fb0373245", //Wilcox BOSS Xe reflex sight",
+                "65f05b9d39dab9e9ec049cfd", //KOMZ Rusak reflex sight"
+                "577d141e24597739c5255e01", //Burris FastFire 3 reflex sight",
+                "57ae0171245977343c27bfcf", //BelOMO PK-06 reflex sight",
+                "58d268fc86f774111273f8c2", //Leupold DeltaPoint Reflex Sight",
+                "58d399e486f77442e0016fe7", //Aimpoint Micro T-1 reflex sight",
+                "5a32aa8bc4a2826c6e06d737", //Trijicon RMR reflex sight",
+                "5b3116595acfc40019476364", //SIG Sauer ROMEO4 reflex sight",
+                "616442e4faa1272e43152193", //Aimpoint ACRO P-1 reflex sight",
+                "61657230d92c473c770213d7" //Aimpoint Micro H-2 reflex sight"
+            ]
+        },
+        "Thermal Scopes":
+        {
+            "mods": [
+                "5a1eaa87fcdbcb001865f75e", //Trijicon REAP-IR thermal scope",
+                "5d1b5e94d7ad1a2b865a96b0", //FLIR RS-32 2.25-9x 35mm 60Hz thermal riflescope",
+                "606f2696f2cb2e02a42aceb1", //MP-155 Ultima thermal camera",
+                "609bab8b455afd752b2e6138", //Torrey Pines Logic T12W 30Hz thermal reflex sight",
+                "63fc44e2429a8a166c7f61e6", //Armasight Zeus-Pro 640 2-8x50 30Hz thermal scope",
+                "6478641c19d732620e045e17", //SIG Sauer ECHO1 1-2x30mm 30Hz thermal reflex scope",
+                "67641b461c2eb66ade05dba6"  //Cyclone Shakhin 3.7x thermal scope
+            ]
+        },
+        "Night Vision Scopes":
+        {
+            "mods": [
+                "5a7c74b3e899ef0014332c29", //NSPU-M 3.5x dovetail night vision scope",
+                "5b3b6e495acfc4330140bd88" //Armasight Vulcan MG 3.5x Bravo night vision scope",
+            ]
+        },
+        "Iron Sights":
+        {
+            "mods": [
+                "55d4af3a4bdc2d972f8b456f", //AR-15 Leapers UTG Low Profile A2 front sight",
+                "55d5f46a4bdc2d1b198b4567", //AR-15 Colt A2 rear sight",
+                "56083e1b4bdc2dc8488b4572", //SV-98 rear sight",
+                "5649b0544bdc2d1b2b8b458a", //AK-74 rear sight",
+                "5649d9a14bdc2d79388b4580", //AK Taktika Tula TT01 rear sight rail",
+                "56d5a661d2720bd8418b456b", //P226 front sight",
+                "56d5a77ed2720b90418b4568", //P226 rear sight",
+                "56ea7293d2720b8d4b8b45ba", //P226 Sight Mount 220-239 rear sight bearing",
+                "574db213245977459a2f3f5d", //SKS rear sight",
+                "57838e1b2459774a256959b1", //VSS rear sight",
+                "57a9b9ce2459770ee926038d", //SOK-12 rear sight",
+                "57c44e7b2459772d28133248", //AS VAL rear sight",
+                "58272b842459774abc128d50", //SOK-12 CSS rear sight rail mount",
+                "5894a73486f77426d259076c", //MPX flip-up front sight",
+                "5894a81786f77427140b8347", //MPX flip-up rear sight",
+                "5926d2be86f774134d668e4e", //HK MP5 Drum rear sight",
+                "599860e986f7743bb57573a6", //PP-19-01 Vityaz rear sight",
+                "59d650cf86f7741b846413a4", //AKM rear sight",
+                "59e8977386f77415a553c453", //VPO-209 rear sight",
+                "5a0eb980fcdbcb001a3b00a6", //AKMB system rear sight",
+                "5a0ed824fcdbcb0176308b0d", //AKMP system rear sight device",
+                "5a0f096dfcdbcb0176308b15", //AKMP system front sight device",
+                "5a6f58f68dc32e000a311390", //Glock front sight",
+                "5a6f5d528dc32e00094b97d9", //Glock rear sight",
+                "5a71e0048dc32e000c52ecc8", //Glock ZEV Tech front sight",
+                "5a71e0fb8dc32e00094b97f2", //Glock ZEV Tech rear sight",
+                "5a7d90eb159bd400165484f1", //Glock Dead Ringer Snake Eye front sight",
+                "5a7d9104159bd400134c8c21", //Glock TruGlo TFX front sight",
+                "5a7d9122159bd4001438dbf4", //Glock Dead Ringer Snake Eye rear sight",
+                "5a7d912f159bd400165484f3", //Glock TruGlo TFX rear sight",
+                "5aafa49ae5b5b00015042a58", //M1A SA XS Post .125 Blade front sight",
+                "5aba62f8d8ce87001943946b", //APS front sight",
+                "5aba637ad8ce87001773e17f", //APS rear sight",
+                "5aba639ed8ce8700182ece67", //APB rear sight",
+                "5abcbb20d8ce87001773e258", //M14 SA Enlarged Military Aperture rear sight",
+                "5ac72e475acfc400180ae6fe", //AK-74M rear sight",
+                "5ac733a45acfc400192630e2", //AK-105 rear sight",
+                "5addba3e5acfc4001669f0ab", //M1A SA National Match .062 Blade front sight",
+                "5ae099875acfc4001714e593", //Mosin Rifle front sight",
+                "5ae099925acfc4001a5fc7b3", //Mosin Rifle rear sight",
+                "5ae30bad5acfc400185c2dc4", //AR-15 rear sight carry handle",
+                "5b0bc22d5acfc47a8607f085", //SA-58 Holland Type rear sight",
+                "5ba26b01d4351e0085325a51", //HK MP7 flip-up front sight",
+                "5ba26b17d4351e00367f9bdd", //HK MP7 flip-up rear sight",
+                "5bb20e49d4351e3bac1212de", //HK 416A5 flip-up rear sight",
+                "5bc09a18d4351e003562b68e", //Magpul MBUS Gen2 flip-up rear sight",
+                "5bc09a30d4351e00367fb7c8", //Magpul MBUS Gen2 flip-up front sight",
+                "5beec9450db83400970084fd", //RPK-16 rear sight base",
+                "5bf3f59f0db834001a6fa060", //RPK-16 rear sight",
+                "5bfd4c980db834001b73449d", //Mosin Rifle carbine rear sight",
+                "5c05295e0db834001a66acbb", //Trijicon ACOG backup rear sight",
+                "5c07b36c0db834002a1259e9", //P226 Meprolight TRU-DOT Night front sight",
+                "5c07b3850db834002330045b", //P226 Meprolight TRU-DOT Night rear sight",
+                "5c1780312e221602b66cc189", //KAC Folding rear sight",
+                "5c17804b2e2216152006c02f", //KAC Folding front sight",
+                "5c18b90d2e2216152142466b", //Magpul MBUS Gen2 flip-up front sight (FDE)",
+                "5c18b9192e2216398b5a8104", //Magpul MBUS Gen2 flip-up rear sight (FDE)",
+                "5c471b7e2e2216152006e46c", //SVDS rear sight",
+                "5c471ba12e221602b3137d76", //SVDS front sight",
+                "5c503b1c2e221602b21d6e9d", //VPO-101 rear sight",
+                "5cadd919ae921500126a77f3", //M9A3 front sight",
+                "5cadd940ae9215051e1c2316", //M9A3 rear sight",
+                "5cadd954ae921500103bb3c2", //M9A3 Sight Mount rear sight rail",
+                "5caf1691ae92152ac412efb9", //ASh-12 rear sight carry handle",
+                "5caf16a2ae92152ac412efbc", //ASh-12 folding front sight",
+                "5d3eb4aba4b93650d64e497d", //FN Five-seveN MK2 rear sight",
+                "5d3eb536a4b9363b1f22f8e2", //FN Five-seveN MK2 front sight",
+                "5de8fb539f98ac2bc659513a", //MP9 rear sight",
+                "5dfa3d7ac41b2312ea33362a", //KAC Folding Micro rear sight",
+                "5dfa3d950dee1b22f862eae0", //KAC Folding Micro front sight",
+                "5e81ee213397a21db957f6a6", //M1911A1 front sight",
+                "5e81ee4dcb2b95385c177582", //M1911A1 rear sight",
+                "5e8708d4ae379e67d22e0102", //Mossberg 590 Ghost Ring front sight",
+                "5e87114fe2db31558c75a120", //Mossberg 590 Ghost Ring rear sight",
+                "5f3e7897ddc4f03b010e204a", //M45A1 Novak Lomount rear sight",
+                "5f3e78a7fbf956000b716b8e", //M45A1 Novak Lomount front sight",
+                "5fb6564947ce63734e3fa1da", //KRISS Defiance low profile flip-up rear sight",
+                "5fb6567747ce63734e3fa1dc", //KRISS Defiance low profile flip-up front sight",
+                "5fc0fa362770a0045c59c677", //MCX flip-up front sight",
+                "5fc0fa957283c4046c58147e", //MCX flip-up rear sight",
+                "60228a76d62c9b14ed777a66", //PL-15 front sight",
+                "60228a850ddce744014caf69", //PL-15 extended front sight",
+                "602293f023506e50807090cb", //PL-15 extended rear sight",
+                "60229948cacb6b0506369e27", //PL-15 rear sight",
+                "61816fcad92c473c770215cc", //FN SCAR flip-up front sight",
+                "61817865d3a39d50044c13a4", //FN SCAR flip-up rear sight",
+                "6194f2912d2c397d6600348d", //HK USP rear sight",
+                "6194f2df645b5d229654ad77", //HK USP Tactical rear sight",
+                "6194f3286db0f2477964e67d", //HK USP Tactical front sight",
+                "6194f35c18a3974e5e7421e6", //HK USP front sight",
+                "61963a852d2c397d660036ad", //HK USP Red Dot sight mount",
+                "619f4cee4c58466fe1228435", //Chiappa Rhino rear sight",
+                "619f4d304c58466fe1228437", //Chiappa Rhino front sight",
+                "619f4f8c4c58466fe1228439", //Chiappa Rhino Red Fiber Optic rear sight",
+                "619f52454c58466fe122843b", //Chiappa Rhino Red Fiber Optic front sight",
+                "623166e08c43374ca1567195", //HK G36 front sight",
+                "6231670f0b8aa5472d060095", //HK G36 rear sight",
+                "625ebcef6f53af4aa66b44dc", //Benelli M3 Ghost Ring rear sight",
+                "628a7b23b0f75035732dd565", //AK RD Enhanced V2 Rear Sight",
+                "628b9471078f94059a4b9bfb", //AK-545 rear sight",
+                "630765777d50ff5e8a1ea718", //Glock 19X front sight",
+                "630765cb962d0247b029dc45", //Glock 19X rear sight",
+                "63c6adcfb4ba094317063742", //PM rear sight",
+                "64119d672c6d6f921a0929fb", //SVT-40 front sight",
+                "64119d90dcf48d656f0aa275", //SVT-40 rear sight",
+                "6492fb8253acae0af00a29b6", //PK rear sight",
+                "649ec2cec93611967b03495e", //AK-12 rear sight",
+                "649ec2da59cbb3c813042dca", //AK-12 rear sight mount",
+                "6513f153e63f29908d0ffaba", //RPD rear sight",
+                "6601265f98a610c1aa0ea637", //M60 rear sight",
+                "6601268bc752a02bbe05e686", //M60E4 front sight",
+                "660126a98f2b23af220b27e7", //M60E6 front sight rail",
+                "668fe5e1800f0244f9036e46", //Desert Eagle rear sight",
+                "668fe5ec4315934ba10c6f96", //Desert Eagle front sight"
+                "674fe8cf4472d471fb0f07df", //Chaos HK Style rear sight
+                "674fe8dd362ea1f88b0e2792" //Chaos HK Style front sight
+            ]
+        }
+    }
+}

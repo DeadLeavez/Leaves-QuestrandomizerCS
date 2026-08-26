@@ -1,0 +1,442 @@
+{
+    //Weapon-equivalent mappings for WTT-Armory. Every *.jsonc in this folder is loaded and merged.
+    //originalWeaponID = the weapon a quest asks for; equivalentWeaponID = another weapon that also counts.
+    //Auto-generated: each custom weapon counts as the vanilla weapon it is cloned from (chain-resolved).
+    "equivalents":
+    [
+        //--- Hand-picked extras ---
+        { "originalWeaponID": "628a60ae6b1d481ff772e9c8", "equivalentWeaponID": "6671ebcdd32bd95eb398e920" }, //RD-704 -> WTT AK5C
+        { "originalWeaponID": "606587252535c57a13424cfd", "equivalentWeaponID": "6671ebcdd32bd95eb398e920" }, //MUTANT -> WTT AK5C
+        { "originalWeaponID": "6513ef33e06849f06c0957ca", "equivalentWeaponID": "66e718dc498d978477e0ba75" }, //RPD -> WTT M249
+        { "originalWeaponID": "65268d8ecb944ff1e90ea385", "equivalentWeaponID": "66e718dc498d978477e0ba75" }, //RPDN -> WTT M249
+        //--- Auto: custom weapon counts as its vanilla base ---
+        { "originalWeaponID": "5ac66d2e5acfc43b321d4b53", "equivalentWeaponID": "69777201f57d45a2ec02aafc" }, //weapon_izhmash_ak103_762x39 -> (no en locale)
+        { "originalWeaponID": "5ac66d9b5acfc4001633997a", "equivalentWeaponID": "69555be939fb0a1a6f0ad12e" }, //weapon_izhmash_ak105_545x39 -> A-545 5.45x39 assault rifle
+        { "originalWeaponID": "627e14b21713922ded6f2c15", "equivalentWeaponID": "68a3836826dffa87b5767c04" }, //weapon_accuracy_inernational_axmc_86x70 -> Accuracy International AXMC .300 WM bolt-action sniper rifle
+        { "originalWeaponID": "5ac4cd105acfc40016339859", "equivalentWeaponID": "0cb4a36dd2e587b46e813dbe" }, //weapon_izhmash_ak74m_545x39 -> AEK-971 5.45x39 assault rifle
+        { "originalWeaponID": "5ac66d2e5acfc43b321d4b53", "equivalentWeaponID": "686093d590c3dce07984c38a" }, //weapon_izhmash_ak103_762x39 -> AEK-973 7.62x39 assault rifle
+        { "originalWeaponID": "5ac4cd105acfc40016339859", "equivalentWeaponID": "679a6a534f3d279c99b135b9" }, //weapon_izhmash_ak74m_545x39 -> AN-94 5.45x39 "Kirov's Custom" assault rifle
+        { "originalWeaponID": "5ac4cd105acfc40016339859", "equivalentWeaponID": "678fe4a4906c7bd23722c71f" }, //weapon_izhmash_ak74m_545x39 -> AN-94 5.45x39 assault rifle
+        { "originalWeaponID": "67d0576f29f580ebc10efd08", "equivalentWeaponID": "693742e7eab3af9d89349410" }, //weapon_theakguy_ak50_127x99 -> Barrett M107A1 .50 BMG anti-material rifle
+        { "originalWeaponID": "67d0576f29f580ebc10efd08", "equivalentWeaponID": "6945dc69fe52c2415de357f7" }, //weapon_theakguy_ak50_127x99 -> Barrett XM109 25x59 anti-material payload rifle
+        { "originalWeaponID": "5cadc190ae921500103bb3b6", "equivalentWeaponID": "6868d249cdee524f8c0ba45f" }, //weapon_beretta_m9a3_9x19 -> Beretta 92FS 9x19 pistol
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "6671ebcdd32bd95eb398e920" }, //weapon_colt_m4a1_556x45 -> Bofors Ak5C 5.56x45 assault rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "682d460e951a926af552d764" }, //weapon_colt_m4a1_556x45 -> Bofors Ak5C 5.56x45 assault rifle (custom)
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "682d3dd16900cb35564c8825" }, //weapon_colt_m4a1_556x45 -> Bofors Ak5D 5.56x45 assault rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "682d4820e48f3c573ec332b5" }, //weapon_colt_m4a1_556x45 -> Bofors Ak5G 5.56x45 light machinegun
+        { "originalWeaponID": "56dee2bdd2720bc8328b4567", "equivalentWeaponID": "669fca7f9ed4916116c76d5e" }, //weapon_izhmeh_mr153_12g -> Browning Auto-5 12ga shotgun
+        { "originalWeaponID": "56dee2bdd2720bc8328b4567", "equivalentWeaponID": "6840ebf5b8687ba34f8dfbca" }, //weapon_izhmeh_mr153_12g -> Browning Auto-5 12ga shotgun (Custom)
+        { "originalWeaponID": "673cab3e03c6a20581028bc1", "equivalentWeaponID": "68fd4feab87d77a5aaf6bf64" }, //weapon_sako_trg_m10_86x70 -> CheyTac M200 Intervention .408 CT bolt-action sniper rifle
+        { "originalWeaponID": "673cab3e03c6a20581028bc1", "equivalentWeaponID": "68fd7d14ff5a09197b5ab82a" }, //weapon_sako_trg_m10_86x70 -> CheyTac M200 Intervention .408 CT bolt-action sniper rifle (Camo)
+        { "originalWeaponID": "673cab3e03c6a20581028bc1", "equivalentWeaponID": "68fd7a61f2b8d96bb3119b19" }, //weapon_sako_trg_m10_86x70 -> CheyTac M200 Intervention .408 CT bolt-action sniper rifle (FDE)
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "690ebacfc047a9a9f1a98782" }, //weapon_colt_m4a1_556x45 -> Colt RO991 9x19 submachine gun
+        { "originalWeaponID": "5cadc190ae921500103bb3b6", "equivalentWeaponID": "6661012d16fbd2fb75408f87" }, //weapon_beretta_m9a3_9x19 -> CZ 75B 9x19mm Pistol
+        { "originalWeaponID": "5cadc190ae921500103bb3b6", "equivalentWeaponID": "67748ec2e6a045dc97e2f978" }, //weapon_beretta_m9a3_9x19 -> CZ 75B Omega 9x19mm Pistol
+        { "originalWeaponID": "5fc3f2d5900b1d5091531e57", "equivalentWeaponID": "687afda52dc9fd6c0e14c602" }, //weapon_tdi_kriss_vector_gen_2_9x19 -> CZ Scorpion EVO 3 A1 9x19 submachine gun
+        { "originalWeaponID": "62e7c4fba689e8c9c50dfc38", "equivalentWeaponID": "6962f22fddc6698c6309b620" }, //weapon_steyr_aug_a1_556x45 -> FN F2000 5.56x45 assault rifle
+        { "originalWeaponID": "62e7c4fba689e8c9c50dfc38", "equivalentWeaponID": "6969867592a994a633084f70" }, //weapon_steyr_aug_a1_556x45 -> FN F2000 5.56x45 assault rifle FDE
+        { "originalWeaponID": "5bfea6e90db834001b7347f3", "equivalentWeaponID": "6924c2f800ff4b8d9d689a5c" }, //weapon_remington_model_700_762x51 -> Henry Big Boy Steel .357 lever-action rifle
+        { "originalWeaponID": "5a7ae0c351dfba0017554310", "equivalentWeaponID": "679f2453d1970258c1df3fce" }, //weapon_glock_glock_17_gen3_9x19 -> Hi-Point Model C-9 9x19 pistol
+        { "originalWeaponID": "6176aca650224f204c1da3fb", "equivalentWeaponID": "664a5b945636ce820472f225" }, //weapon_hk_g28_762x51 -> HK 417 7.62x51 assault rifle
+        { "originalWeaponID": "6193a720f8ee7e52e42109ed", "equivalentWeaponID": "68b7f4060a4536984f82cf4b" }, //weapon_hk_usp_45 -> HK MK23 .45 ACP pistol
+        { "originalWeaponID": "5d3eb3b0a4b93615055e84d2", "equivalentWeaponID": "68433b58a8f9a618b11082d4" }, //weapon_fn_five_seven_57x28 -> HK UCP 4.6x30 pistol
+        { "originalWeaponID": "5fc3e272f8b6a877a729eac5", "equivalentWeaponID": "67b05e25d83f07b7b587c0b5" }, //weapon_hk_ump_1143x23 -> HK UMP 9x19mm submachine gun
+        { "originalWeaponID": "5fc3e272f8b6a877a729eac5", "equivalentWeaponID": "6958447bfc5cad58acf95c0f" }, //weapon_hk_ump_1143x23 -> HK USC .45 ACP carbine
+        { "originalWeaponID": "623063e994fc3f7b302a9696", "equivalentWeaponID": "6920b28eabc4f9d229cb7e49" }, //weapon_hk_g36_556x45 -> HK XM8 5.56x45 assault rifle
+        { "originalWeaponID": "623063e994fc3f7b302a9696", "equivalentWeaponID": "6920a431c8f2ed5000c540a0" }, //weapon_hk_g36_556x45 -> HK XM8 5.56x45 assault rifle (FDE)
+        { "originalWeaponID": "5bb2475ed4351e00853264e3", "equivalentWeaponID": "66ba249b102a9dd6040a6e7e" }, //weapon_hk_416a5_556x45 -> IWI Carmel 5.56x45mm Assault Rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "66ba26a6925f9921573224c9" }, //weapon_colt_m4a1_556x45 -> IWI Carmel 5.56x45mm Assault Rifle (FDE)
+        { "originalWeaponID": "5c488a752e221602b412af63", "equivalentWeaponID": "66a544c956621d3364f6085e" }, //weapon_dt_mdr_556x45 -> IWI Tavor X95 5.56x45 assault rifle (FDE)
+        { "originalWeaponID": "5c488a752e221602b412af63", "equivalentWeaponID": "66a545898022784400d6c836" }, //weapon_dt_mdr_556x45 -> IWI Tavor X95 5.56x45 assault rifle (OD)
+        { "originalWeaponID": "5c488a752e221602b412af63", "equivalentWeaponID": "66a47e98c486ec9d1af3a4da" }, //weapon_dt_mdr_556x45 -> IWI Tavor X95 5.56x45mm assault rifle
+        { "originalWeaponID": "5c488a752e221602b412af63", "equivalentWeaponID": "67f425638b8cbfdc0cd1b5f2" }, //weapon_dt_mdr_556x45 -> IWI Tavor X95 9x19 submachine gun
+        { "originalWeaponID": "5ac4cd105acfc40016339859", "equivalentWeaponID": "695ab544a219218449041700" }, //weapon_izhmash_ak74m_545x39 -> Kalashnikov AK-107 5.45x39 Assault Rifle
+        { "originalWeaponID": "5fbcc1d9016cce60e8341ab3", "equivalentWeaponID": "6761b213607f9a6f79017c7e" }, //weapon_sig_mcx_gen1_762x35 -> Knight's Armament Company PDW .300 Blackout assault rifle
+        { "originalWeaponID": "669fa3f88abd2662d80eee77", "equivalentWeaponID": "677c9a47baecf3c4b2453365" }, //weapon_magnum_research_desert_eagle_l5_127x33 -> LAR Grizzly 50 Mark V .50 AE pistol
+        { "originalWeaponID": "669fa3f88abd2662d80eee77", "equivalentWeaponID": "677ca3e62e9e964a11a55d8e" }, //weapon_magnum_research_desert_eagle_l5_127x33 -> LAR Grizzly 50 Mark V .50 AE pistol (Gold)
+        { "originalWeaponID": "669fa3f88abd2662d80eee77", "equivalentWeaponID": "677ca334da2787e0538c882d" }, //weapon_magnum_research_desert_eagle_l5_127x33 -> LAR Grizzly 50 Mark V .50 AE pistol (Stainless)
+        { "originalWeaponID": "6513ef33e06849f06c0957ca", "equivalentWeaponID": "66e718dc498d978477e0ba75" }, //weapon_zid_rpd_762x39 -> M249 SAW 5.56x45 light machine gun
+        { "originalWeaponID": "618428466ef05c2ce828f218", "equivalentWeaponID": "69066bef905ee9e06c462009" }, //weapon_fn_mk16_556x45_fde -> Magpul Masada 5.56x45 assault rifle
+        { "originalWeaponID": "618428466ef05c2ce828f218", "equivalentWeaponID": "69161a1d649768162e8219ef" }, //weapon_fn_mk16_556x45_fde -> Magpul Masada 5.56x45 assault rifle (Custom)
+        { "originalWeaponID": "618428466ef05c2ce828f218", "equivalentWeaponID": "6906a1aeef59ca68d128e8b7" }, //weapon_fn_mk16_556x45_fde -> Magpul Masada 5.56x45 assault rifle (FDE)
+        { "originalWeaponID": "5bfea6e90db834001b7347f3", "equivalentWeaponID": "69417a3f787395b8cc0ab13e" }, //weapon_remington_model_700_762x51 -> Marlin M1984 Dark-series .44 Magnum lever-action rifle
+        { "originalWeaponID": "66992b349950f5f4cd06029f", "equivalentWeaponID": "6761b213607f9a6f79017cd8" }, //weapon_iwi_uzi_9x19 -> Minebea PM-9 9x19mm Submachine Gun
+        { "originalWeaponID": "618428466ef05c2ce828f218", "equivalentWeaponID": "696ce75f73805e693401aba0" }, //weapon_fn_mk16_556x45_fde -> MSBS Grot 5.56x45 assault rifle
+        { "originalWeaponID": "618428466ef05c2ce828f218", "equivalentWeaponID": "696fe2ebcf7469bf3805173f" }, //weapon_fn_mk16_556x45_fde -> MSBS Grot 5.56x45 assault rifle FDE
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "66839591f4d0cba7b041b2af" }, //weapon_colt_m4a1_556x45 -> Patriot M4A1 5.56x45 carbine
+        { "originalWeaponID": "5448bd6b4bdc2dfc2f8b4569", "equivalentWeaponID": "68d40fb07130ef271f60991f" }, //weapon_izhmeh_pm_9x18pm -> PMM-12 9x18 pistol
+        { "originalWeaponID": "5d3eb3b0a4b93615055e84d2", "equivalentWeaponID": "68bf41bbb786f6e9315a5cab" }, //weapon_fn_five_seven_57x28 -> PSA 5.7 Rock 5.7x28 pistol
+        { "originalWeaponID": "5bfea6e90db834001b7347f3", "equivalentWeaponID": "684e32eaec9f5eb3cacc7ca7" }, //weapon_remington_model_700_762x51 -> Remington MSR .300 WM bolt-action sniper rifle
+        { "originalWeaponID": "5d3eb3b0a4b93615055e84d2", "equivalentWeaponID": "692f77045371aadbbb0ada2e" }, //weapon_fn_five_seven_57x28 -> Ruger 57 5.7x28 pistol
+        { "originalWeaponID": "5a7828548dc32e5a9c28b516", "equivalentWeaponID": "6761b213607f9a6f79017d23" }, //weapon_remington_model_870_12g -> Serbu Super Shorty 12ga shotgun
+        { "originalWeaponID": "57dc2fa62459775949412633", "equivalentWeaponID": "68c23b960f579b9b5fe021e7" }, //weapon_izhmash_aks74u_545x39 -> Simonov AG-042 5.45x39 assault rifle
+        { "originalWeaponID": "57dc2fa62459775949412633", "equivalentWeaponID": "68cf56067ff6ceab0c2fd49e" }, //weapon_izhmash_aks74u_545x39 -> Simonov AG-043 5.45x39 assault rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "676b4e2ff185a450a0b300b4" }, //weapon_colt_m4a1_556x45 -> Singuard Arms "Wages of Sin" 5.56x45 assault rifle
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "6761b213607f9a6f79017d40" }, //weapon_colt_m4a1_556x45 -> Singuard Arms "Wages of Sin" 5.56x45 assault rifle (Anodized Red)
+        { "originalWeaponID": "5447a9cd4bdc2dbd208b4567", "equivalentWeaponID": "676c3cac01023283e5f6a562" }, //weapon_colt_m4a1_556x45 -> Singuard Arms "Wages of Sin" 5.56x45 assault rifle (FDE)
+        { "originalWeaponID": "5cadc190ae921500103bb3b6", "equivalentWeaponID": "665fe0e865683281eb8e7ed6" }, //weapon_beretta_m9a3_9x19 -> Springfield Armory DS Prodigy 9x19 pistol
+        { "originalWeaponID": "5cadc190ae921500103bb3b6", "equivalentWeaponID": "675ceb83e25d80bc676e15a6" }, //weapon_beretta_m9a3_9x19 -> Springfield Armory DS Prodigy 9x19 pistol (FDE)
+        { "originalWeaponID": "59f98b4986f7746f546d2cef", "equivalentWeaponID": "68677d09339b397ed3d37522" }, //weapon_tochmash_sr1mp_9x21 -> SR-2 Udav 9x21mm pistol
+        { "originalWeaponID": "5a7ae0c351dfba0017554310", "equivalentWeaponID": "68452c3da87156b67d9ec538" }, //weapon_glock_glock_17_gen3_9x19 -> Staccato XC 9x19 pistol
+        { "originalWeaponID": "588892092459774ac91d4b11", "equivalentWeaponID": "deee28079e76d537f532021c" }, //weapon_lobaev_dvl-10_308 -> Surgeon Rifles 1581 XL action .338 LM bolt-action sniper rifle
+        { "originalWeaponID": "588892092459774ac91d4b11", "equivalentWeaponID": "1bf618e47cce6d69bec01e9f" }, //weapon_lobaev_dvl-10_308 -> Surgeon Rifles 1581 XL action .338 Norma Magnum bolt-action sniper rifle
+        { "originalWeaponID": "55801eed4bdc2d89578b4588", "equivalentWeaponID": "69236a0b2d1260dbca41ef92" }, //weapon_izhmash_sv-98_762x54r -> SV-98M 7.62x54R bolt-action sniper rifle
+        { "originalWeaponID": "5c46fbd72e2216398b5a8c9c", "equivalentWeaponID": "6657bc8faeddd6b0a9b40224" }, //weapon_izhmash_svd_s_762x54 -> SVD 7.62x54R sniper rifle
+        { "originalWeaponID": "5c46fbd72e2216398b5a8c9c", "equivalentWeaponID": "6657bd4d3a4d6e7c33fd2fdc" }, //weapon_izhmash_svd_s_762x54 -> SVD 7.62x54R sniper rifle (Camo)
+        { "originalWeaponID": "5a7ae0c351dfba0017554310", "equivalentWeaponID": "684b257022b8260501141308" }, //weapon_glock_glock_17_gen3_9x19 -> Taran Tactical JW4 Pit Viper 9x19 pistol
+        { "originalWeaponID": "5a7ae0c351dfba0017554310", "equivalentWeaponID": "684b64658c4c5f37f2c4e56a" }, //weapon_glock_glock_17_gen3_9x19 -> Taran Tactical JW4 Pit Viper 9x19 pistol (Stainless)
+        { "originalWeaponID": "59d6088586f774275f37482f", "equivalentWeaponID": "68e0002a0d6a4dab56810fbd" }, //weapon_izhmash_akm_762x39 -> Valmet M78 7.62x51 light machine gun
+        { "originalWeaponID": "5cadc190ae921500103bb3b6", "equivalentWeaponID": "6761b213607f9a6f79017d52" }, //weapon_beretta_m9a3_9x19 -> Wilson Combat EDC X9 9x19 pistol
+        { "originalWeaponID": "5c46fbd72e2216398b5a8c9c", "equivalentWeaponID": "66e88596febdcf9daade16a8" } //weapon_izhmash_svd_s_762x54 -> Zastava M76 7.92x57 marksman rifle
+    ],
+
+    "weaponCategoryAdditions":
+    {
+        "Pistol":
+        [
+            "6868d249cdee524f8c0ba45f", //Beretta 92FS 9x19 pistol
+            "679f2453d1970258c1df3fce", //Hi-Point Model C-9 9x19 pistol
+            "6661012d16fbd2fb75408f87", //CZ 75B 9x19mm Pistol
+            "67748ec2e6a045dc97e2f978", //CZ 75B Omega 9x19mm Pistol
+            "677c9a47baecf3c4b2453365", //LAR Grizzly 50 Mark V .50 AE pistol
+            "677ca3e62e9e964a11a55d8e", //LAR Grizzly 50 Mark V .50 AE pistol (Gold)
+            "677ca334da2787e0538c882d", //LAR Grizzly 50 Mark V .50 AE pistol (Stainless)
+            "68b7f4060a4536984f82cf4b", //HK MK23 .45 ACP pistol
+            "684b257022b8260501141308", //Taran Tactical JW4 Pit Viper 9x19 pistol
+            "684b64658c4c5f37f2c4e56a", //Taran Tactical JW4 Pit Viper 9x19 pistol (Stainless)
+            "68d40fb07130ef271f60991f", //PMM-12 9x18 pistol
+            "665fe0e865683281eb8e7ed6", //Springfield Armory DS Prodigy 9x19 pistol
+            "675ceb83e25d80bc676e15a6", //Springfield Armory DS Prodigy 9x19 pistol (FDE)
+            "68bf41bbb786f6e9315a5cab", //PSA 5.7 Rock 5.7x28 pistol
+            "692f77045371aadbbb0ada2e", //Ruger 57 5.7x28 pistol
+            "68452c3da87156b67d9ec538", //Staccato XC 9x19 pistol
+            "68433b58a8f9a618b11082d4", //HK UCP 4.6x30 pistol
+            "68677d09339b397ed3d37522", //SR-2 Udav 9x21mm pistol
+            "6761b213607f9a6f79017d52" //Wilson Combat EDC X9 9x19 pistol
+        ],
+        "SMG":
+        [
+            "687afda52dc9fd6c0e14c602", //CZ Scorpion EVO 3 A1 9x19 submachine gun
+            "690ebacfc047a9a9f1a98782", //Colt RO991 9x19 submachine gun
+            "67b05e25d83f07b7b587c0b5", //HK UMP 9x19mm submachine gun
+            "6958447bfc5cad58acf95c0f", //HK USC .45 ACP carbine
+            "67f425638b8cbfdc0cd1b5f2", //IWI Tavor X95 9x19 submachine gun
+            "6761b213607f9a6f79017cd8" //Minebea PM-9 9x19mm Submachine Gun
+        ],
+        "Bolt Action":
+        [
+            "68a3836826dffa87b5767c04", //Accuracy International AXMC .300 WM bolt-action sniper rifle
+            "68fd4feab87d77a5aaf6bf64", //CheyTac M200 Intervention .408 CT bolt-action sniper rifle
+            "68fd7d14ff5a09197b5ab82a", //CheyTac M200 Intervention .408 CT bolt-action sniper rifle (Camo)
+            "68fd7a61f2b8d96bb3119b19", //CheyTac M200 Intervention .408 CT bolt-action sniper rifle (FDE)
+            "684e32eaec9f5eb3cacc7ca7", //Remington MSR .300 WM bolt-action sniper rifle
+            "69236a0b2d1260dbca41ef92", //SV-98M 7.62x54R bolt-action sniper rifle
+            "deee28079e76d537f532021c", //Surgeon Rifles 1581 XL action .338 LM bolt-action sniper rifle
+            "1bf618e47cce6d69bec01e9f" //Surgeon Rifles 1581 XL action .338 Norma Magnum bolt-action sniper rifle
+        ],
+        "LMG":
+        [
+            "682d4820e48f3c573ec332b5", //Bofors Ak5G 5.56x45 light machinegun
+            "66e718dc498d978477e0ba75", //M249 SAW 5.56x45 light machine gun
+            "68e0002a0d6a4dab56810fbd" //Valmet M78 7.62x51 light machine gun
+        ],
+        "Bullpup":
+        [
+            "6962f22fddc6698c6309b620", //FN F2000 5.56x45 assault rifle
+            "6969867592a994a633084f70", //FN F2000 5.56x45 assault rifle FDE
+            "66a544c956621d3364f6085e", //IWI Tavor X95 5.56x45 assault rifle (FDE)
+            "66a545898022784400d6c836", //IWI Tavor X95 5.56x45 assault rifle (OD)
+            "66a47e98c486ec9d1af3a4da", //IWI Tavor X95 5.56x45mm assault rifle
+            "67f425638b8cbfdc0cd1b5f2" //IWI Tavor X95 9x19 submachine gun
+        ],
+        "FN Series":
+        [
+            "6962f22fddc6698c6309b620", //FN F2000 5.56x45 assault rifle
+            "6969867592a994a633084f70" //FN F2000 5.56x45 assault rifle FDE
+        ],
+        "DMR":
+        [
+            "664a5b945636ce820472f225", //HK 417 7.62x51 assault rifle
+            "6657bc8faeddd6b0a9b40224", //SVD 7.62x54R sniper rifle
+            "6657bd4d3a4d6e7c33fd2fdc", //SVD 7.62x54R sniper rifle (Camo)
+            "66e88596febdcf9daade16a8" //Zastava M76 7.92x57 marksman rifle
+        ],
+        "Ol' Reliable AKs":
+        [
+            "69555be939fb0a1a6f0ad12e", //A-545 5.45x39 assault rifle
+            "0cb4a36dd2e587b46e813dbe", //AEK-971 5.45x39 assault rifle
+            "686093d590c3dce07984c38a", //AEK-973 7.62x39 assault rifle
+            "679a6a534f3d279c99b135b9", //AN-94 5.45x39 "Kirov's Custom" assault rifle
+            "678fe4a4906c7bd23722c71f", //AN-94 5.45x39 assault rifle
+            "695ab544a219218449041700", //Kalashnikov AK-107 5.45x39 Assault Rifle
+            "68c23b960f579b9b5fe021e7", //Simonov AG-042 5.45x39 assault rifle
+            "68cf56067ff6ceab0c2fd49e" //Simonov AG-043 5.45x39 assault rifle
+        ],
+        "Pump shotguns":
+        [
+            "6761b213607f9a6f79017d23" //Serbu Super Shorty 12ga shotgun
+        ],
+        "Hunting":
+        [
+            "6924c2f800ff4b8d9d689a5c", //Henry Big Boy Steel .357 lever-action rifle
+            "69417a3f787395b8cc0ab13e" //Marlin M1984 Dark-series .44 Magnum lever-action rifle
+        ],
+        "The Legends":
+        [
+            "6868d249cdee524f8c0ba45f", //Beretta 92FS 9x19 pistol
+            "6661012d16fbd2fb75408f87", //CZ 75B 9x19mm Pistol
+            "67748ec2e6a045dc97e2f978" //CZ 75B Omega 9x19mm Pistol
+        ],
+        "WW2":
+        [
+            "669fca7f9ed4916116c76d5e", //Browning Auto-5 12ga shotgun
+            "6840ebf5b8687ba34f8dfbca" //Browning Auto-5 12ga shotgun (Custom)
+        ],
+        "Ak 100 Series":
+        [
+            "695ab544a219218449041700" //Kalashnikov AK-107 5.45x39 Assault Rifle
+        ],
+        "Scrap SMGs":
+        [
+            "6761b213607f9a6f79017cd8" //Minebea PM-9 9x19mm Submachine Gun
+        ],
+        "WTT-Armory":
+        [
+            "69777201f57d45a2ec02aafc", //(no en locale)
+            "69555be939fb0a1a6f0ad12e", //A-545 5.45x39 assault rifle
+            "68a3836826dffa87b5767c04", //Accuracy International AXMC .300 WM bolt-action sniper rifle
+            "0cb4a36dd2e587b46e813dbe", //AEK-971 5.45x39 assault rifle
+            "686093d590c3dce07984c38a", //AEK-973 7.62x39 assault rifle
+            "679a6a534f3d279c99b135b9", //AN-94 5.45x39 "Kirov's Custom" assault rifle
+            "678fe4a4906c7bd23722c71f", //AN-94 5.45x39 assault rifle
+            "693742e7eab3af9d89349410", //Barrett M107A1 .50 BMG anti-material rifle
+            "6945dc69fe52c2415de357f7", //Barrett XM109 25x59 anti-material payload rifle
+            "6868d249cdee524f8c0ba45f", //Beretta 92FS 9x19 pistol
+            "6671ebcdd32bd95eb398e920", //Bofors Ak5C 5.56x45 assault rifle
+            "682d460e951a926af552d764", //Bofors Ak5C 5.56x45 assault rifle (custom)
+            "682d3dd16900cb35564c8825", //Bofors Ak5D 5.56x45 assault rifle
+            "682d4820e48f3c573ec332b5", //Bofors Ak5G 5.56x45 light machinegun
+            "669fca7f9ed4916116c76d5e", //Browning Auto-5 12ga shotgun
+            "6840ebf5b8687ba34f8dfbca", //Browning Auto-5 12ga shotgun (Custom)
+            "68fd4feab87d77a5aaf6bf64", //CheyTac M200 Intervention .408 CT bolt-action sniper rifle
+            "68fd7d14ff5a09197b5ab82a", //CheyTac M200 Intervention .408 CT bolt-action sniper rifle (Camo)
+            "68fd7a61f2b8d96bb3119b19", //CheyTac M200 Intervention .408 CT bolt-action sniper rifle (FDE)
+            "690ebacfc047a9a9f1a98782", //Colt RO991 9x19 submachine gun
+            "6661012d16fbd2fb75408f87", //CZ 75B 9x19mm Pistol
+            "67748ec2e6a045dc97e2f978", //CZ 75B Omega 9x19mm Pistol
+            "687afda52dc9fd6c0e14c602", //CZ Scorpion EVO 3 A1 9x19 submachine gun
+            "6962f22fddc6698c6309b620", //FN F2000 5.56x45 assault rifle
+            "6969867592a994a633084f70", //FN F2000 5.56x45 assault rifle FDE
+            "6924c2f800ff4b8d9d689a5c", //Henry Big Boy Steel .357 lever-action rifle
+            "679f2453d1970258c1df3fce", //Hi-Point Model C-9 9x19 pistol
+            "664a5b945636ce820472f225", //HK 417 7.62x51 assault rifle
+            "68b7f4060a4536984f82cf4b", //HK MK23 .45 ACP pistol
+            "68433b58a8f9a618b11082d4", //HK UCP 4.6x30 pistol
+            "67b05e25d83f07b7b587c0b5", //HK UMP 9x19mm submachine gun
+            "6958447bfc5cad58acf95c0f", //HK USC .45 ACP carbine
+            "6920b28eabc4f9d229cb7e49", //HK XM8 5.56x45 assault rifle
+            "6920a431c8f2ed5000c540a0", //HK XM8 5.56x45 assault rifle (FDE)
+            "66ba249b102a9dd6040a6e7e", //IWI Carmel 5.56x45mm Assault Rifle
+            "66ba26a6925f9921573224c9", //IWI Carmel 5.56x45mm Assault Rifle (FDE)
+            "66a544c956621d3364f6085e", //IWI Tavor X95 5.56x45 assault rifle (FDE)
+            "66a545898022784400d6c836", //IWI Tavor X95 5.56x45 assault rifle (OD)
+            "66a47e98c486ec9d1af3a4da", //IWI Tavor X95 5.56x45mm assault rifle
+            "67f425638b8cbfdc0cd1b5f2", //IWI Tavor X95 9x19 submachine gun
+            "695ab544a219218449041700", //Kalashnikov AK-107 5.45x39 Assault Rifle
+            "6761b213607f9a6f79017c7e", //Knight's Armament Company PDW .300 Blackout assault rifle
+            "677c9a47baecf3c4b2453365", //LAR Grizzly 50 Mark V .50 AE pistol
+            "677ca3e62e9e964a11a55d8e", //LAR Grizzly 50 Mark V .50 AE pistol (Gold)
+            "677ca334da2787e0538c882d", //LAR Grizzly 50 Mark V .50 AE pistol (Stainless)
+            "66e718dc498d978477e0ba75", //M249 SAW 5.56x45 light machine gun
+            "69066bef905ee9e06c462009", //Magpul Masada 5.56x45 assault rifle
+            "69161a1d649768162e8219ef", //Magpul Masada 5.56x45 assault rifle (Custom)
+            "6906a1aeef59ca68d128e8b7", //Magpul Masada 5.56x45 assault rifle (FDE)
+            "69417a3f787395b8cc0ab13e", //Marlin M1984 Dark-series .44 Magnum lever-action rifle
+            "6761b213607f9a6f79017cd8", //Minebea PM-9 9x19mm Submachine Gun
+            "696ce75f73805e693401aba0", //MSBS Grot 5.56x45 assault rifle
+            "696fe2ebcf7469bf3805173f", //MSBS Grot 5.56x45 assault rifle FDE
+            "66839591f4d0cba7b041b2af", //Patriot M4A1 5.56x45 carbine
+            "68d40fb07130ef271f60991f", //PMM-12 9x18 pistol
+            "68bf41bbb786f6e9315a5cab", //PSA 5.7 Rock 5.7x28 pistol
+            "684e32eaec9f5eb3cacc7ca7", //Remington MSR .300 WM bolt-action sniper rifle
+            "692f77045371aadbbb0ada2e", //Ruger 57 5.7x28 pistol
+            "6761b213607f9a6f79017d23", //Serbu Super Shorty 12ga shotgun
+            "68c23b960f579b9b5fe021e7", //Simonov AG-042 5.45x39 assault rifle
+            "68cf56067ff6ceab0c2fd49e", //Simonov AG-043 5.45x39 assault rifle
+            "676b4e2ff185a450a0b300b4", //Singuard Arms "Wages of Sin" 5.56x45 assault rifle
+            "6761b213607f9a6f79017d40", //Singuard Arms "Wages of Sin" 5.56x45 assault rifle (Anodized Red)
+            "676c3cac01023283e5f6a562", //Singuard Arms "Wages of Sin" 5.56x45 assault rifle (FDE)
+            "665fe0e865683281eb8e7ed6", //Springfield Armory DS Prodigy 9x19 pistol
+            "675ceb83e25d80bc676e15a6", //Springfield Armory DS Prodigy 9x19 pistol (FDE)
+            "68677d09339b397ed3d37522", //SR-2 Udav 9x21mm pistol
+            "68452c3da87156b67d9ec538", //Staccato XC 9x19 pistol
+            "deee28079e76d537f532021c", //Surgeon Rifles 1581 XL action .338 LM bolt-action sniper rifle
+            "1bf618e47cce6d69bec01e9f", //Surgeon Rifles 1581 XL action .338 Norma Magnum bolt-action sniper rifle
+            "69236a0b2d1260dbca41ef92", //SV-98M 7.62x54R bolt-action sniper rifle
+            "6657bc8faeddd6b0a9b40224", //SVD 7.62x54R sniper rifle
+            "6657bd4d3a4d6e7c33fd2fdc", //SVD 7.62x54R sniper rifle (Camo)
+            "684b257022b8260501141308", //Taran Tactical JW4 Pit Viper 9x19 pistol
+            "684b64658c4c5f37f2c4e56a", //Taran Tactical JW4 Pit Viper 9x19 pistol (Stainless)
+            "68e0002a0d6a4dab56810fbd", //Valmet M78 7.62x51 light machine gun
+            "6761b213607f9a6f79017d52", //Wilson Combat EDC X9 9x19 pistol
+            "66e88596febdcf9daade16a8" //Zastava M76 7.92x57 marksman rifle
+        ],
+        "HK Series":
+        [
+            "664a5b945636ce820472f225", //HK 417 7.62x51 assault rifle
+            "68b7f4060a4536984f82cf4b", //HK MK23 .45 ACP pistol
+            "68433b58a8f9a618b11082d4", //HK UCP 4.6x30 pistol
+            "67b05e25d83f07b7b587c0b5", //HK UMP 9x19mm submachine gun
+            "6958447bfc5cad58acf95c0f", //HK USC .45 ACP carbine
+            "6920b28eabc4f9d229cb7e49", //HK XM8 5.56x45 assault rifle
+            "6920a431c8f2ed5000c540a0" //HK XM8 5.56x45 assault rifle (FDE)
+        ]
+    },
+
+    "modCategoryAdditions":
+    {
+        "Iron Sights":
+        [
+            "69777201f57d45a2ec02aafe", //(no locale)
+            "69555c7739fb0a1a6f0ad132", //A-545 Rear Sight
+            "68609cdd6100b1899111ff9f", //AK series CQB rear sight
+            "6937485ce543594692aab677", //Barrett M107A1 folding front sight post
+            "6937485fb8feebf8aff61b85", //Barrett M107A1 folding rear sight
+            "687fb51f2756d21d3145a094", //CZ Scorpion EVO 3 front sight
+            "687fb5224b7bf5a5702898ee", //CZ Scorpion EVO 3 rear sight
+            "696958420d2309811a0fd1d7", //FN F2000 5.56x45 Scope Cover
+            "6968029b5966cfdf3708c748", //FN F2000 Front Sight
+            "696801b85966cfdf3708c746", //FN F2000 Rear Flip-Up Sight
+            "696808315966cfdf3708c74c", //FN F2000S Front Sight
+            "69680a1b5966cfdf3708c756", //FN F2000S Rear Flip-Up Sight
+            "664a5ff61c4610dc01e84917", //HK 417 Drum rear sight
+            "664a600b58753b43b7fea3af", //HK 417 front sight
+            "68b7f7e1154441e5f4447192", //HK MK23 front sight
+            "68b7f7317385935fb8a06488", //HK MK23 rear sight
+            "68b9ce4e6ac219f4b866616d", //HK MK23 rear sight bearing
+            "68b7f7ac290421dd052d8def", //HK MK23 tritium front sight
+            "68b7f777a2a0395b35545877", //HK MK23 tritium rear sight
+            "684374b008d0b9c0aa535a62", //HK UCP rear sight
+            "66a47ed0df2ffbca58ebe5ed", //IWI Tavor X95 front sight
+            "66a47ed3f97061a20b99f188", //IWI Tavor X95 rear sight
+            "677c9d4ee9edb9191668af01", //LAR Grizzly front sight
+            "677c9d30ca0b19fe954b4ed2", //LAR Grizzly front sight (Green)
+            "677c9d5ecdee47b41baa92ac", //LAR Grizzly front sight (Red)
+            "677c9e554dde113597355fad", //LAR Grizzly rear sight
+            "677ca78263bc534f0b830a42", //LAR Grizzly Tritium rear sight (Green)
+            "677c9e4595c08963e941a146", //LAR Grizzly Tritium rear sight (Red)
+            "66e71ab0796060d309b7b244", //M249 Front Sight Post
+            "6912276c0545f6fef92580ca", //Magpul Masada flip-up front sight
+            "691226c24afdbfd9b59f5092", //Magpul Masada flip-up rear sight
+            "691226dc484b05df2aa39d50", //Magpul Masada flip-up rear sight (FDE)
+            "66ba2a6be18ed84221edd72d", //Magpul MBUS Gen3 flip-up front sight
+            "66ba2a7583204e25695233c0", //Magpul MBUS Gen3 flip-up front sight
+            "66ba297b859e57cf91e38a5d", //Magpul MBUS Gen3 flip-up rear sight
+            "66ba29d44744d98a4df0073b", //Magpul MBUS Gen3 flip-up rear sight
+            "6683957f2e516f6146af483d", //Patriot rear sight carry handle
+            "68bf453529c58e5188c0bcbe", //PSA 5.7 Rock front sight
+            "68bf450e899a7ddb21e01d0f", //PSA 5.7 Rock rear sight
+            "692f704e5371aadbbb0ada22", //Ruger 57 Front Sight
+            "692f704e5371aadbbb0ada20", //Ruger 57 Rear Sight
+            "68c23b3d4a286357245eb641", //Simonov AG-042/043 rear sight
+            "675ce99bcb144fc338c092e3", //Springfield Armory DS Prodigy Front Sight
+            "665fe70a14a35e1ed07facaf", //Springfield Armory DS Prodigy Front Sight
+            "665fe63876838d24231faa26", //Springfield Armory DS Prodigy Rear Pistol Sight
+            "6867821cdea16277c803a584", //SR-2 Udav tritium front pistol sight
+            "68678220f740d20e8625095f", //SR-2 Udav tritium rear pistol sight
+            "6846049fd008e00428409f24", //Staccato XC front sight
+            "6846039a06cd8ba4da4b764c", //Staccato XC rear sight with sight mount cap
+            "684b271ce72d12cf50b2a0dd", //TTI Pit Viper rear sight
+            "684b66d1a91f8b28868236a4", //TTI Pit Viper rear sight (Stainless)
+            "683a4e266a0c93630610d794", //Wilson Combat EDC X9 slide plate for extended slide
+            "6761b213607f9a6f79017d5b", //Wilson Combat EDC X9 tactical slide plate
+            "66e887cf09ede6c7c42def11" //Zastava M76 rear sight
+        ],
+        "Collimators":
+        [
+            "03f6c86c56945862820e1006", //Aimpoint CS reflex sight
+            "5ae3d18efa17cbd51e898ced" //ITL MARS reflex sight
+        ],
+        "Assault Scopes":
+        [
+            "682be7bf16812803987c3715", //Aimpoint CGA5P 2x telescopic sight with carryhandle
+            "2322ee962f6c77a1284abc1e", //BAE Systems SUSAT 4x32 scope
+            "696958420d2309811a0fd1d5" //FN F2000 1.6x Scope
+        ],
+        "All Silencers":
+        [
+            "699c9f633ba4c14a55002933", //(no locale)
+            "677ca04bc5fcd4555728b18c", //AAC Ti-RANT custom .50 AE sound suppressor
+            "693745e76a10f1e0e2cf7853", //Barrett QDL .50 bmg suppressor
+            "69464ff61b0557c6882268ba", //Barrett XM109 25x59 sound suppressor
+            "68bf486151b56d9652d15b69", //Custom 5.7x28 direct thread sound suppressor
+            "68d4192eb4411d527334f35f", //Custom 9x18 sound suppressor
+            "68fd62d343a142b14be0c3ec", //Elite Iron Windtalker AMF .408 CT sound suppressor
+            "68fd63e8842f704b09062fd1", //Elite Iron Windtalker AMF .408 CT sound suppressor (FDE)
+            "68fd6401e11fcc19f3a8d365", //Elite Iron Windtalker AMF .408 CT sound suppressor (Titanium)
+            "666102ef2d367ec85ddd2030", //Gemtech Tundra 9x19 sound suppressor
+            "684388df68faf2369eeba68f", //HK UCP tactical 4.6x30 sound suppressor
+            "6884465f8615db2a21955aa1", //Innovative Arms IA-SC9 integral suppressor
+            "68b9e668a786e0e3b54ba0b9", //Knight's Armament Company MK23 .45 ACP sound suppressor
+            "6830f15212b2c07a8f31a42a", //Minebea PM-9 9x19 integral suppressor system
+            "684e49af525c602815316f8d", //OmniTech Systems Sabre-5 .300 WM sound suppressor
+            "664b9a4798222d80ce536df6", //OSS Helix QD 7.62x51 sound suppressor
+            "686092fd52a7a52a320b81b8", //PBS-1N 7.62x39 experimental sound suppressor
+            "3777aadf41ebb6d92d108931", //PBS-2N 5.45x39 experimental sound suppressor
+            "691612be65f7a3e248c8be2a", //SIG Sauer SRD762Ti 7.62x51 sound suppressor (Camo)
+            "686780cea875e915fec121ec", //SR-2 Udav prototype 9x21mm sound suppressor
+            "696fc5ed64572d85f30aac10", //STEEL Pegasus 5.56x45 Silencer
+            "68e00ec3cddba35e72a8c0be", //Valmet M78 7.61x51 sound suppressor
+            "68cae1561e2d372b839a3fed", //VSS-M "Ublyudok" 9x39 integral barrel-suppressor
+            "66e88961b65d524acd112c0a" //Zastava M76 Moloc Armament 7.92x57 sound suppressor
+        ],
+        "Big Silencers":
+        [
+            "677ca04bc5fcd4555728b18c", //AAC Ti-RANT custom .50 AE sound suppressor
+            "693745e76a10f1e0e2cf7853", //Barrett QDL .50 bmg suppressor
+            "69464ff61b0557c6882268ba", //Barrett XM109 25x59 sound suppressor
+            "68fd62d343a142b14be0c3ec", //Elite Iron Windtalker AMF .408 CT sound suppressor
+            "68fd63e8842f704b09062fd1", //Elite Iron Windtalker AMF .408 CT sound suppressor (FDE)
+            "68fd6401e11fcc19f3a8d365", //Elite Iron Windtalker AMF .408 CT sound suppressor (Titanium)
+            "684e49af525c602815316f8d", //OmniTech Systems Sabre-5 .300 WM sound suppressor
+            "664b9a4798222d80ce536df6", //OSS Helix QD 7.62x51 sound suppressor
+            "691612be65f7a3e248c8be2a", //SIG Sauer SRD762Ti 7.62x51 sound suppressor (Camo)
+            "68e00ec3cddba35e72a8c0be", //Valmet M78 7.61x51 sound suppressor
+            "66e88961b65d524acd112c0a" //Zastava M76 Moloc Armament 7.92x57 sound suppressor
+        ],
+        "Small Silencers":
+        [
+            "68bf486151b56d9652d15b69", //Custom 5.7x28 direct thread sound suppressor
+            "68d4192eb4411d527334f35f", //Custom 9x18 sound suppressor
+            "666102ef2d367ec85ddd2030", //Gemtech Tundra 9x19 sound suppressor
+            "684388df68faf2369eeba68f", //HK UCP tactical 4.6x30 sound suppressor
+            "6884465f8615db2a21955aa1", //Innovative Arms IA-SC9 integral suppressor
+            "68b9e668a786e0e3b54ba0b9", //Knight's Armament Company MK23 .45 ACP sound suppressor
+            "6830f15212b2c07a8f31a42a", //Minebea PM-9 9x19 integral suppressor system
+            "686780cea875e915fec121ec" //SR-2 Udav prototype 9x21mm sound suppressor
+        ],
+        "Medium Silencers":
+        [
+            "686092fd52a7a52a320b81b8", //PBS-1N 7.62x39 experimental sound suppressor
+            "3777aadf41ebb6d92d108931", //PBS-2N 5.45x39 experimental sound suppressor
+            "696fc5ed64572d85f30aac10", //STEEL Pegasus 5.56x45 Silencer
+            "68cae1561e2d372b839a3fed" //VSS-M "Ublyudok" 9x39 integral barrel-suppressor
+        ],
+        "Bipods":
+        [
+            "682aaf066682ec0bfe5000e8", //Ak5G Bipod
+            "693745d99ef35610fd3bf4ad", //Barrett M107A1 bipod
+            "68fd727675ed7e422a8e89c2", //CheyTac M200 Invervention bipod
+            "68fd72acc8fe574cbf6cb70a", //CheyTac M200 Invervention bipod (Camo)
+            "68fd72a7dbb26b84c33b8a91", //CheyTac M200 Invervention bipod (FDE)
+            "69221bec95c6fbc0a4a88340", //HK XM8 bipod
+            "684741ff7650c89e76c13e2c", //M249 Bipod
+            "68e00daaa838761ebcba47cb" //Valmet M78 Bipod
+        ],
+        "Tactical Lasers":
+        [
+            "68b9cf84c826940d2b684dad", //AN/PEQ-6 Integrated Laser Light Module
+            "68d739c05eadd47b0e4617a7" //PMM-12 laser aiming module
+        ]
+    }
+}

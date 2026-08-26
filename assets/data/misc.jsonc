@@ -1,0 +1,81 @@
+{
+    "validMaps":
+    [
+        "factory4_day",
+        "factory4_night",
+        "TarkovStreets",
+        "bigmap",
+        "Sandbox",
+        "Interchange",
+        "RezervBase",
+        "Shoreline",
+        "laboratory",
+        "Woods",
+        "Lighthouse"
+        //"Labyrinth" //New map - disabled by default. Uncomment (add a comma to the line above) to let quests be relocated here. Its locationIdMap entry below is already in place.
+    ],
+    "easyMaps": //Maps that will be used if a quest is early.
+    [
+        "factory4_day",
+        "TarkovStreets",
+        "bigmap",
+        "Sandbox",
+        "Interchange",
+        "RezervBase",
+        "Shoreline",
+        "Woods",
+        "Lighthouse"
+    ],
+    "locationIdMap":
+    {
+        "any": "any",
+        "factory4_day": "55f2d3fd4bdc2d5f408b4567",
+        "factory4_night": "59fc81d786f774390775787e",
+        "bigmap": "56f40101d2720b2a4d8b45d6",
+        "woods": "5704e3c2d2720bac5b8b4567",
+        "shoreline": "5704e554d2720bac5b8b456e",
+        "interchange": "5714dbc024597771384a510d",
+        "lighthouse": "5704e4dad2720bb55b8b4567",
+        "laboratory": "5b0fc42d86f7744a585f9105",
+        "rezervbase": "5704e5fad2720bc05b8b4567",
+        "tarkovstreets": "5714dc692459777137212e12",
+        "sandbox": "653e6760052c01c1c805532f",
+        "sandbox_high": "653e6760052c01c1c805532f",
+        "labyrinth": "6733700029c367a3d40b02af"
+    },
+    "validTargets": //Each target has a DIFFICULTY (drives kill-count scaling when a quest's target is rerolled - by the difference in difficulty, so equal-difficulty swaps like Usec<->Bear change nothing) and a WEIGHT (pick odds vs the others; omit for 1). Difficulty need not be contiguous - space PMCs further from Scav for a hardcore run and PMC<->Scav rerolls swing the count harder.
+    [
+        { "target": "Usec",   "difficulty": 0, "weight": 0 }, //Usec/Bear DISABLED as targets (faction-specific PMC hunts aren't fun). Weight 0 = never picked as a destination, but KEPT in the list so a quest that currently targets Usec/Bear still matches the reroll gate and gets swapped away to AnyPmc/Savage/Any. Deleting them instead would freeze existing Usec/Bear quests, so don't.
+        { "target": "Bear",   "difficulty": 0, "weight": 0 },
+        { "target": "AnyPmc", "difficulty": 1, "weight": 1 },
+        { "target": "Savage", "difficulty": 2, "weight": 1 },
+        { "target": "Any",    "difficulty": 3, "weight": 1 }
+    ],
+    "bodyParts":
+    [
+        ["Head"],
+        ["Chest", "Stomach", "LeftArm", "RightArm"],
+        ["Stomach", "LeftLeg", "RightLeg"]
+    ],
+    "rewards":
+    {
+        "common":
+        [
+            "665886abdaadd1069736c539", //Unlocked valuables crate (Common)
+            "6658876e146af22739040fad", //Unlocked equipment crate (Common)
+            "6658892e6e007c6f33662002" //Unlocked supply crate (Common)
+        ],
+        "rare":
+        [
+            "665730fa4de4820934746c48", //Unlocked equipment crate (Rare)
+            "665732f4464c4b4ba4670fa9", //Unlocked supply crate (Rare)
+            "66573310a1657263d816a139" //Unlocked valuables crate (Rare)
+        ],
+        "epic":
+        [
+            "6658291eefd94e2d665b14a4", //Unlocked equipment crate (Epic)
+            "66582972ac60f009f270d2aa", //Unlocked supply crate (Epic)
+            "665829a6efd94e2d665b14a8" //Unlocked valuables crate (Epic)
+        ]
+    }
+}
