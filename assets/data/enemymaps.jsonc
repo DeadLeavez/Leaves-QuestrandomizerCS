@@ -1,0 +1,106 @@
+// enemymaps.jsonc - "which maps does this enemy actually appear on?"
+//
+//
+// MAP CODES (code -> map):
+//   "factory4_day"   -> Factory (day)      "RezervBase"    -> Reserve
+//   "factory4_night" -> Factory (night)    "laboratory"    -> The Lab
+//   "bigmap"         -> Customs            "TarkovStreets" -> Streets of Tarkov
+//   "Woods"          -> Woods              "Sandbox"       -> Ground Zero
+//   "Shoreline"      -> Shoreline          "Labyrinth"     -> Labyrinth
+//   "Interchange"    -> Interchange        "Suburbs"       -> Icebreaker (modded map; reuses the vanilla
+//   "Lighthouse"     -> Lighthouse                            "Suburbs" slot, so its code is "Suburbs")
+//
+// ENEMY TYPES (every WildSpawnType role id you can put in "roles"):
+//   marksman, assault, bossTest, bossBully, followerTest, followerBully, bossKilla, bossKojaniy,
+//   followerKojaniy, pmcBot, cursedAssault, bossGluhar, followerGluharAssault, followerGluharSecurity,
+//   followerGluharScout, followerGluharSnipe, followerSanitar, bossSanitar, test, assaultGroup,
+//   sectantWarrior, sectantPriest, bossTagilla, followerTagilla, exUsec, gifter, bossKnight,
+//   followerBigPipe, followerBirdEye, bossZryachiy, followerZryachiy, bossBoar, followerBoar,
+//   arenaFighter, arenaFighterEvent, bossBoarSniper, crazyAssaultEvent, peacefullZryachiyEvent,
+//   sectactPriestEvent, ravangeZryachiyEvent, followerBoarClose1, followerBoarClose2, bossKolontay,
+//   followerKolontayAssault, followerKolontaySecurity, shooterBTR, bossPartisan, spiritWinter,
+//   spiritSpring, peacemaker, pmcBEAR, pmcUSEC, skier, sectantPredvestnik, sectantPrizrak, sectantOni,
+//   infectedAssault, infectedPmc, infectedCivil, infectedLaborant, infectedTagilla, bossTagillaAgro,
+//   bossKillaAgro, tagillaHelperAgro
+//
+[
+    // ---- Bosses + their followers (followers spawn on the same maps as their boss) ----
+    {
+        "roles":    [ "bossBully", "followerBully" ], // Reshala
+        "maps":     [ "bigmap" ]
+    },
+    {
+        "roles":    [ "bossKilla" ],
+        "maps":     [ "Interchange" ]
+    },
+    {
+        "roles":    [ "bossKojaniy", "followerKojaniy" ], // Shturman
+        "maps":     [ "Woods" ]
+    },
+    {
+        "roles":    [ "bossGluhar", "followerGluharAssault", "followerGluharSecurity", "followerGluharScout", "followerGluharSnipe" ],
+        "maps":     [ "RezervBase" ]
+    },
+    {
+        "roles":    [ "bossSanitar", "followerSanitar" ],
+        "maps":     [ "Shoreline" ]
+    },
+    {
+        "roles":    [ "bossTagilla", "followerTagilla" ],
+        "maps":     [ "factory4_day", "factory4_night" ]
+    },
+    {
+        "roles":    [ "bossZryachiy", "followerZryachiy" ],
+        "maps":     [ "Lighthouse" ]
+    },
+    {
+        "roles":    [ "bossBoar", "followerBoar", "followerBoarClose1", "followerBoarClose2", "bossBoarSniper" ], // Kaban
+        "maps":     [ "TarkovStreets" ]
+    },
+    {
+        "roles":    [ "bossKolontay", "followerKolontayAssault", "followerKolontaySecurity" ],
+        "maps":     [ "TarkovStreets", "Sandbox" ]
+    },
+    {
+        "roles":    [ "bossPartisan" ],
+        "maps":     [ "bigmap", "Woods", "Shoreline", "Lighthouse" ]
+    },
+
+    {
+        "roles":    [ "sectantWarrior", "sectantPriest", "sectantPredvestnik", "sectantPrizrak", "sectantOni" ],
+        "maps":     [ "factory4_night", "Woods", "Shoreline", "bigmap", "Sandbox" ]
+    },
+
+
+    // ---- Goonsquad. Goonsquad! Aaaaah!!! ----
+    {
+        "roles":    [ "bossKnight", "followerBigPipe", "followerBirdEye" ],
+        "maps":     [ "bigmap", "Woods", "Shoreline", "Lighthouse" ]
+    },
+
+    // ---- Rogues & Raiders ----
+    {
+        "roles":    [ "exUsec" ], // Rogues
+        "maps":     [ "Lighthouse" ]
+    },
+    {
+        "roles":    [ "pmcBot" ], // Raiders
+        "maps":     [ "RezervBase", "laboratory" ]
+    },
+
+    // ---- Labyrinth agro variants ----
+    {
+        "roles":    [ "bossKillaAgro", "bossTagillaAgro", "tagillaHelperAgro" ],
+        "maps":     [ "Labyrinth" ]
+    },
+
+    // ---- Icebreaker (modded map); uses the vanilla "Suburbs" slot ----
+    {
+        "roles":    [ "bossKnight" ], // only Knight of the Goons appears here
+        "maps":     [ "Suburbs" ]
+    },
+    {
+        "roles":    [ "exUsec" ], // Rogues also spawn on Icebreaker
+        "maps":     [ "Suburbs" ]
+    }
+]

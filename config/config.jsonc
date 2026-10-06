@@ -16,7 +16,18 @@
         "67a0972e77dd677f600804bd", //This Tape Sucks
         "67a097379f2068e74603c6ac", //Indisputable Authority
         "67a09761e720611a6a01f288", //Keepers Word
-        "67d03be712fb5f8fd2096332" //Vacate the Premises
+        "67d03be712fb5f8fd2096332", //Vacate the Premises
+
+        //"Enemy must be wearing gear X" quests - a hidden kill-condition filter (enemyEquipmentInclusive).
+        //With gear-adding mods installed the target pool barely ever matches, and QR piling weapon/map/
+        //bodypart rolls on top makes them impossible. Blacklisted so they stay vanilla (still annoying, but
+        //doable). Already-active copies force-purge back to vanilla on next load (OutlineVerification).
+        "6663149cfd5ca9577902e037", //The Invisible Hand (enemyEquipmentInclusive, 27 gear groups)
+        "67503260899713ccad00060e", //Enough Drinks for That One (enemyEquipmentInclusive, 10 gear groups)
+        //The other two only use enemyEquipmentExclusive with a single item (kill anyone NOT wearing it =
+        //effectively unconstrained), so they aren't really a limitation - blacklisted anyway for consistency.
+        "676c243577f0257dd50239e6", //The Price of Celebration (enemyEquipmentExclusive, 1 item)
+        "676c243fb16f4b14b905e7f4" //This Is My Party (enemyEquipmentExclusive, 1 item)
 
     ],
 

@@ -57,6 +57,16 @@ public static class Settings
 
     public static MiscData Misc { get; private set; } = null!;
 
+    // A bot ROLE id (SavageRole, e.g. "bossKilla", "sectantPriest") -> the map codes that role is known
+    // to appear on (the same codes misc.jsonc uses). This is the RUNTIME lookup, expanded by
+    // ExpandEnemyMaps from enemymaps.jsonc's authoring shape (a list of {roles, maps} rows, so a shared
+    // map set can be grouped across roles). Used ONLY to replace the misleading "[Any map]" on a kill
+    // objective that hunts a specific role but carries no Location condition (a boss/Goon/cultist hunt
+    // genuinely happens on just a few maps). An absent role, or one with an empty list -> the objective
+    // keeps its "[Any map]". Case-insensitive because the served SavageRole casing isn't guaranteed to
+    // match the file's. Author-owned; an empty/absent file is valid and simply no-ops.
+    public static Dictionary<string, List<string>> EnemyMaps { get; private set; } = null!;
+
     // Gear groups the "wear X" objectives roll over: group name -> its interchangeable pieces + weight.
     // Replaces the old flat gearlist.jsonc: a quest now rolls ONE weighted group and asks for any one
     // of its items (late-bound like weapon categories - adding an item to a group reaches every quest
@@ -89,6 +99,10 @@ public static class Settings
         Config = modHelper.GetJsonDataFromFile<QuestrandomizerConfig>(modPath, "config/config.jsonc");
         WeaponCategories = modHelper.GetJsonDataFromFile<WeaponCategoriesData>(modPath, "assets/data/weaponcategories.jsonc");
         Misc = modHelper.GetJsonDataFromFile<MiscData>(modPath, "assets/data/misc.jsonc");
+        // enemymaps.jsonc is a LIST of {roles, maps} rows - expand it into the flat, case-insensitive
+        // role -> map-codes lookup the rest of the mod reads (see EnemyMaps / ExpandEnemyMaps).
+        var enemyMapsFile = modHelper.GetJsonDataFromFile<List<EnemyMapEntry>>(modPath, "assets/data/enemymaps.jsonc");
+        EnemyMaps = ExpandEnemyMaps(enemyMapsFile);
         var gearCategoriesFile = modHelper.GetJsonDataFromFile<GearCategoriesData>(modPath, "assets/data/gearcategories.jsonc");
         GearCategories = gearCategoriesFile.GearGroups;
         GearCategoriesWeighting = new Dictionary<string, double>();
@@ -117,6 +131,35 @@ public static class Settings
         QuestWhitelist = LoadQuestWhitelist(modPath, modHelper);
 
         (WeaponEquivalents, CategoryAdditions, ModCategoryAdditions, CategoryWeights) = LoadWeaponCompatibilityFiles(modPath, modHelper);
+    }
+
+    // Flatten the {roles, maps} rows of enemymaps.jsonc into the case-insensitive role -> map-codes
+    private static Dictionary<string, List<string>> ExpandEnemyMaps(List<EnemyMapEntry>? entries)
+    {
+        var result = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+        if (entries == null)
+        {
+            return result;
+        }
+        foreach (EnemyMapEntry entry in entries)
+        {
+            foreach (string role in entry.Roles ?? new List<string>())
+            {
+                if (!result.TryGetValue(role, out List<string>? maps))
+                {
+                    maps = new List<string>();
+                    result[role] = maps;
+                }
+                foreach (string code in entry.Maps ?? new List<string>())
+                {
+                    if (!maps.Contains(code))
+                    {
+                        maps.Add(code);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     // Merges every compat file's "modCategoryAdditions" into the raw mod categories (e.g. dropping

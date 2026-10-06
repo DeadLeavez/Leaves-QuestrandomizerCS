@@ -489,6 +489,43 @@ public static class QuestFacts
         return result;
     }
 
+    // The DISPLAY names of the maps the given bot ROLES are known to appear on, from enemymaps.jsonc
+    // (union across every role, run through MapDisplaysFromCodes so it de-dupes by display name and
+    // gets the same factory/Ground-Zero collapse as every other map render). Empty when none of the
+    // roles is listed - the caller then keeps its "[Any map]" fallback. This is what turns a boss/Goon/
+    // cultist hunt with no Location condition from a misleading "[Any map]" into the handful of maps the
+    // target actually spawns on. Lookup is case-insensitive (Settings.EnemyMaps' comparer).
+    public static List<string> MapDisplaysForRoles(IEnumerable<string> roles)
+    {
+        var codes = new List<string>();
+        foreach (string role in roles)
+        {
+            if (Settings.EnemyMaps.TryGetValue(role, out List<string>? roleMaps) && roleMaps != null)
+            {
+                foreach (string code in roleMaps)
+                {
+                    codes.Add(code);
+                }
+            }
+        }
+        return MapDisplaysFromCodes(codes);
+    }
+
+    // The bot ROLES a kill objective hunts, read straight off the served task's Kills sub-condition
+    // (no outline needed - used by the vanilla/unrolled map-suffix pass). Empty when the task has no
+    // Kills condition or names no role.
+    public static List<string> SavageRolesOfTask(QuestCondition task)
+    {
+        foreach (QuestConditionCounterCondition sub in task.Counter?.Conditions ?? new List<QuestConditionCounterCondition>())
+        {
+            if (sub.ConditionType == "Kills")
+            {
+                return sub.SavageRole ?? new List<string>();
+            }
+        }
+        return new List<string>();
+    }
+
     // The concrete item ids a find / leave-at-location objective targets (usually one; a list means
     // "any of these"). Mirrors how ObjectiveFacts reads handover targets: the List first, else the
     // single Item.

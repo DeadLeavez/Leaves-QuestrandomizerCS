@@ -38,13 +38,16 @@ public class QuestrandomizerRerollApi(
     {
         var routes = new List<Leaves.RouteInfo>
         {
-            new Leaves.RouteInfo("GET", "/questrandomizer/ui", "Main web page.", "ui"),
-            new Leaves.RouteInfo("GET", "/questrandomizer/ui/handbook", "Handbook page.", "ui"),
-            new Leaves.RouteInfo("GET", "/questrandomizer/ui/info", "Cross-player turn-in Info page.", "ui"),
-            new Leaves.RouteInfo("GET", "/questrandomizer/ui/debug", "Debug page (quest/outline/locale dumps).", "ui"),
-            new Leaves.RouteInfo("GET", "/questrandomizer/ui/reroll", "Legacy alias -> permanent redirect to /ui.", "internal"),
-            new Leaves.RouteInfo("GET", "/questrandomizer/ui/styles.css", "Web UI stylesheet.", "internal"),
-            new Leaves.RouteInfo("GET", "/questrandomizer/ui/required-list.js", "Shared per-player turn-in list script.", "internal"),
+            // The /questrandomizer/ui* page + asset files are served by the Leaves-WebUI mod now, which
+            // registers them under "Web UI (static files)". Left commented so the move is visible.
+            //   new Leaves.RouteInfo("GET", "/questrandomizer/ui", "Main web page.", "ui"),
+            //   new Leaves.RouteInfo("GET", "/questrandomizer/ui/handbook", "Handbook page.", "ui"),
+            //   new Leaves.RouteInfo("GET", "/questrandomizer/ui/info", "Cross-player turn-in Info page.", "ui"),
+            //   new Leaves.RouteInfo("GET", "/questrandomizer/ui/debug", "Debug page (quest/outline/locale dumps).", "ui"),
+            //   new Leaves.RouteInfo("GET", "/questrandomizer/ui/reroll", "Legacy alias -> permanent redirect to /ui.", "internal"),
+            //   new Leaves.RouteInfo("GET", "/questrandomizer/ui/styles.css", "Web UI stylesheet.", "internal"),
+            //   new Leaves.RouteInfo("GET", "/questrandomizer/ui/nav.json", "Nav-rail manifest for the shared rail.", "internal"),
+            //   new Leaves.RouteInfo("GET", "/questrandomizer/ui/required-list.js", "Shared per-player turn-in list script.", "internal"),
             new Leaves.RouteInfo("GET", "/questrandomizer/api/handbook", "Handbook JSON the handbook page fetches.", "api"),
             new Leaves.RouteInfo("GET", "/questrandomizer/api/profiles", "Profile picker [{ profileId, nickname, level }].", "api"),
             new Leaves.RouteInfo("GET", "/questrandomizer/api/turnins", "Every outstanding turn-in across all visible profiles.", "api"),
@@ -66,23 +69,43 @@ public class QuestrandomizerRerollApi(
         return Task.CompletedTask;
     }
 
-    // The web pages + shared stylesheet live as plain files under assets/ui/ (deployed by the assets\**
-    // build glob), not baked into this source - so they can be edited without touching C#. Read fresh on
-    // each request (the pages are hit rarely) so live tweaks to a deployed file show up without a rebuild.
-    private readonly string uiDir = System.IO.Path.Combine(
-        modHelper.GetAbsolutePathToModFolder(System.Reflection.Assembly.GetExecutingAssembly()),
-        "assets", "ui");
+    // The web pages + stylesheet + page scripts (questrandomizer.html, handbook/info/debug.html,
+    // styles.css, nav.json, required-list.txt) moved to the Leaves-WebUI mod, which serves every
+    // Leaves mod's static UI files. This listener is the JSON API only now. See WEBUI_EXTRACTION_PLAN.md.
+    //   private readonly string uiDir = System.IO.Path.Combine(
+    //       modHelper.GetAbsolutePathToModFolder(System.Reflection.Assembly.GetExecutingAssembly()),
+    //       "assets", "ui");
 
     private static readonly JsonSerializerOptions Json = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
+    // Page paths now served by the Leaves-WebUI mod. Excluded here so exactly one listener claims each
+    // (listener dispatch order is not guaranteed). Everything else under /questrandomizer/ - the whole
+    // /questrandomizer/api/ surface - is still ours.
+    private static readonly HashSet<string> MovedToWebUiMod = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "/questrandomizer/ui",
+        "/questrandomizer/ui/reroll",
+        "/questrandomizer/ui/handbook",
+        "/questrandomizer/ui/info",
+        "/questrandomizer/ui/debug",
+        "/questrandomizer/ui/styles.css",
+        "/questrandomizer/ui/nav.json",
+        "/questrandomizer/ui/required-list.js",
+    };
+
     public bool CanHandle(MongoId sessionId, HttpContext context)
     {
-        // Our whole namespace: the JSON api under /questrandomizer/api/ AND the /questrandomizer/ui
-        // web page. "/questrandomizer/" is ours alone, so this never shadows an SPT route.
-        return Leaves.HttpUtils.HasPrefix(context, Prefix);
+        // The JSON api under /questrandomizer/api/. "/questrandomizer/" is ours alone, so this never
+        // shadows an SPT route; the /questrandomizer/ui* page files are served by Leaves-WebUI.
+        if (!Leaves.HttpUtils.HasPrefix(context, Prefix))
+        {
+            return false;
+        }
+        string path = (context.Request.Path.Value ?? "").TrimEnd('/');
+        return !MovedToWebUiMod.Contains(path);
     }
 
     public async Task Handle(MongoId sessionId, HttpContext context)
@@ -92,43 +115,20 @@ public class QuestrandomizerRerollApi(
 
         try
         {
-            if (method == "GET" && path.EndsWith("/ui", StringComparison.OrdinalIgnoreCase))
-            {
-                await ServeUiFile(context, "questrandomizer.html", "text/html; charset=utf-8");
-            }
-            // Legacy alias: this landing page used to live at /ui/reroll, back when re-rolling was its
-            // whole point. It's the mod's main page now (served at /ui), so permanently redirect the old
-            // path - existing bookmarks keep working.
-            else if (method == "GET" && path.EndsWith("/ui/reroll", StringComparison.OrdinalIgnoreCase))
-            {
-                context.Response.Redirect("/questrandomizer/ui", permanent: true);
-            }
-            else if (method == "GET" && path.EndsWith("/ui/handbook", StringComparison.OrdinalIgnoreCase))
-            {
-                await ServeUiFile(context, "handbook.html", "text/html; charset=utf-8");
-            }
-            else if (method == "GET" && path.EndsWith("/ui/info", StringComparison.OrdinalIgnoreCase))
-            {
-                await ServeUiFile(context, "info.html", "text/html; charset=utf-8");
-            }
-            else if (method == "GET" && path.EndsWith("/ui/debug", StringComparison.OrdinalIgnoreCase))
-            {
-                await ServeUiFile(context, "debug.html", "text/html; charset=utf-8");
-            }
-            else if (method == "GET" && path.EndsWith("/ui/styles.css", StringComparison.OrdinalIgnoreCase))
-            {
-                await ServeUiFile(context, "styles.css", "text/css; charset=utf-8");
-            }
-            // Shared browser script (the per-player turn-in listing) used by BOTH the info and debug
-            // pages. Shipped as .txt because SPT's mod validator rejects any .js in a mod folder; served
-            // here at a .js URL so the pages can <script src> it. Fixed literal, no path-traversal.
-            else if (method == "GET" && path.EndsWith("/ui/required-list.js", StringComparison.OrdinalIgnoreCase))
-            {
-                await ServeUiFile(context, "required-list.txt", "text/javascript; charset=utf-8");
-            }
-            // Must sit AFTER /ui/handbook (which also ends with "/handbook") - this is the JSON data the
-            // handbook page fetches, at /questrandomizer/api/handbook.
-            else if (method == "GET" && path.EndsWith("/handbook", StringComparison.OrdinalIgnoreCase))
+            // --- Page/asset static serves moved to the Leaves-WebUI mod (WEBUI_EXTRACTION_PLAN.md).
+            //     Kept commented; CanHandle already routes these paths elsewhere. ---
+            //   "/questrandomizer/ui"                   -> questrandomizer/questrandomizer.html
+            //   "/questrandomizer/ui/reroll"            -> 301 redirect to /questrandomizer/ui
+            //   "/questrandomizer/ui/handbook"          -> questrandomizer/handbook.html
+            //   "/questrandomizer/ui/info"              -> questrandomizer/info.html
+            //   "/questrandomizer/ui/debug"             -> questrandomizer/debug.html
+            //   "/questrandomizer/ui/styles.css"        -> questrandomizer/styles.css
+            //   "/questrandomizer/ui/nav.json"          -> questrandomizer/nav.json
+            //   "/questrandomizer/ui/required-list.js"  -> questrandomizer/required-list.txt
+            //
+            // This branch is the JSON data the handbook page fetches, at /questrandomizer/api/handbook
+            // (the old "must sit after /ui/handbook" ordering note no longer applies - that route is gone).
+            if (method == "GET" && path.EndsWith("/handbook", StringComparison.OrdinalIgnoreCase))
             {
                 await WriteJson(context, StatusCodes.Status200OK, questrandomizer.GetHandbookData());
             }
@@ -794,18 +794,17 @@ public class QuestrandomizerRerollApi(
         return true;
     }
 
-    // Thin wrappers over the shared Leaves.HttpUtils mechanics, capturing this mod's own bits: the
-    // camelCase serializer options for WriteJson, and the assets/ui directory for ServeUiFile. Keeping
-    // them means the ~30 call sites below stay short and don't repeat those two details.
+    // Thin wrapper over Leaves.HttpUtils.WriteJson capturing this mod's camelCase serializer options,
+    // so the ~30 call sites below stay short. (ServeUiFile moved out with the pages - Leaves-WebUI.)
     private static async Task WriteJson(HttpContext context, int statusCode, object payload)
     {
         await Leaves.HttpUtils.WriteJson(context, statusCode, payload, Json);
     }
 
-    private async Task ServeUiFile(HttpContext context, string fileName, string contentType)
-    {
-        await Leaves.HttpUtils.ServeFile(context, System.IO.Path.Combine(uiDir, fileName), contentType);
-    }
+    //   private async Task ServeUiFile(HttpContext context, string fileName, string contentType)
+    //   {
+    //       await Leaves.HttpUtils.ServeFile(context, System.IO.Path.Combine(uiDir, fileName), contentType);
+    //   }
 
 
     private sealed record RerollRequest

@@ -64,7 +64,7 @@ public class OutlineVerification(
 
             // PURGES take precedence over the shape fixers: if the whole outline is about to be dropped,
             // there is no point repairing its shape first.
-            if (ShouldPurgeBlacklistedUnstarted(profileId, questId, outline))
+            if (ShouldPurgeBlacklisted(questId, outline))
             {
                 toPurge.Add(questId);
                 continue;
@@ -86,8 +86,8 @@ public class OutlineVerification(
             outlines.Remove(questId);
             totalFixes++;
             Leaves.Utils.Instance.printColor(
-                $"[Questrandomizer] Outline purge: quest {questId} is now blacklisted and the player has not "
-                + "started it - dropped its stored outline so it reverts to vanilla.",
+                $"[Questrandomizer] Outline purge: quest {questId} is now blacklisted - dropped its stored "
+                + "outline so it reverts to vanilla (force-purged whether or not the player has started it).",
                 LogTextColor.Yellow);
         }
 
@@ -299,35 +299,40 @@ public class OutlineVerification(
         return fixes;
     }
 
-    // PURGE: a stored outline for a quest that has since been added to the quest blacklist, on a profile
-    // that never started that quest.
+    // PURGE: a stored outline for a quest that has since been added to the quest blacklist - dropped
+    // FORCE, whether or not the player has started it.
     //
     // Unlike the fixers above this does not repair a shape - it drops the outline whole. The use case:
-    // new quests get added to the blacklist (e.g. after they're found to randomize badly), and everyone
-    // who hasn't touched them yet should just get the vanilla quest, not the already-rolled randomized
-    // one frozen in their outline. Dropping the outline sends the quest back through the roll path, where
-    // RollQuest short-circuits a blacklisted quest to an empty outline - so it serves as vanilla and stays
-    // stable from then on.
+    // a quest is found to randomize badly (e.g. "The Invisible Hand" - a vanilla "kill enemies wearing
+    // gear X" quest that QR piles weapon-category, map, body-part and target rolls on top of, turning an
+    // already-annoying quest impossible) and is blacklisted so it stays vanilla. Everyone should get the
+    // vanilla quest back, not the randomized one frozen in their outline. Dropping the outline sends the
+    // quest back through the roll path, where RollQuest short-circuits a blacklisted quest to an empty
+    // outline - so it serves as vanilla and stays stable from then on.
     //
-    // Guards, all required:
+    // Why force-purging a STARTED quest is safe here (deliberately unlike ShouldPurgeOldVersionUnstarted,
+    // which keeps its started guard): QR never bakes edits into the player's live quest progress - it
+    // serves a regenerated CLONE of the quest each load, with the outline as the sole source of truth. So
+    // dropping the outline just makes the NEXT served definition vanilla. The vanilla kills condition id is
+    // pinned across regeneration (origin Vanilla), so the player's live kill counter is preserved and keeps
+    // counting; any objective QR ADDED (e.g. a bolt-on handover) simply disappears from the served quest,
+    // orphaning its counter harmlessly. The quest becomes completable on its vanilla terms. That trade -
+    // one client re-read of a relaxed quest - is the accepted cost of yanking these back to vanilla now
+    // rather than waiting for every mid-quest player to finish or abandon them.
+    //
+    // Guards:
     //   - The outline actually carries decisions (Objectives.Count > 0). An already-empty outline is
     //     vanilla already, so there is nothing to purge - and skipping it keeps this idempotent: the
     //     re-roll a purge triggers writes back an empty outline, which this then leaves alone next boot.
+    //     This is what makes the force-purge one-time-per-profile even without a started check.
     //   - The quest is on the blacklist NOW (config drives this; it's why the outline is stale).
-    //   - The player has NOT started it. A started/finished/failed quest is left strictly alone: its
-    //     randomized conditions may already be baked into live progress, and yanking them mid-quest is
-    //     exactly the desync this whole cache design exists to prevent.
-    private bool ShouldPurgeBlacklistedUnstarted(MongoId profileId, MongoId questId, QuestOutline outline)
+    private bool ShouldPurgeBlacklisted(MongoId questId, QuestOutline outline)
     {
         if (outline.Objectives.Count == 0)
         {
             return false;
         }
         if (!QuestFacts.IsBlacklisted(questId))
-        {
-            return false;
-        }
-        if (Leaves.Utils.Instance.hasProfileStartedQuest(profileId, questId))
         {
             return false;
         }

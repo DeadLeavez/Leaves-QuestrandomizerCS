@@ -227,7 +227,11 @@ public static class QuestOutlineConverter
 
     private static MongoId? ParseId(string? raw)
     {
-        return string.IsNullOrEmpty(raw) ? null : new MongoId(raw);
+        if (string.IsNullOrEmpty(raw))
+        {
+            return null;
+        }
+        return new MongoId(raw);
     }
 
     // The first sub-condition of the given type under a CounterCreator's Counter, or null if there is

@@ -179,7 +179,19 @@ public static class QuestLocaleGeneration
                     continue;
                 }
 
-                string inner = maps.Count > 0 ? JoinOr(maps) : "Any map";
+                string inner;
+                if (maps.Count > 0)
+                {
+                    inner = JoinOr(maps);
+                }
+                else
+                {
+                    // No Location on this kill. If it hunts a specific role, name the maps that role
+                    // spawns on (enemymaps.jsonc) instead of "Any map"; an unlisted / broad target keeps
+                    // "Any map" so the web UI's any-map filter still catches it. Mirrors the rolled path.
+                    List<string> roleMaps = QuestFacts.MapDisplaysForRoles(QuestFacts.SavageRolesOfTask(task));
+                    inner = roleMaps.Count > 0 ? JoinOr(roleMaps) : "Any map";
+                }
                 workspace.Edit(conditionId, baseText + $" [{inner}]");
             }
         }
@@ -336,10 +348,19 @@ public static class QuestLocaleGeneration
         }
         else
         {
-            // No maps => the quest has no Location condition at all (see the rolled path for the full
-            // rationale), so it really does count everywhere. Saying so explicitly beats an absent
-            // line, which reads as a text bug.
-            parts.Add("at [Any map]");
+            // No maps => the quest has no Location condition at all. If this is a boss/Goon/cultist hunt,
+            // that target only appears on a few maps, so name them from enemymaps.jsonc rather than the
+            // misleading "[Any map]". A broad target (PMC/Scav/Any) is never in that table and genuinely
+            // counts everywhere, so it falls through to "[Any map]" - as does an unlisted role.
+            List<string> roleMaps = savageHunt ? QuestFacts.MapDisplaysForRoles(savageRoles) : new List<string>();
+            if (roleMaps.Count > 0)
+            {
+                parts.Add($"at [{JoinOr(roleMaps)}]");
+            }
+            else
+            {
+                parts.Add("at [Any map]");
+            }
         }
         // Required gear: a rolled gear GROUP renders its label ("[FORT body armor]"), reading cleanly -
         // the individual pieces are in the group, not the objective line. A legacy pinned-item outline
