@@ -24,6 +24,10 @@ Current Shortcomings
 - Removes durability for handover quests.
 - Doesn't have a counter for "found" items for handover quests. (The thing most- but not all BSG handover quests have.) Just a visual thing. Minor.
 
+## Requirements
+- [Leaves-LeavesUtil](https://github.com/DeadLeavez/Leaves-LeavesUtil) ([latest release](https://github.com/DeadLeavez/Leaves-LeavesUtil/releases/latest)) - required.
+- [Leaves-WebUI](https://github.com/DeadLeavez/Leaves-WebUI) - optional, adds the browser pages for this mod.
+
 ## Compatibility
 If you made a weapon mod, or just want to make a weapon mod compatible with the randomized quests. I have provided three ways of doing it.
 - Method 1: (user) add weapon to new or existing weapon categories.
