@@ -263,3 +263,6 @@ OLD CONFIGS ARE NOT COMPATIBLE.
 - Added btr to config (disabled by default)
 - Updated for 3.11 (still works on 3.10)
 - Updated the localization from crowdin. Thanks to everyone who helped out!
+
+## 1.0.0
+- Updated to SPT 4.0.x (not compatible with 4.1.x).
